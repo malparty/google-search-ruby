@@ -1,4 +1,4 @@
-[![Build Status](CI_BADGE_URL goes here)](REPO_URL goes here)
+[![Build Status](https://img.shields.io/github/workflow/status/malparty/google-search-ruby/Test)](https://github.com/malparty/google-search-ruby/)
 
 ## Introduction
 

@@ -15,7 +15,7 @@ on:
 env:
   DOCKER_REGISTRY_HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
   DOCKER_REGISTRY_USERNAME: ${{ github.repository_owner }}
-  DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+  DOCKER_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DOCKER_IMAGE: ${{ github.repository }}
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 

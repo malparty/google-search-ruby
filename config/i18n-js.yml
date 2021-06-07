@@ -1,5 +1,0 @@
-export_i18n_js: false
-
-translations:
-  - file: 'app/javascript/translations/translations.js'
-    only: '*'

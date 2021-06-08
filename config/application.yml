@@ -21,4 +21,4 @@ test:
 # Because it initializes the app, so all variables need to exist in the Docker build stage (used in bin/docker-assets-precompile).
 docker_build:
   <<: *default
-  MAILER_DEFAULT_HOST:
+  SECRET_KEY_BASE:

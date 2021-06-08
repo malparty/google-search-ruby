@@ -5,6 +5,9 @@
     "lint": "eslint . --color",
     "lint:fix": "eslint . --color --fix"
   },
+  "engines": {
+    "node": ">=14.17.0 <15"
+  },
   "dependencies": {
     "@babel/preset-typescript": "7.13.0",
     "@rails/actioncable": "^6.0.0",

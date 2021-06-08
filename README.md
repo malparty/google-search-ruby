@@ -1,15 +1,15 @@
-[![Build Status](CI_BADGE_URL goes here)](REPO_URL goes here)
-
+[![Build Status](https://img.shields.io/github/workflow/status/malparty/google-search-ruby/Test)](https://github.com/malparty/google-search-ruby)
 ## Introduction
 
-> *App introduction goes here ...*
+> Google Search Ruby is a Web app that extract large amounts of data from the Google search results page.
+> Feed it with a CSV File containing your keywords, and the app will do the rest for you!
 
 ## Project Setup
 
 ### Prerequisites
 
 - Ruby version: 2.7.2
-- Node version: 14.15.4
+- Node version: 14.17.0
 
 ### Docker
 
@@ -86,13 +86,6 @@ docker push $DOCKER_IMAGE:$BRANCH_TAG
 docker-compose -f docker-compose.test.yml run test bin/bundle exec rake db:test:prepare
 ```
 
-#### Semaphore CI 2.0
-
-To setup the semaphore CI 2.0 for the project, please follow [this guideline](.semaphore/README.md)
-
-#### Github actions
-
-To setup Github actions for the project, please follow [this guideline](.github/README.md)
 
 ### Test
 

@@ -42,8 +42,8 @@ Rails.application.configure do
 
   config.action_mailer.asset_host = ENV.fetch('MAILER_DEFAULT_HOST')
 
-  config.action_mailer.default_url_options = { 
-    host: ENV.fetch('MAILER_DEFAULT_HOST'), 
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch('MAILER_DEFAULT_HOST'),
     port: ENV.fetch('MAILER_DEFAULT_PORT')
   }
 
@@ -82,7 +82,7 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
-  
+
   # Configure Bullet gem to detect N+1 queries
   config.after_initialize do
     Bullet.enable        = true

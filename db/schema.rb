@@ -61,4 +61,4 @@ ActiveRecord::Schema.define(version: 2021_06_21_104559) do
   end
 
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-end
+  end

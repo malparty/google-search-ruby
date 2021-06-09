@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class KeywordController < ApplicationController
+class KeywordsController < ApplicationController
   def index; end
 end

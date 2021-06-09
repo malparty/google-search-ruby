@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
-  root to: 'keywords#index'
+  use_doorkeeper do
+    skip_controllers :authorizations, :applications, :authorized_applications
+  end
 
   use_doorkeeper do
     skip_controllers :authorizations, :authorized_applications, :tokens, :token_info
   end
 
   devise_for :users, controllers: { registrations: :registrations }
+
+  root to: 'keywords#index'
 
   resources :keywords, only: :index
 

@@ -7,16 +7,17 @@ module Api
 
       def create
         user = User.new(email: user_params[:email], password: user_params[:password],
-                         firstname: user_params[:firstname])
+                        firstname: user_params[:firstname])
         user.lastname = user_params[:lastname]
         client_app = Doorkeeper::Application.find_by(uid: params[:client_id])
         return render(json: { error: 'Invalid client ID' }, status: :forbidden) unless client_app
+
         if user.save
           # create access token for the user, so the user won't need to login again after registration
           access_token = get_access_token user.id, client_app.id
           # return json containing access token and refresh token
           # so that user won't need to call login API right after registration
-          render json: create_success_result( user, access_token)
+          render json: create_success_result(user, access_token)
         else
           render(json: { error: user.errors.full_messages }, status: :unprocessable_entity)
         end
@@ -33,6 +34,7 @@ module Api
           scopes: ''
         )
       end
+
       def create_success_result(user, access_token)
         {
           user: {

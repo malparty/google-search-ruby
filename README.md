@@ -4,6 +4,12 @@
 > Google Search Ruby is a Web app that extract large amounts of data from the Google search results page.
 > Feed it with a CSV File containing your keywords, and the app will do the rest for you!
 
+## Web Application
+
+[Staging](https://google-search-ruby-staging.herokuapp.com/)
+
+[Production](https://google-search-ruby.herokuapp.com/)
+
 ## Project Setup
 
 ### Prerequisites
@@ -114,3 +120,11 @@ rspec [rspec-params]
 
 - Create a [Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 from bot account with `public_repo` scope, and set it as `DANGER_GITHUB_API_TOKEN` secret on the CI Environment Settings.
+
+
+## About
+![Nimble](https://assets.nimblehq.co/logo/dark/logo-dark-text-160.png)
+
+This project is created to complete **Web Certification Path** using **Ruby** at [Nimble][nimble]
+
+[nimble]: https://nimblehq.co

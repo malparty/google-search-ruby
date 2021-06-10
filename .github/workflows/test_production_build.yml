@@ -5,7 +5,7 @@ on:
     branches-ignore:
       - master
       - main
-      - development
+      - develop
 
 env:
   DOCKER_REGISTRY_HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}

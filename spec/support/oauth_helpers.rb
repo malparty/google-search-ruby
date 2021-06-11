@@ -39,4 +39,17 @@ module OAuthHelpers
     post 'create', params: params
     JSON.parse(response.body)
   end
+
+  def create_user_params
+    @user ||= Fabricate(:user)
+    @application ||= Fabricate(:application)
+
+    {
+      password: 'password',
+      email: @user.email,
+      lastname: @user.lastname,
+      firstname: @user.firstname,
+      client_id: @application.uid
+    }
+  end
 end

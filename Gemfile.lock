@@ -97,7 +97,7 @@ GEM
       sexp_processor
     coderay (1.1.3)
     colored2 (3.1.2)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     cork (0.3.0)
       colored2 (~> 3.1)
@@ -132,14 +132,11 @@ GEM
     danger-reek (0.3.0)
       danger-plugin-api (~> 1.0)
       reek (>= 3.6, < 7.0)
-    danger-rubocop (0.9.4)
+    danger-rubocop (0.9.5)
       danger
       rubocop (~> 1.0)
     danger-simplecov_json (0.3.0)
       danger-plugin-api (~> 1.0)
-    danger-slim_lint (0.1.2)
-      danger-plugin-api (~> 1.0)
-      slim_lint (~> 0.11)
     danger-suggester (0.1.0)
       danger
       git_diff
@@ -212,7 +209,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.9.1)
+    loofah (2.10.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -412,12 +409,6 @@ GEM
       simplecov
     simplecov-lcov (0.8.0)
     simplecov_json_formatter (0.1.3)
-    slim (4.1.0)
-      temple (>= 0.7.6, < 0.9)
-      tilt (>= 2.0.6, < 2.1)
-    slim_lint (0.21.1)
-      rubocop (>= 0.78.0)
-      slim (>= 3.0, < 5.0)
     spring (2.1.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -431,7 +422,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    temple (0.8.2)
     terminal-table (3.0.1)
       unicode-display_width (>= 1.1.1, < 3)
     thor (1.1.0)
@@ -486,7 +476,6 @@ DEPENDENCIES
   danger-reek
   danger-rubocop
   danger-simplecov_json
-  danger-slim_lint
   danger-suggester
   danger-undercover
   database_cleaner
@@ -525,7 +514,6 @@ DEPENDENCIES
   simplecov
   simplecov-json
   simplecov-lcov
-  slim
   spring
   spring-commands-rspec
   spring-watcher-listen (= 2.0.1)

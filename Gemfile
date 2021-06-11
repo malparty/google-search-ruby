@@ -22,9 +22,6 @@ gem 'pundit' # Minimal authorization through OO design and pure Ruby classes
 gem 'webpacker', '~>5.2.0' # Transpile app-like JavaScript
 gem 'sass-rails' # SASS
 
-# Templating
-gem 'slim' # light weight template engine
-
 # Translations
 # gem 'devise-i18n' # Translations for Devise
 # gem 'rails-i18n', '~> 6.0.0' # Translations for Rails
@@ -58,7 +55,6 @@ group :development, :test do
 
   gem 'undercover' # Report missing test coverage in new changes
   gem 'danger' # Automated code review.
-  gem 'danger-slim_lint' # Lint slim files.
   gem 'danger-eslint' # ESLint
   gem 'scss_lint' # SCSS lint
   gem 'danger-rubocop' # A Danger plugin for Rubocop.

@@ -21,4 +21,14 @@ describe Api::V1::UsersController, type: :request do
       expect(JSON.parse(response.body).keys).to contain_exactly('error')
     end
   end
+
+  context 'when a user register with a non valid password' do
+    it 'receive an error' do
+      params = create_user_params
+      params[:password] = '123'
+      post 'create', params: params
+
+      expect(JSON.parse(response.body).keys).to contain_exactly('error')
+    end
+  end
 end

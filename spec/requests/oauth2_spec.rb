@@ -32,4 +32,14 @@ describe Doorkeeper::TokensController, type: :request do
       expect(JSON.parse(response.body)['error']).to eq('invalid_grant')
     end
   end
+
+  context 'when user refresh an existing token on time' do
+    it 'return the refreshed token' do
+      token = query_token
+      refreshed_token = query_refresh_token token['refresh_token']
+
+      expect(refreshed_token['token_type']).to eq('Bearer')
+    end
+
+  end
 end

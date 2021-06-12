@@ -34,15 +34,12 @@ module Api
       end
 
       def create_success_result(user, access_token)
-        { user: {
-          id: user.id,
-          email: user.email,
-          access_token: access_token.token,
-          token_type: 'bearer',
-          expires_in: access_token.expires_in,
-          refresh_token: access_token.refresh_token,
-          created_at: access_token.created_at.to_time.to_i
-        } }
+        user_json = UserSerializer.new(user).serializable_hash
+        token_json = Doorkeeper::TokenSerializer.new(access_token).serializable_hash
+        { data: [
+          user_json[:data],
+          token_json[:data]
+        ] }
       end
 
       def user_params

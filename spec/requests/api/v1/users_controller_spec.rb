@@ -4,12 +4,12 @@ require 'rails_helper'
 
 describe Api::V1::UsersController, type: :request do
   context 'when a user register' do
-    it 'returns the user and access token' do
+    it 'returns the user' do
       params = create_user_params
       params[:email] = 'new_email@gmail.com'
       post 'create', params: params
 
-      expect(JSON.parse(response.body).keys).to contain_exactly('user')
+      expect(JSON.parse(response.body)['data'].map { |item| item['type'] }).to contain_exactly('user', 'token')
     end
   end
 

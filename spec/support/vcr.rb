@@ -14,7 +14,7 @@ VCR.configure do |c|
 end
 
 RSpec.configure do |config|
-  # You can pass a hash to the `vcr` tag to specifcy additional options:
+  # You can pass a hash to the `vcr` tag to specify additional options:
   #   vcr: { group: 'places/google/details', cassettes: %w(kfc red_planet)}
   #   vcr: { group: 'places/google/details', cassette: 'kfc'}
   #   vcr: { cassette: 'places/google/details', options: { decode_compressed_response: true } }

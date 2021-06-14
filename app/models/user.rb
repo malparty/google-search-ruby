@@ -13,4 +13,14 @@ class User < ApplicationRecord
     user = User.find_for_authentication(email: email)
     user&.valid_password?(password) ? user : nil
   end
+
+  def get_access_token(client_app_id)
+    Doorkeeper::AccessToken.create(
+      resource_owner_id: @id,
+      application_id: client_app_id,
+      refresh_token: generate_refresh_token,
+      expires_in: Doorkeeper.configuration.access_token_expires_in.to_i,
+      scopes: ''
+    )
+  end
 end

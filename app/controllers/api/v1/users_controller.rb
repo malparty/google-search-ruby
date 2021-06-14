@@ -12,7 +12,7 @@ module Api
 
         if user.save
           # create access token for the user, so the user won't need to login again after registration
-          access_token = get_access_token user.id, client_app.id
+          access_token = user.get_access_token client_app.id
           # return json containing access token and refresh token
           # so that user won't need to call login API right after registration
           render json: create_success_result(user, access_token)
@@ -22,16 +22,6 @@ module Api
       end
 
       private
-
-      def get_access_token(user_id, client_app_id)
-        Doorkeeper::AccessToken.create(
-          resource_owner_id: user_id,
-          application_id: client_app_id,
-          refresh_token: generate_refresh_token,
-          expires_in: Doorkeeper.configuration.access_token_expires_in.to_i,
-          scopes: ''
-        )
-      end
 
       def create_success_result(user, access_token)
         user_json = UserSerializer.new(user).serializable_hash

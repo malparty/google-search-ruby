@@ -3,24 +3,24 @@
 require 'rails_helper'
 
 describe 'login', type: :system do
-  context 'when non logged user reach the app' do
-    it 'redirect the user to the login page' do
+  context 'when an unauthenticated user reaches the app' do
+    it 'redirects the user to the login page' do
       visit root_path
 
       expect(page).to have_current_path(new_user_session_path)
     end
   end
 
-  context 'when valid credentials' do
-    it 'log the user in and display a flash message' do
+  context 'when the user signed in with valid credentials' do
+    it 'logs the user in and displays a flash message' do
       sign_in_ui
 
       expect(page).to have_content(I18n.t('devise.sessions.signed_in'))
     end
   end
 
-  context 'when invalid credentials' do
-    it 'refuse login and display an error' do
+  context 'when the user tried to sign in with invalid credentials' do
+    it 'refuses login and displays an error' do
       bad_user = Fabricate(:user)
       bad_user.password = 'bad'
       error_msg = I18n.t('devise.failure.invalid').to_s.gsub('%{authentication_keys}', 'Email')
@@ -31,7 +31,7 @@ describe 'login', type: :system do
     end
   end
 
-  context 'when signed in and reach the home page' do
+  context 'when the user signed in and reached the home page' do
     it 'does not redirect to the sign in page' do
       sign_in Fabricate(:user)
       visit root_path

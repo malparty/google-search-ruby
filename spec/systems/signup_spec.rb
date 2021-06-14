@@ -6,16 +6,19 @@ describe 'signup', type: :system do
   context 'when an unauthenticated user reaches the sign up page' do
     it 'displays the email field' do
       visit new_user_registration_path
+
       expect(find('form')).to have_field('user_email')
     end
 
     it 'displays the password field ' do
       visit new_user_registration_path
+
       expect(find('form')).to have_field('user_password')
     end
 
     it 'displays the password confirmation field ' do
       visit new_user_registration_path
+
       expect(find('form')).to have_field('user_password_confirmation')
     end
   end

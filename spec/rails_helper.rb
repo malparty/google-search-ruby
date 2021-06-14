@@ -24,5 +24,5 @@ RSpec.configure do |config|
 
   config.include Devise::Test::IntegrationHelpers, type: :system
 
-  config.include AuthenticationHelper
+  config.include DeviseHelpers::SystemHelpers
 end

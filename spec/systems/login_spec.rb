@@ -13,7 +13,7 @@ describe 'login', type: :system do
 
   context 'when valid credentials' do
     it 'log the user in and display a flash message' do
-      sign_in
+      sign_in_ui
 
       expect(page).to have_content(I18n.t('devise.sessions.signed_in'))
     end
@@ -25,9 +25,18 @@ describe 'login', type: :system do
       bad_user.password = 'bad'
       error_msg = I18n.t('devise.failure.invalid').to_s.gsub('%{authentication_keys}', 'Email')
 
-      sign_in bad_user
+      sign_in_ui bad_user
 
       expect(page).to have_content(error_msg)
+    end
+  end
+
+  context 'when signed in and reach the home page' do
+    it 'does not redirect to the sign in page' do
+      sign_in Fabricate(:user)
+      visit root_path
+
+      expect(page).to have_current_path(root_path)
     end
   end
 end

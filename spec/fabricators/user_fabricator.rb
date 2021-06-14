@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require 'ffaker'
+
 Fabricator(:user) do
-  lastname 'DENT'
-  firstname 'Arthur'
-  email 'arthur@dent.com'
-  password 'password'
-  password_confirmation 'password'
+  lastname FFaker::Name.last_name
+  firstname FFaker::Name.first_name
+  email FFaker::Internet.email
+  password 'password123'
+  password_confirmation 'password123'
 end

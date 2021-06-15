@@ -28,7 +28,8 @@ module GoogleService
     end
 
     def ads_top_url
-
+      # data-ved enables to filter "role=list" (sub links) items
+      @document.css('#tads div[data-text-ad] a[data-ved]').map { |a_tag| a_tag['href'] }
     end
 
     def ads_page_url

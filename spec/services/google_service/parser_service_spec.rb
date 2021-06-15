@@ -33,5 +33,14 @@ RSpec.describe GoogleService::ParserService, type: :service do
       expect(described_class.new(result).ads_page_count).to eq(6)
     end
 
+    it 'find 3 different top ads url' do
+      result = nil
+      VCR.use_cassette('google_search_top_ads_6') do
+        result = GoogleService::ClientService.query('vpn')
+      end
+
+      expect(described_class.new(result).ads_top_url).to contain_exactly('https://cloud.google.com/free','https://www.expressvpn.com/', 'https://www.top10vpn.com/best-vpn-for-vietnam/')
+    end
+
   end
 end

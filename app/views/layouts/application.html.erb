@@ -10,20 +10,22 @@
   <%= javascript_pack_tag 'application' %>
 </head>
 <body>
-<%= render 'layouts/header' %>
-<main>
-  <div class="container mt-2">
-    <div class="row justify-content-center">
-      <% if notice %>
-        <p class="alert alert-info"><%= notice %></p>
-      <% end %>
-      <% if alert %>
-        <p class="alert alert-warning"><%= alert %></p>
-      <% end %>
+<div class="d-flex flex-column sticky-footer-wrapper min-vh-100">
+  <%= render 'layouts/header' %>
+  <main class="flex-fill">
+    <div class="container mt-2">
+      <div class="row justify-content-center">
+        <% if notice %>
+          <p class="alert alert-info"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert alert-warning"><%= alert %></p>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <%= yield %>
-</main>
-<%= render 'layouts/footer' %>
+    <%= yield %>
+  </main>
+  <%= render 'layouts/footer' %>
+</div>
 </body>
 </html>

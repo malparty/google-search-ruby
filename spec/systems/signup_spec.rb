@@ -44,7 +44,7 @@ describe 'signup', type: :system do
       it 'displays an error message' do
         sign_up_ui 'good@email.com', '123'
 
-        expect(page).to have_selector('#error_explanation li')
+        expect(page).to have_selector('#error_explanation')
       end
     end
 
@@ -52,7 +52,7 @@ describe 'signup', type: :system do
       it 'displays an error message' do
         sign_up_ui 'good@email.com', 'complex123password', 'differentPassword123'
 
-        expect(page).to have_selector('#error_explanation li')
+        expect(page).to have_selector('#error_explanation')
       end
     end
   end

@@ -1,49 +1,7 @@
 <!DOCTYPE html>
 <html lang='<%= I18n.locale %>'>
-<body>
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-  <a class="navbar-brand" href="/">
-    <%= image_tag 'logo.svg', class: 'd-inline-block align-top', width: 30, height: 30,
-                  alt: "#{t('app_name')} application" %>
-    <%= t('app_name') %>
-  </a>
-  <% if user_signed_in? %>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Welcome <%= current_user.first_name %>!
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <%= link_to t('my_profile'), edit_user_registration_path, method: :get, class: 'dropdown-item' %>
-            <%= button_to t('auth.logout'), destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
-            </div>
-        </li>
-
-      </ul>
-    </div>
-  <% end %>
-</nav>
-<div class="container mt-2">
-  <div class="row justify-content-center">
-    <% if notice %>
-      <p class="alert alert-info"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-warning"><%= alert %></p>
-    <% end %>
-  </div>
-</div>
-<%= yield %>
-</body>
-
 <head>
-  <title>Google Search Ruby</title>
+  <title><%= t('app_name') %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -51,4 +9,57 @@
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_pack_tag 'application' %>
 </head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+      <%= image_tag 'logo.svg', class: 'd-inline-block align-top', width: 30, height: 30,
+                    alt: "#{t('app_name')} application" %>
+      <%= t('app_name') %>
+    </a>
+    <% if user_signed_in? %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+              data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Welcome <%= current_user.first_name %>!
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to t('my_profile'), edit_user_registration_path, method: :get, class: 'dropdown-item' %>
+              <%= button_to t('auth.logout'), destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    <% end %>
+  </nav>
+</header>
+<main>
+  <div class="container mt-2">
+    <div class="row justify-content-center">
+      <% if notice %>
+        <p class="alert alert-info"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert-warning"><%= alert %></p>
+      <% end %>
+    </div>
+  </div>
+  <%= yield %>
+</main>
+<footer>
+  <div class="d-flex justify-content-center">
+    <span class="text-muted">
+      This project is a Ruby/Rails Internal Certification for
+      <%= link_to 'Nimble', "https://nimblehq.co/", target: "_blank" %>.
+    </span>
+  </div>
+</footer>
+</body>
 </html>

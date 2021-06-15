@@ -20,11 +20,11 @@ module GoogleService
     end
 
     def ads_top_count
-      @document.css('div[data-text-ad]').count
+      @document.css('#tads div[data-text-ad]').count
     end
 
     def ads_page_count
-
+      @document.css('div[data-text-ad]').count
     end
 
     def ads_top_url

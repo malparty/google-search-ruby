@@ -30,7 +30,7 @@
                 </div>
 
                 <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-                  <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+                  <div><%= t('waiting_confirmation_for') %>: <%= resource.unconfirmed_email %></div>
                 <% end %>
               </div>
               <div class="col-12 col-md-6">
@@ -52,7 +52,7 @@
             </div>
             <div class="collapse" id="newPassword">
               <% if @minimum_password_length %>
-                <em><%= @minimum_password_length %> characters minimum</em>
+                <em>(<%= "#{@minimum_password_length} #{t('min_char')}" %>)</em>
               <% end %>
               <div class="row">
                 <div class="col-12 col-md-6">
@@ -71,7 +71,7 @@
             </div>
 
             <div class="actions">
-              <%= f.submit 'Update', class: 'btn btn-primary btn-block' %>
+              <%= f.submit t('update'), class: 'btn btn-primary btn-block' %>
             </div>
           <% end %>
         </section>
@@ -84,10 +84,10 @@
         <section class="card-body">
           <h3>Cancel my account</h3>
 
-          <p>Unhappy? 🥺</p>
-          <%= button_to "Cancel my account",
+          <p><%= t('unhappy') %>? 🥺</p>
+          <%= button_to t('auth.cancel_my_account'),
                         registration_path(resource_name),
-                        data: { confirm: "Are you sure?" },
+                        data: { confirm: t('confirm') },
                         method: :delete,
                         class: 'btn btn-danger btn-block' %>
         </section>

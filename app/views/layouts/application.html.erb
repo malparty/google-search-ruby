@@ -7,7 +7,7 @@
       Google Search Ruby
     </a>
     <% if user_signed_in? %>
-      <%= button_to t('logout'), destroy_user_session_path, method: :delete, class:'btn btn-link'  %>
+      <%= button_to t('auth.logout'), destroy_user_session_path, method: :delete, class:'btn btn-link'  %>
     <% end %>
   </nav>
   <div class="container mt-2">

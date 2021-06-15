@@ -10,6 +10,10 @@ VCR.configure do |c|
   c.ignore_request do |request|
     URI(request.uri).port == 9200
   end
+  # Uncomment when need to record a cassette with readable Html
+  # c.before_record do |i|
+  #   i.response.body.force_encoding('UTF-8')
+  # end
   c.default_cassette_options = { record: :none, match_requests_on: [:path] }
 end
 

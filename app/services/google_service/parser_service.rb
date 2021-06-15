@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module GoogleService
-  module ParserService
+  class ParserService
     require 'nokogiri'
 
     def initialize(html)
@@ -20,7 +20,7 @@ module GoogleService
     end
 
     def ads_top_count
-
+      @document.css('div[data-text-ad]').count
     end
 
     def ads_page_count

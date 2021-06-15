@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='<%= I18n.locale %>'>
   <head>
-    <title>GoogleSearchRuby</title>
+    <title>Google Search Ruby</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,6 +13,13 @@
   <body>
     <% if user_signed_in? %>
       <%= button_to t('logout'), destroy_user_session_path, method: :delete  %>
+    <% else %>
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          <%= image_tag 'logo.svg', class:'d-inline-block align-top', width: 30, height: 30, alt: 'Google Search Ruby application' %>
+          Google Search Ruby
+        </a>
+      </nav>
     <% end %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>

@@ -9,17 +9,7 @@ module GoogleService
 
     def initialize(keyword, lang = 'en')
       escaped_keyword = CGI.escape(keyword)
-      @uri = URI("https://auibawsasxasxechjksdc.fr/search?q=#{escaped_keyword}&hl=#{lang}&gl=#{lang}")
-    end
-
-    # Inspect Http response status code
-    # Any non 200 response code will be logged
-    # response is set to nil in order to notify the error
-    def validate_result
-      return if @result.response.code == '200'
-
-      Rails.logger.warn "Warning: Query Google with keyword #{@keyword} return status code #{@result.response.code}"
-      @result = nil
+      @uri = URI("https://google.com/search?q=#{escaped_keyword}&hl=#{lang}&gl=#{lang}")
     end
 
     def query_result
@@ -32,6 +22,17 @@ module GoogleService
         validate_result
       end
       @result
+    end
+
+    private
+    # Inspect Http response status code
+    # Any non 200 response code will be logged
+    # response is set to nil in order to notify the error
+    def validate_result
+      return if @result.response.code == '200'
+
+      Rails.logger.warn "Warning: Query Google with keyword #{@keyword} return status code #{@result.response.code}"
+      @result = nil
     end
   end
 end

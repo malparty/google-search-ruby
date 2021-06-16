@@ -1,14 +1,10 @@
-<<<<<<< HEAD
 # frozen_string_literal: true
 
-=======
->>>>>>> 111bad2 ([#5] Rebase from Config Deployment)
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-<<<<<<< HEAD
 
   # the authenticate method from devise documentation
   def self.authenticate(email, password)
@@ -36,6 +32,4 @@ class User < ApplicationRecord
       break token unless Doorkeeper::AccessToken.exists?(refresh_token: token)
     end
   end
-=======
->>>>>>> 111bad2 ([#5] Rebase from Config Deployment)
 end

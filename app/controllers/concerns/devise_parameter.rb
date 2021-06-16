@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module DeviseParameter
+
   protected
 
   def update_allowed_parameters

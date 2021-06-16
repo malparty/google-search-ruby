@@ -25,6 +25,7 @@ module GoogleService
     end
 
     private
+
     # Inspect Http response status code
     # Any non 200 response code will be logged
     # response is set to nil in order to notify the error

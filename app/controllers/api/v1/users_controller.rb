@@ -6,7 +6,6 @@ module Api
       skip_before_action :doorkeeper_authorize!, only: :create
 
       def create
-
         user = User.new(user_params)
         client_app = Doorkeeper::Application.find_by(uid: params[:client_id])
         return render(json: { error: 'Invalid client ID' }, status: :forbidden) unless client_app

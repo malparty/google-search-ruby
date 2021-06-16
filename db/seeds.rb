@@ -13,5 +13,4 @@ if Doorkeeper::Application.count.zero?
   Doorkeeper::Application.create(name: "Android client", redirect_uri: "", scopes: "")
 end
 
-
 Fabricate(:user)

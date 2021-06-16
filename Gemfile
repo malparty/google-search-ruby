@@ -25,6 +25,9 @@ gem 'doorkeeper' # Awesome OAuth 2 provider for your Rails / Grape app
 gem 'webpacker', '~>5.2.0' # Transpile app-like JavaScript
 gem 'sass-rails' # SASS
 
+# Logging tools
+gem 'colorize' # Ruby gem for colorizing text using ANSI escape sequences
+
 # Translations
 # gem 'devise-i18n' # Translations for Devise
 # gem 'rails-i18n', '~> 6.0.0' # Translations for Rails

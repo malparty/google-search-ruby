@@ -21,5 +21,10 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.include Rails.application.routes.url_helpers
+
   config.include OAuthHelpers
+
+  config.include Devise::Test::IntegrationHelpers, type: :system
+
+  config.include AuthenticationHelper
 end

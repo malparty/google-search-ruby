@@ -157,6 +157,8 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
     docile (1.4.0)
+    doorkeeper (5.5.1)
+      railties (>= 5)
     erubi (1.10.0)
     erubis (2.7.0)
     fabrication (2.22.0)
@@ -480,6 +482,7 @@ DEPENDENCIES
   danger-undercover
   database_cleaner
   devise
+  doorkeeper
   fabrication
   ffaker
   figaro

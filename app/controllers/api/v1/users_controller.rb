@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Api
+module API
   module V1
-    class UsersController < Api::V1::ApplicationController
+    class UsersController < API::V1::ApplicationController
       skip_before_action :doorkeeper_authorize!, only: :create
 
       def create

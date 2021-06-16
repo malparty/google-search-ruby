@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Api::V1::UsersController, type: :request do
+describe API::V1::UsersController, type: :request do
   context 'when a user register' do
     it 'returns the user' do
       params = create_user_params

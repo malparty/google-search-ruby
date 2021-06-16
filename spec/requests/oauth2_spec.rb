@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 describe Doorkeeper::TokensController, type: :request do
+
   context 'when user ask for a token with good request' do
     it 'return a refreshable token' do
       post 'create', params: token_request_params

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
   root to: 'keywords#index'
 
   use_doorkeeper do

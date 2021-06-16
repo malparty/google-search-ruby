@@ -10,7 +10,7 @@ module OAuthHelpers
       client_id: @application.uid,
       client_secret: @application.secret,
       email: @user.email,
-      password: 'password'
+      password: @user.password
     }
   end
 
@@ -29,7 +29,7 @@ module OAuthHelpers
       client_id: @application.uid,
       client_secret: @application.secret,
       email: @user.email,
-      password: 'password',
+      password: @user.password,
       refresh_token: refresh_token
     }
   end
@@ -45,10 +45,10 @@ module OAuthHelpers
     @application ||= Fabricate(:application)
 
     {
-      password: 'password',
+      password: @user.password,
       email: @user.email,
-      lastname: @user.lastname,
-      firstname: @user.firstname,
+      lastname: @user.last_name,
+      firstname: @user.first_name,
       client_id: @application.uid
     }
   end

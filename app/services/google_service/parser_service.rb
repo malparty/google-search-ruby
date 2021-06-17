@@ -4,7 +4,7 @@ module GoogleService
   class ParserService
     require 'nokogiri'
 
-    @@non_ads_result_selector = 'a[data-ved]:not([role]):not([jsaction]):not(.adwords):not(.footer-links)'
+    NON_ADS_RESULT_SELECTOR = 'a[data-ved]:not([role]):not([jsaction]):not(.adwords):not(.footer-links)'
 
     def initialize(html)
       @html = html
@@ -45,16 +45,16 @@ module GoogleService
     end
 
     def non_ads_result_count
-      @document.css(@@non_ads_result_selector).count
+      @document.css(NON_ADS_RESULT_SELECTOR).count
     end
 
     def non_ads_url
-      @document.css(@@non_ads_result_selector).map { |a_tag| a_tag['href'] }
+      @document.css(NON_ADS_RESULT_SELECTOR).map { |a_tag| a_tag['href'] }
     end
 
     def total_link_count
       Rails.logger.info 'Counter HERE!!!'
-      @document.css('a').map { | a_tag | Rails.logger.info a_tag['href'] }
+      @document.css('a').map { |a_tag| Rails.logger.info a_tag['href'] }
       @document.css('a').count
     end
   end

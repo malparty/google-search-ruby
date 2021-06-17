@@ -29,6 +29,4 @@ RSpec.configure do |config|
   config.include DeviseHelpers::SystemHelpers
 
   config.include OAuthHelpers
-
-  config.include AuthenticationHelper
 end

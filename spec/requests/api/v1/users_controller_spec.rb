@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe API::V1::UsersController, type: :request do
-  context 'when a user register' do
+  context 'when a user registers' do
     it 'returns the user' do
       params = create_user_params
       params[:email] = 'new_email@gmail.com'
@@ -13,8 +13,8 @@ describe API::V1::UsersController, type: :request do
     end
   end
 
-  context 'when a user register with an existing email' do
-    it 'receive an error' do
+  context 'when a user registers with an existing email' do
+    it 'receives an error' do
       params = create_user_params
       post 'create', params: params
 
@@ -22,8 +22,8 @@ describe API::V1::UsersController, type: :request do
     end
   end
 
-  context 'when a user register with a non valid password' do
-    it 'receive an error' do
+  context 'when a user registers with a non valid password' do
+    it 'receives an error' do
       params = create_user_params
       params[:password] = '123'
       post 'create', params: params
@@ -32,8 +32,8 @@ describe API::V1::UsersController, type: :request do
     end
   end
 
-  context 'when a user register with a non valid Client Id' do
-    it 'receive an error' do
+  context 'when a user registers with a non valid Client Id' do
+    it 'receives an error' do
       params = create_user_params
       params[:client_id] = 'not valid'
       post 'create', params: params

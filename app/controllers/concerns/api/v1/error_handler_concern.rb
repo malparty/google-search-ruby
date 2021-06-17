@@ -8,7 +8,7 @@ module API
       private
 
       # Render Error Message in json_api format
-      def render_error(detail:, source: nil, status: :unprocessable_entity)
+      def render_error(detail, source: nil, status: :unprocessable_entity)
         error = build_error(detail: detail, source: source)
         render_errors [error], status
       end

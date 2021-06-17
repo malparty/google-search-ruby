@@ -15,13 +15,13 @@ Rails.application.routes.draw do
     namespace :v1 do
       # User sign_up
       resources :users, only: %i[create]
-    end
-  end
 
-  scope 'api/v1' do
-    # OAuth2 (token, revoke, ...)
-    use_doorkeeper do
-      skip_controllers :authorizations, :applications, :authorized_applications
+      # OAuth2 (token, revoke, ...)
+      use_doorkeeper do
+        controllers tokens: 'tokens'
+
+        skip_controllers :applications, :authorizations, :authorized_applications, :token_info
+      end
     end
   end
 end

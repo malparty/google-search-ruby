@@ -17,10 +17,11 @@ module API
         render json: { errors: jsonapi_errors }, status: status
       end
 
-      def build_error(detail:, source: nil)
+      def build_error(detail:, source: nil, code: nil)
         {
           source: source,
-          detail: detail
+          detail: detail,
+          code: code
         }.compact
       end
     end

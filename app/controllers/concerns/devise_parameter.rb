@@ -4,9 +4,11 @@ module DeviseParameter
   protected
 
   def update_allowed_parameters
-    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:firstname, :lastname, :email, :password) }
+    devise_parameter_sanitizer.permit(:sign_up) do |u|
+      u.permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    end
     devise_parameter_sanitizer.permit(:account_update) do |u|
-      u.permit(:firstname, :lastname, :email, :password, :current_password)
+      u.permit(:first_name, :last_name, :email, :password, :current_password)
     end
   end
 end

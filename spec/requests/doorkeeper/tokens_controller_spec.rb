@@ -12,8 +12,7 @@ describe Doorkeeper::TokensController, type: :request do
 
   context 'when a user asks for a token without client secret' do
     it 'returns an invalid_client error' do
-      params = token_request_params
-      params.except!(:client_secret)
+      params = token_request_params.except!(:client_secret)
 
       post :create, params: params
 
@@ -23,8 +22,7 @@ describe Doorkeeper::TokensController, type: :request do
 
   context 'when a user asks for a token with bad credentials' do
     it 'returns an invalid_grant error' do
-      params = token_request_params
-      params[:password] = 'wrong_pass'
+      params = token_request_params.merge(password: 'wrong_pass')
 
       post :create, params: params
 
@@ -44,8 +42,7 @@ describe Doorkeeper::TokensController, type: :request do
   context 'when a user revokes an existing token' do
     it 'returns no error message' do
       token = query_token
-      params = token_request_params
-      params[:token] = token
+      params = token_request_params.merge({ token: token })
 
       post :revoke, params: params
 

@@ -18,7 +18,7 @@ describe API::V1::UsersController, type: :request do
       params = create_user_params
       post 'create', params: params
 
-      expect(JSON.parse(response.body).keys).to contain_exactly('error')
+      expect(JSON.parse(response.body).keys).to contain_exactly('errors')
     end
   end
 
@@ -28,7 +28,7 @@ describe API::V1::UsersController, type: :request do
       params[:password] = '123'
       post 'create', params: params
 
-      expect(JSON.parse(response.body).keys).to contain_exactly('error')
+      expect(JSON.parse(response.body).keys).to contain_exactly('errors')
     end
   end
 
@@ -38,7 +38,7 @@ describe API::V1::UsersController, type: :request do
       params[:client_id] = 'not valid'
       post 'create', params: params
 
-      expect(JSON.parse(response.body).keys).to contain_exactly('error')
+      expect(JSON.parse(response.body).keys).to contain_exactly('errors')
     end
   end
 end

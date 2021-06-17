@@ -7,11 +7,14 @@ class KeywordsController < ApplicationController
     keyword = params['keyword']
     raw_response = GoogleService::ClientService.new(keyword).query_result
 
-    return redirect_to keywords_path, alert: I18n.t('keywords.could_not_query') unless raw_response
+    if raw_response
+      render :create, locals: {
+        keyword: keyword,
+        raw_response: raw_response
+      }
+      return
+    end
 
-    render :create, locals: {
-      keyword: keyword,
-      raw_response: raw_response
-    }
+    redirect_to keywords_path, alert: I18n.t('keywords.could_not_query')
   end
 end

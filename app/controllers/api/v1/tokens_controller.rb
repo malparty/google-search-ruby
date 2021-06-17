@@ -33,7 +33,6 @@ module API
         return if (200..299).cover? response.status
 
         resp = JSON.parse(response.body)
-        Rails.logger.debug resp
         result = { errors: [build_error(detail: resp['error_description'], code: resp['error'])] }
 
         response.body = result.to_json

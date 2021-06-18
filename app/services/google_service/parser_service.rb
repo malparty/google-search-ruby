@@ -6,9 +6,11 @@ module GoogleService
 
     NON_ADS_RESULT_SELECTOR = 'a[data-ved]:not([role]):not([jsaction]):not(.adwords):not(.footer-links)'
 
-    def initialize(html)
-      @html = html
-      @document = Nokogiri::HTML.parse(html)
+    def initialize(html_response)
+      raise ArgumentError, 'response.body cannot be nil' if html_response.body.blank?
+
+      @html = html_response
+      @document = Nokogiri::HTML.parse(html_response)
 
       # Add a class to all AdWords link for easier manipulation
       @document.css('div[data-text-ad] a[data-ved]').add_class('adwords')
@@ -53,8 +55,6 @@ module GoogleService
     end
 
     def total_link_count
-      Rails.logger.info 'Counter HERE!!!'
-      @document.css('a').map { |a_tag| Rails.logger.info a_tag['href'] }
       @document.css('a').count
     end
   end

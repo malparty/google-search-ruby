@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'doorkeeper/custom_error_response'
+require 'doorkeeper/custom_token_response'
 
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use (requires ORM extensions installed).
@@ -455,3 +456,4 @@ Doorkeeper.configure do
 end
 
 Doorkeeper::OAuth::ErrorResponse.send :prepend, Doorkeeper::CustomErrorResponse
+Doorkeeper::OAuth::TokenResponse.send :prepend, Doorkeeper::CustomTokenResponse

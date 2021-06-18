@@ -5,9 +5,7 @@ require 'rails_helper'
 describe API::V1::UsersController, type: :request do
   context 'when a user registers' do
     it 'returns the user' do
-      params = create_user_params
-      params[:email] = 'new_email@gmail.com'
-      post :create, params: params
+      post :create, params: create_user_params.merge!({ email: 'new_email@gmail.com' })
 
       expect(JSON.parse(response.body)['data'].map { |item| item['type'] }).to contain_exactly('user', 'token')
     end
@@ -15,8 +13,7 @@ describe API::V1::UsersController, type: :request do
 
   context 'when a user registers with an existing email' do
     it 'receives an error' do
-      params = create_user_params
-      post :create, params: params
+      post :create, params: create_user_params
 
       expect(JSON.parse(response.body).keys).to contain_exactly('errors')
     end
@@ -24,9 +21,7 @@ describe API::V1::UsersController, type: :request do
 
   context 'when a user registers with a non valid password' do
     it 'receives an error' do
-      params = create_user_params
-      params[:password] = '123'
-      post :create, params: params
+      post :create, params: create_user_params.merge!({ password: '123' })
 
       expect(JSON.parse(response.body).keys).to contain_exactly('errors')
     end
@@ -34,9 +29,7 @@ describe API::V1::UsersController, type: :request do
 
   context 'when a user registers with a non valid Client Id' do
     it 'receives an error' do
-      params = create_user_params
-      params[:client_id] = 'not valid'
-      post :create, params: params
+      post :create, params: create_user_params.merge!({ client_id: 'not valid' })
 
       expect(JSON.parse(response.body).keys).to contain_exactly('errors')
     end

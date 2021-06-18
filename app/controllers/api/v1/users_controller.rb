@@ -16,7 +16,7 @@ module API
           return
         end
 
-        render_errors user.jsonapi_errors and return unless user.save
+        render_errors ActiveModel::ErrorsSerializer.new(user.errors).serializable_hash and return unless user.save
 
         # create access token for the user, so the user won't need to login again after registration
         access_token = user.get_access_token client_app.id

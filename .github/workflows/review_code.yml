@@ -52,6 +52,9 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true' || steps.node-modules-cache.outputs.cache-hit != 'true'
         run: yarn
 
+      - name: Run Rspec
+        run: rspec
+
       - name: Run Undercover
         run: bundle exec undercover-report -c origin/develop --lcov coverage/lcov/*.lcov
 

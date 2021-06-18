@@ -53,7 +53,7 @@ jobs:
         run: yarn
 
       - name: Run Rspec
-        run: rspec
+        run: bundle exec rspec
 
       - name: Run Undercover
         run: bundle exec undercover-report -c origin/develop --lcov coverage/lcov/*.lcov

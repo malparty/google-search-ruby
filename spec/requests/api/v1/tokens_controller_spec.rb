@@ -6,15 +6,14 @@ describe API::V1::TokensController, type: :request do
   context 'when a user asks for a token with good request' do
     it 'returns a refreshable token' do
       post :create, params: token_request_params
+
       expect(JSON.parse(response.body)['data']['attributes']['token_type']).to eq('Bearer')
     end
   end
 
   context 'when a user asks for a token without client secret' do
     it 'returns an invalid_client error' do
-      params = token_request_params.except!(:client_secret)
-
-      post :create, params: params
+      post :create, params: token_request_params.except!(:client_secret)
 
       expect(JSON.parse(response.body)['errors'][0]['code']).to eq('invalid_client')
     end
@@ -22,9 +21,7 @@ describe API::V1::TokensController, type: :request do
 
   context 'when a user asks for a token with bad credentials' do
     it 'returns an invalid_grant error' do
-      params = token_request_params.merge(password: 'wrong_pass')
-
-      post :create, params: params
+      post :create, params: token_request_params.merge(password: 'wrong_pass')
 
       expect(JSON.parse(response.body)['errors'][0]['code']).to eq('invalid_grant')
     end

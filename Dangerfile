@@ -19,8 +19,8 @@ suggester.suggest
 eslint.lint
 
 # Report your Ruby app test suite code coverage in Danger.
-simplecov.report 'coverage/coverage.json'
+# simplecov.report 'coverage/coverage.json'
 
 # Report missing test coverage of new changes in Danger
-# Commented as Danger is missing undercover reports which needs tests run ahead
+# Commented as undercover reports needs tests to run, which needs a different env
 # undercover.report

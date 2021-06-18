@@ -6,6 +6,10 @@ on:
 
 env:
   DANGER_GITHUB_API_TOKEN: ${{ github.token }}
+  DOCKER_REGISTRY_HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
+  DOCKER_REGISTRY_USERNAME: ${{ github.repository_owner }}
+  DOCKER_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  DOCKER_IMAGE: ${{ github.repository }}
 
 jobs:
   build:

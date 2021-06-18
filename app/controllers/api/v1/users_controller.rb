@@ -19,7 +19,7 @@ module API
         render_errors ActiveModel::ErrorsSerializer.new(user.errors).serializable_hash and return unless user.save
 
         # create access token for the user, so the user won't need to login again after registration
-        access_token = user.get_access_token client_app.id
+        access_token = user.create_access_token client_app.id
         # return json containing access token and refresh token
         # so that user won't need to call login API right after registration
         render json: create_success_result(user, access_token), status: :created

@@ -12,7 +12,7 @@ class User < ApplicationRecord
     user&.valid_password?(password) ? user : nil
   end
 
-  def get_access_token(client_app_id)
+  def create_access_token(client_app_id)
     Doorkeeper::AccessToken.create(
       resource_owner_id: @id,
       application_id: client_app_id,

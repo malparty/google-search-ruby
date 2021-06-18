@@ -4,14 +4,14 @@ module API
   module V1
     class TokensController < Doorkeeper::TokensController
       include ErrorHandlerConcern
-      include JsonAPIHandlerConcern
 
       private
 
+      # Overwrite this method as it bypass the custom_error_response provided by Doorkeeper
       def revocation_error_response
         error_description = I18n.t(:unauthorized, scope: %i[doorkeeper errors messages revoke])
         {
-          errors: build_error(detail: error_description, code: :unauthorized_client)
+          errors: build_error(detail: error_description, code: :invalid_client)
         }
       end
     end

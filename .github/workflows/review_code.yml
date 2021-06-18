@@ -11,6 +11,9 @@ env:
   DOCKER_REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DOCKER_IMAGE: ${{ github.repository }}
 
+  # Set the default docker-compose file
+  COMPOSE_FILE: docker-compose.test.yml
+
 jobs:
   build:
     name: Build Docker image

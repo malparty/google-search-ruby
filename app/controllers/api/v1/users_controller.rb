@@ -18,23 +18,11 @@ module API
 
         render_errors ActiveModel::ErrorsSerializer.new(user.errors).serializable_hash and return unless user.save
 
-        # create access token for the user, so the user won't need to login again after registration
-        access_token = user.create_access_token client_app.id
-        # return json containing access token and refresh token
-        # so that user won't need to call login API right after registration
-        render json: create_success_result(user, access_token), status: :created
+        render json: UserTokenSerializer.new(user, { params: { client_id: client_app.id } }).serializable_hash,
+               status: :created
       end
 
       private
-
-      def create_success_result(user, access_token)
-        user_json = UserSerializer.new(user).serializable_hash
-        token_json = Doorkeeper::TokenSerializer.new(access_token).serializable_hash
-        { data: [
-          user_json[:data],
-          token_json[:data]
-        ] }
-      end
 
       def create_params
         params.permit(:email, :password, :last_name, :first_name, :client_id)

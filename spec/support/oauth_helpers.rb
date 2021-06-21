@@ -16,7 +16,9 @@ module OAuthHelpers
 
   def query_token
     params = token_request_params
+
     post 'create', params: params
+
     JSON.parse(response.body)
   end
 
@@ -36,7 +38,9 @@ module OAuthHelpers
 
   def query_refresh_token(refresh_token)
     params = token_refresh_params refresh_token
+
     post 'create', params: params
+
     JSON.parse(response.body)
   end
 
@@ -47,8 +51,8 @@ module OAuthHelpers
     {
       password: @user.password,
       email: @user.email,
-      lastname: @user.last_name,
-      firstname: @user.first_name,
+      last_name: @user.last_name,
+      first_name: @user.first_name,
       client_id: @application.uid
     }
   end

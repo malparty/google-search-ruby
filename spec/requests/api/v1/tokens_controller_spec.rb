@@ -21,7 +21,7 @@ describe API::V1::TokensController, type: :request do
 
   context 'when a user asks for a token with bad credentials' do
     it 'returns an invalid_grant error' do
-      post :create, params: token_request_params.merge(password: 'wrong_pass')
+      post :create, params: token_request_params.merge!(password: 'wrong_pass')
 
       expect(JSON.parse(response.body)['errors'][0]['code']).to eq('invalid_grant')
     end
@@ -39,7 +39,7 @@ describe API::V1::TokensController, type: :request do
   context 'when a user revokes an existing token' do
     it 'returns a success status code' do
       token = query_token
-      params = token_request_params.merge({ token: token })
+      params = token_request_params.merge!(token: token)
 
       post :revoke, params: params
 

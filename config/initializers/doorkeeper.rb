@@ -64,7 +64,7 @@ Doorkeeper.configure do
   # WARNING, the following code allow any user to edit Client Application endpoints!
   admin_authenticator do
     if current_user
-      head :forbidden unless current_user.id == 1
+      head :forbidden unless current_user.is_admin
     else
       redirect_to new_user_session_path
     end

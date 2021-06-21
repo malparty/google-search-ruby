@@ -12,7 +12,7 @@ module GoogleService
       @uri = URI("#{BASE_SEARCH_URL2}?q=#{escaped_keyword}&hl=#{lang}&gl=#{lang}")
     end
 
-    def query_result
+    def call
       begin
         @result = HTTParty.get(@uri, { headers: { 'User-Agent' => USER_AGENT } })
       rescue HTTParty::Error, Timeout::Error, SocketError => e

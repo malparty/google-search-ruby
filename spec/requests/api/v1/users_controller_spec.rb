@@ -7,7 +7,7 @@ describe API::V1::UsersController, type: :request do
     it 'returns the user' do
       post :create, params: create_user_params.merge!({ email: 'new_email@gmail.com' })
 
-      expect(JSON.parse(response.body)['data'].map { |item| item['type'] }).to contain_exactly('user', 'token')
+      expect(JSON.parse(response.body)['data']['type']).to eq('user')
     end
   end
 

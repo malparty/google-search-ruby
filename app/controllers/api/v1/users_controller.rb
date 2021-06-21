@@ -7,18 +7,14 @@ module API
 
       skip_before_action :doorkeeper_authorize!, only: :create
 
+      before_action :ensure_valid_client, only: :create
+
       def create
         user = User.new(create_params.except(:client_id))
-        client_app = Doorkeeper::Application.find_by(uid: create_params[:client_id])
-
-        unless client_app
-          render_error 'Invalid client ID', status: :forbidden, source: :client_id
-          return
-        end
 
         render_errors ActiveModel::ErrorsSerializer.new(user.errors).serializable_hash and return unless user.save
 
-        render json: UserTokenSerializer.new(user, { params: { client_id: client_app.id } }).serializable_hash,
+        render json: UserTokenSerializer.new(user, { params: { client_id: @client_app.id } }).serializable_hash,
                status: :created
       end
 
@@ -26,6 +22,12 @@ module API
 
       def create_params
         params.permit(:email, :password, :last_name, :first_name, :client_id)
+      end
+
+      def ensure_valid_client
+        @client_app = Doorkeeper::Application.find_by(uid: create_params[:client_id])
+
+        render_error 'Invalid client ID', status: :forbidden, source: :client_id if @client_app.blank?
       end
     end
   end

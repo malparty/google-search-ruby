@@ -2,7 +2,6 @@
 
 module GoogleService
   class ClientService
-
     USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '\
                 'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'
 
@@ -34,7 +33,7 @@ module GoogleService
       return if @result.response.code == '200'
 
       Rails.logger.warn "Warning: Query Google with keyword #{@keyword} return status code #{@result.response.code}"
-                          .colorize(:yellow)
+        .colorize(:yellow)
       @result = nil
     end
   end

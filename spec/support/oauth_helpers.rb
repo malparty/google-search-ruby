@@ -17,7 +17,7 @@ module OAuthHelpers
   def query_token
     params = token_request_params
 
-    post 'create', params: params
+    post :create, params: params
 
     JSON.parse(response.body)
   end
@@ -39,7 +39,7 @@ module OAuthHelpers
   def query_refresh_token(refresh_token)
     params = token_refresh_params refresh_token
 
-    post 'create', params: params
+    post :create, params: params
 
     JSON.parse(response.body)
   end

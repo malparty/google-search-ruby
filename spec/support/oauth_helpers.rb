@@ -52,8 +52,9 @@ module OAuthHelpers
       password: @user.password,
       email: @user.email,
       last_name: @user.last_name,
-      firstname: @user.first_name,
-      client_id: @application.uid
+      first_name: @user.first_name,
+      client_id: @application.uid,
+      client_secret: @application.secret
     }
   end
 end

@@ -34,4 +34,12 @@ describe API::V1::UsersController, type: :request do
       expect(JSON.parse(response.body).keys).to contain_exactly('errors')
     end
   end
+
+  context 'when a user registers with a non valid Client Secret' do
+    it 'receives an error' do
+      post :create, params: create_user_params.merge!({ client_secret: 'not valid' })
+
+      expect(JSON.parse(response.body).keys).to contain_exactly('errors')
+    end
+  end
 end

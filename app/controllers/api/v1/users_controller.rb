@@ -10,7 +10,7 @@ module API
       before_action :ensure_valid_client, only: :create
 
       def create
-        user = User.new(create_params.except(:client_id))
+        user = User.new(create_params.except(:client_id, :client_secret))
 
         render_errors ActiveModel::ErrorsSerializer.new(user.errors).serializable_hash and return unless user.save
 
@@ -21,13 +21,14 @@ module API
       private
 
       def create_params
-        params.permit(:email, :password, :last_name, :first_name, :client_id)
+        params.permit(:email, :password, :last_name, :first_name, :client_id, :client_secret)
       end
 
       def ensure_valid_client
-        @client_app = Doorkeeper::Application.find_by(uid: create_params[:client_id])
+        @client_app = Doorkeeper::Application.by_uid_and_secret(create_params[:client_id],
+                                                                create_params[:client_secret])
 
-        render_error 'Invalid client ID', status: :forbidden, source: :client_id if @client_app.blank?
+        render_error 'Invalid client credentials', status: :forbidden, source: :client_id if @client_app.blank?
       end
     end
   end

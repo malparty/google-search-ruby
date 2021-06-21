@@ -45,7 +45,6 @@ Doorkeeper.configure do
   #
   use_refresh_token
 
-
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
   # file then you need to declare this block in order to restrict access to the web interface for
   # adding oauth authorized applications. In other case it will return 403 Forbidden response
@@ -61,6 +60,15 @@ Doorkeeper.configure do
   #     redirect_to sign_in_url
   #   end
   # end
+  #
+  # WARNING, the following code allow any user to edit Client Application endpoints!
+  admin_authenticator do
+    if current_user
+      head :forbidden unless current_user.id == 1
+    else
+      redirect_to new_user_session_path
+    end
+  end
 
   # You can use your own model classes if you need to extend (or even override) default
   # Doorkeeper models such as `Application`, `AccessToken` and `AccessGrant.
@@ -318,7 +326,6 @@ Doorkeeper.configure do
   #
   # handle_auth_errors :raise
 
-
   # Allows to customize OAuth grant flows that +each+ application support.
   # You can configure a custom block (or use a class respond to `#call`) that must
   # return `true` in case Application instance supports requested OAuth grant flow
@@ -393,8 +400,6 @@ Doorkeeper.configure do
   #   Rails.logger.info(context.auth.inspect)
   #   Rails.logger.info(context.issued_token)
   # end
-
-
 
   # Configure custom constraints for the Token Introspection request.
   # By default this configuration option allows to introspect a token by another

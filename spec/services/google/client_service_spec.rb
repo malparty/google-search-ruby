@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe GoogleService::ClientService, type: :service do
+RSpec.describe Google::ClientService, type: :service do
   context 'when querying a simple keyword' do
     it 'returns an HTTParty Response', vcr: 'google_search' do
       result = described_class.new(FFaker::Lorem.word).call

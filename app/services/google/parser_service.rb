@@ -20,7 +20,9 @@ module Google
       @document.css('#footcnt a').add_class('footer-links')
     end
 
-    def parse_into(keyword)
+    # Write parsed data directly in the keyword object argument
+    # and return back the keyword object
+    def parse_into!(keyword)
       keyword.ads_top_count = ads_top_count
       keyword.ads_page_count = ads_page_count
       keyword.ads_top_url = ads_top_url
@@ -28,6 +30,8 @@ module Google
       keyword.non_ads_result_count = non_ads_result_count
       keyword.total_link_count = total_link_count
       keyword.html = @html
+
+      keyword
     end
 
     def ads_top_count

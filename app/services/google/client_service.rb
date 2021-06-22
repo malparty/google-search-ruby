@@ -15,7 +15,7 @@ module Google
     def call
       result = HTTParty.get(@uri, { headers: { 'User-Agent' => USER_AGENT } })
 
-      return false unless validate_result result
+      return false unless valid_result? result
 
       result
     rescue HTTParty::Error, Timeout::Error, SocketError => e
@@ -29,7 +29,7 @@ module Google
     # Inspect Http response status code
     # Any non 200 response code will be logged
     # response is set to nil in order to notify the error
-    def validate_result(result)
+    def valid_result?(result)
       return result if result&.response&.code == '200'
 
       Rails.logger.warn "Warning: Query Google with '#{@escaped_keyword}' return status code #{result.response.code}"

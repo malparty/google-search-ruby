@@ -8,20 +8,20 @@ module Google
     BASE_SEARCH_URL = 'https://www.google.com/search'
 
     def initialize(keyword:, lang: 'en')
-      escaped_keyword = CGI.escape(keyword)
-      @uri = URI("#{BASE_SEARCH_URL}?q=#{escaped_keyword}&hl=#{lang}&gl=#{lang}")
+      @escaped_keyword = CGI.escape(keyword)
+      @uri = URI("#{BASE_SEARCH_URL}?q=#{@escaped_keyword}&hl=#{lang}&gl=#{lang}")
     end
 
     def call
-      begin
-        @result = HTTParty.get(@uri, { headers: { 'User-Agent' => USER_AGENT } })
-      rescue HTTParty::Error, Timeout::Error, SocketError => e
-        Rails.logger.error "Error: Query Google with keyword #{@keyword} throw an error: #{e}".colorize(:red)
-        @result = nil
-      else
-        validate_result
-      end
-      @result
+      result = HTTParty.get(@uri, { headers: { 'User-Agent' => USER_AGENT } })
+
+      return false unless valid_result? result
+
+      result
+    rescue HTTParty::Error, Timeout::Error, SocketError => e
+      Rails.logger.error "Error: Query Google with '#{@escaped_keyword}' thrown an error: #{e}".colorize(:red)
+
+      false
     end
 
     private
@@ -31,9 +31,10 @@ module Google
     def valid_result?(result)
       return true if result&.response&.code == '200'
 
-      Rails.logger.warn "Warning: Query Google with keyword #{@keyword} return status code #{@result.response.code}"
-        .colorize(:yellow)
-      @result = nil
+      Rails.logger.warn "Warning: Query Google with '#{@escaped_keyword}' return status code #{result.response.code}"
+                          .colorize(:yellow)
+
+      false
     end
   end
 end

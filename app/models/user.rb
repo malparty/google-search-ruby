@@ -14,7 +14,7 @@ class User < ApplicationRecord
 
   def create_access_token(client_app_id)
     Doorkeeper::AccessToken.create(
-      resource_owner_id: @id,
+      resource_owner_id: self[:id],
       application_id: client_app_id,
       refresh_token: generate_refresh_token,
       expires_in: Doorkeeper.configuration.access_token_expires_in.to_i,

@@ -24,7 +24,7 @@ RSpec.describe Google::ClientService, type: :service do
       expect(result).to be_nil
     end
 
-    it 'log a warning with the escaped keyword', vcr: 'google_warn' do
+    it 'logs a warning with the escaped keyword', vcr: 'google_warn' do
       allow(Rails.logger).to receive(:warn)
 
       word = FFaker::Lorem.word

@@ -7,7 +7,7 @@ module Doorkeeper
     attributes :token, :token_type, :expires_in, :refresh_token
 
     attribute :created_at do |token|
-      token.created_at.to_time.to_i
+      token.created_at.to_i
     end
   end
 end

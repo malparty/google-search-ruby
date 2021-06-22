@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module GoogleService
+module Google
   class ParserService
     require 'nokogiri'
 

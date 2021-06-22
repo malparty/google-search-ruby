@@ -13,16 +13,15 @@ module Google
     end
 
     def call
-      begin
-        result = HTTParty.get(@uri, { headers: { 'User-Agent' => USER_AGENT } })
-      rescue HTTParty::Error, Timeout::Error, SocketError => e
-        Rails.logger.error "Error: Query Google with keyword #{@escaped_keyword} throw an error: #{e}"
-          .colorize(:red)
+      result = HTTParty.get(@uri, { headers: { 'User-Agent' => USER_AGENT } })
 
-        result = nil
-      end
+      return false unless validate_result result
 
-      validate_result result
+      result
+    rescue HTTParty::Error, Timeout::Error, SocketError => e
+      Rails.logger.error "Error: Query Google with '#{@escaped_keyword}' thrown an error: #{e}".colorize(:red)
+
+      false
     end
 
     private
@@ -33,11 +32,10 @@ module Google
     def validate_result(result)
       return result if result&.response&.code == '200'
 
-      Rails.logger.warn "Warning: Query Google with keyword #{@escaped_keyword} "\
-        " return status code #{result.response.code}"
+      Rails.logger.warn "Warning: Query Google with '#{@escaped_keyword}' return status code #{result.response.code}"
         .colorize(:yellow)
 
-      nil
+      false
     end
   end
 end

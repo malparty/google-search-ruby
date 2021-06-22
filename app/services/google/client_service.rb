@@ -32,7 +32,7 @@ module Google
       return true if result&.response&.code == '200'
 
       Rails.logger.warn "Warning: Query Google with '#{@escaped_keyword}' return status code #{result.response.code}"
-                          .colorize(:yellow)
+        .colorize(:yellow)
 
       false
     end

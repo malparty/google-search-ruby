@@ -14,14 +14,15 @@ module Google
 
     def call
       begin
-        @result = HTTParty.get(@uri, { headers: { 'User-Agent' => USER_AGENT } })
+        result = HTTParty.get(@uri, { headers: { 'User-Agent' => USER_AGENT } })
+
       rescue HTTParty::Error, Timeout::Error, SocketError => e
         Rails.logger.error "Error: Query Google with keyword #{@keyword} throw an error: #{e}".colorize(:red)
-        @result = nil
-      else
-        validate_result
+
+        result = nil
       end
-      @result
+
+      validate_result result
     end
 
     private
@@ -29,12 +30,13 @@ module Google
     # Inspect Http response status code
     # Any non 200 response code will be logged
     # response is set to nil in order to notify the error
-    def validate_result
-      return if @result.response.code == '200'
+    def validate_result(result)
+      return result if result.response.code == '200'
 
       Rails.logger.warn "Warning: Query Google with keyword #{@keyword} return status code #{@result.response.code}"
         .colorize(:yellow)
-      @result = nil
+
+      nil
     end
   end
 end

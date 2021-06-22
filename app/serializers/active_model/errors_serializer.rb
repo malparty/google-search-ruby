@@ -6,7 +6,7 @@ module ActiveModel
       @errors = errors
     end
 
-    def serializable_hash
+    def as_json(_options = nil)
       { errors: @errors.errors.map { |e| { detail: e.full_message, source: e.attribute } } }
     end
   end

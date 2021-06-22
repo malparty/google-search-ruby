@@ -31,7 +31,7 @@ module Google
     # Any non 200 response code will be logged
     # response is set to nil in order to notify the error
     def validate_result(result)
-      return result if result.response.code == '200'
+      return result if result&.response&.code == '200'
 
       Rails.logger.warn "Warning: Query Google with keyword #{@escaped_keyword} "\
         " return status code #{result.response.code}"

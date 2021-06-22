@@ -6,10 +6,11 @@ module GoogleService
 
     NON_ADS_RESULT_SELECTOR = 'a[data-ved]:not([role]):not([jsaction]):not(.adwords):not(.footer-links)'
 
-    def initialize(html_response)
+    def initialize(html_response:)
       raise ArgumentError, 'response.body cannot be nil' if html_response.body.blank?
 
       @html = html_response
+
       @document = Nokogiri::HTML.parse(html_response)
 
       # Add a class to all AdWords link for easier manipulation

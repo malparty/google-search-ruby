@@ -7,7 +7,7 @@ module Google
 
     BASE_SEARCH_URL = 'https://www.google.com/search'
 
-    def initialize(keyword, lang = 'en')
+    def initialize(keyword:, lang: 'en')
       escaped_keyword = CGI.escape(keyword)
       @uri = URI("#{BASE_SEARCH_URL}?q=#{escaped_keyword}&hl=#{lang}&gl=#{lang}")
     end

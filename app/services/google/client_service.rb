@@ -15,7 +15,6 @@ module Google
     def call
       begin
         result = HTTParty.get(@uri, { headers: { 'User-Agent' => USER_AGENT } })
-
       rescue HTTParty::Error, Timeout::Error, SocketError => e
         Rails.logger.error "Error: Query Google with keyword #{@keyword} throw an error: #{e}".colorize(:red)
 

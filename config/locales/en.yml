@@ -30,4 +30,6 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  logout: "Sign out"
+  logout: 'Sign out'
+  doorkeeper:
+    token_revoked: 'If your token was valid, it has been revoked'

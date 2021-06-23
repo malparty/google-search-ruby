@@ -13,6 +13,7 @@ gem 'fabrication' # Fabrication generates objects in Ruby. Fabricators are schem
 gem 'sidekiq' # background processing for Ruby
 gem 'bootsnap', require: false # Reduces boot times through caching; required in config/boot.rb
 gem 'i18n-js', '3.5.1' # A library to provide the I18n translations on the Javascript
+gem 'jsonapi-serializer' # A fast JSON:API serializer for Ruby Objects.
 
 # Authentications & Authorizations
 gem 'devise' # Authentication solution for Rails with Warden
@@ -53,7 +54,6 @@ group :development, :test do
   gem 'rubocop-rails', require: false # A RuboCop extension focused on enforcing Rails best practices and coding conventions.
   gem 'rubocop-rspec', require: false # Code style checking for RSpec files
   gem 'rubocop-performance', require: false # An extension of RuboCop focused on code performance checks.
-  gem 'ffaker' # used to easily generate fake data: names, addresses, phone numbers, etc.
 
   gem 'undercover' # Report missing test coverage in new changes
   gem 'danger' # Automated code review.

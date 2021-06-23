@@ -2,8 +2,6 @@
 
 module Google
   class ParserService
-    require 'nokogiri'
-
     NON_ADS_RESULT_SELECTOR = 'a[data-ved]:not([role]):not([jsaction]):not(.adwords):not(.footer-links)'
 
     def initialize(html_response:)

@@ -11,23 +11,25 @@ describe 'login', type: :system do
     end
   end
 
-  context 'when the user signed in with valid credentials' do
-    it 'logs the user in and displays a flash message' do
-      sign_in_ui
+  context 'when user signs in' do
+    context 'given valid credentials' do
+      it 'logs the user in and displays a flash message' do
+        sign_in_ui
 
-      expect(page).to have_content(I18n.t('devise.sessions.signed_in'))
+        expect(page).to have_content(I18n.t('devise.sessions.signed_in'))
+      end
     end
-  end
 
-  context 'when the user tried to sign in with invalid credentials' do
-    it 'refuses login and displays an error' do
-      bad_user = Fabricate(:user)
-      bad_user.password = 'bad'
-      error_msg = I18n.t('devise.failure.invalid').to_s.gsub('%{authentication_keys}', 'Email')
+    context 'given invalid credentials' do
+      it 'refuses login and displays an error' do
+        bad_user = Fabricate(:user)
+        bad_user.password = 'bad'
+        error_msg = I18n.t('devise.failure.invalid').to_s.gsub('%{authentication_keys}', 'Email')
 
-      sign_in_ui bad_user
+        sign_in_ui bad_user
 
-      expect(page).to have_content(error_msg)
+        expect(page).to have_content(error_msg)
+      end
     end
   end
 

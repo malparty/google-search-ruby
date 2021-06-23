@@ -30,6 +30,18 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  logout: 'Sign out'
+  app_name: 'Google Search Ruby'
   doorkeeper:
     token_revoked: 'If your token was valid, it has been revoked'
+  auth:
+    logout: 'Sign out'
+    sign_up: 'Sign up'
+    sign_in: 'Sign in'
+    cancel_my_account: 'Cancel my account'
+  min_char: 'characters minimum'
+  confirm: 'Are you sure?'
+  update: 'Update'
+  unhappy: 'Unhappy'
+  waiting_confirmation_for: 'Currently waiting confirmation for'
+  forgot_password: 'Forgot your password?'
+  my_profile: 'My Profile'

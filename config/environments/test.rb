@@ -78,4 +78,5 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missing.
   config.assets.compile = false
+  config.assets.unknown_asset_fallback = false
 end

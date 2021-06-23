@@ -44,7 +44,7 @@ describe 'signup', type: :system do
       it 'displays an error message' do
         sign_up_ui 'good@email.com', '123'
 
-        expect(page).to have_selector('#error_explanation li')
+        expect(page).to have_selector('#error_explanation')
       end
     end
 
@@ -52,14 +52,14 @@ describe 'signup', type: :system do
       it 'displays an error message' do
         sign_up_ui 'good@email.com', 'complex123password', 'differentPassword123'
 
-        expect(page).to have_selector('#error_explanation li')
+        expect(page).to have_selector('#error_explanation')
       end
     end
   end
 
   context 'when an authenticated user reaches the sign up page' do
     it 'redirects him to the root_page' do
-      sign_in_ui
+      sign_in(Fabricate(:user))
       visit new_user_registration_path
 
       expect(page).to have_current_path(root_path)

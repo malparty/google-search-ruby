@@ -28,7 +28,6 @@ module Google
 
     # Inspect Http response status code
     # Any non 200 response code will be logged
-    # response is set to nil in order to notify the error
     def valid_result?(result)
       return true if result&.response&.code == '200'
 

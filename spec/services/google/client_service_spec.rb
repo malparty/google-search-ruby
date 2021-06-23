@@ -21,7 +21,7 @@ RSpec.describe Google::ClientService, type: :service do
     it 'returns false', vcr: 'google_warn' do
       result = described_class.new(keyword: FFaker::Lorem.word).call
 
-      expect(result).to be_falsey
+      expect(result).to eq(false)
     end
 
     it 'logs a warning with the escaped keyword', vcr: 'google_warn' do

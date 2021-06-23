@@ -12,10 +12,12 @@ module API
       def create
         user = User.new(create_params.except(:client_id, :client_secret))
 
-        render json: ActiveModel::ErrorsSerializer.new(user.errors) and return unless user.save
-
-        render json: UserTokenSerializer.new(user, { params: { client_id: @client_app.id } }),
-               status: :created
+        if user.save
+          render json: UserTokenSerializer.new(user, { params: { client_id: @client_app.id } }),
+                 status: :created
+        else
+          render json: ActiveModel::ErrorsSerializer.new(user.errors)
+        end
       end
 
       private

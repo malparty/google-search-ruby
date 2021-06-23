@@ -13,7 +13,7 @@ RSpec.describe Google::ClientService, type: :service do
     it 'queries Google Search', vcr: 'google_search' do
       path = described_class.new(keyword: FFaker::Lorem.word).call.request.path
 
-      expect(path.to_s).to start_with('https://www.google.com/search')
+      expect(path.to_s).to start_with(described_class::BASE_SEARCH_URL)
     end
   end
 

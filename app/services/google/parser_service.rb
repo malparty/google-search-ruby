@@ -3,16 +3,18 @@
 module Google
   class ParserService
     NON_ADS_RESULT_SELECTOR = 'a[data-ved]:not([role]):not([jsaction]):not(.adwords):not(.footer-links)'
+    AD_CONTAINER_ID = 'tads'
+    ADWORDS_CLASS = 'adwords'
 
     def initialize(html_response:)
-      raise ArgumentError, 'response.body cannot be nil' if html_response.body.blank?
+      raise ArgumentError, 'response.body cannot be blank' if html_response.body.blank?
 
       @html = html_response
 
       @document = Nokogiri::HTML.parse(html_response)
 
       # Add a class to all AdWords link for easier manipulation
-      @document.css('div[data-text-ad] a[data-ved]').add_class('adwords')
+      @document.css('div[data-text-ad] a[data-ved]').add_class(ADWORDS_CLASS)
 
       # Mark footer links to identify them
       @document.css('#footcnt a').add_class('footer-links')
@@ -33,20 +35,20 @@ module Google
     end
 
     def ads_top_count
-      @document.css('#tads .adwords').count
+      @document.css("##{AD_CONTAINER_ID} .#{ADWORDS_CLASS}").count
     end
 
     def ads_page_count
-      @document.css('.adwords').count
+      @document.css(".#{ADWORDS_CLASS}").count
     end
 
     def ads_top_url
       # data-ved enables to filter "role=list" (sub links) items
-      @document.css('#tads .adwords').map { |a_tag| a_tag['href'] }
+      @document.css("##{AD_CONTAINER_ID} .#{ADWORDS_CLASS}").map { |a_tag| a_tag['href'] }
     end
 
     def ads_page_url
-      @document.css('.adwords').map { |a_tag| a_tag['href'] }
+      @document.css(".#{ADWORDS_CLASS}").map { |a_tag| a_tag['href'] }
     end
 
     def non_ads_result_count

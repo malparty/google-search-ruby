@@ -3,27 +3,29 @@
 require 'rails_helper'
 
 describe API::V1::TokensController, type: :request do
-  context 'when a user asks for a token with good request' do
-    it 'returns a refreshable token' do
-      post :create, params: token_request_params
+  context 'when a user asks for a token' do
+    context 'given valid params' do
+      it 'returns a refreshable token' do
+        post :create, params: token_request_params
 
-      expect(JSON.parse(response.body)['data']['attributes']['token_type']).to eq('Bearer')
+        expect(JSON.parse(response.body)['data']['attributes']['token_type']).to eq('Bearer')
+      end
     end
-  end
 
-  context 'when a user asks for a token without client secret' do
-    it 'returns an invalid_client error' do
-      post :create, params: token_request_params.except!(:client_secret)
+    context 'when missing a client secret' do
+      it 'returns an invalid_client error' do
+        post :create, params: token_request_params.except!(:client_secret)
 
-      expect(JSON.parse(response.body)['errors'][0]['code']).to eq('invalid_client')
+        expect(JSON.parse(response.body)['errors'][0]['code']).to eq('invalid_client')
+      end
     end
-  end
 
-  context 'when a user asks for a token with bad credentials' do
-    it 'returns an invalid_grant error' do
-      post :create, params: token_request_params.merge!(password: 'wrong_pass')
+    context 'given bad credentials' do
+      it 'returns an invalid_grant error' do
+        post :create, params: token_request_params.merge!(password: 'wrong_pass')
 
-      expect(JSON.parse(response.body)['errors'][0]['code']).to eq('invalid_grant')
+        expect(JSON.parse(response.body)['errors'][0]['code']).to eq('invalid_grant')
+      end
     end
   end
 

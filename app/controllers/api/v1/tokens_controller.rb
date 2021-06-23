@@ -5,6 +5,7 @@ module API
     class TokensController < Doorkeeper::TokensController
       include ErrorHandlerConcern
 
+      # Overridden from doorkeeper as the doorkeeper revoke action does not return response according to json-api spec
       def revoke
         # The authorization server responds with HTTP status code 200 if the client
         # submitted an invalid token or the token has been revoked successfully.
@@ -24,7 +25,7 @@ module API
 
       private
 
-      # Overwrite this method as it bypass the custom_error_response provided by Doorkeeper
+      # Overridden from doorkeeper as it does not return response according to json-api spec
       def revocation_error_response
         error_description = I18n.t(:unauthorized, scope: %i[doorkeeper errors messages revoke])
         {

@@ -32,7 +32,7 @@ describe 'signup', type: :system do
       end
     end
 
-    context 'given a bad email' do
+    context 'given an invalid email' do
       it 'stays on the same page' do
         sign_up_ui 'bad_email', 'password123'
 
@@ -48,7 +48,7 @@ describe 'signup', type: :system do
       end
     end
 
-    context 'given a bad password confirmation' do
+    context 'given an invalid password confirmation' do
       it 'displays an error message' do
         sign_up_ui 'good@email.com', 'complex123password', 'differentPassword123'
 

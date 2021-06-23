@@ -20,7 +20,7 @@ describe API::V1::UsersController, type: :request do
       end
     end
 
-    context 'given a non valid password' do
+    context 'given an invalid password' do
       it 'receives an error' do
         post :create, params: create_user_params.merge!(password: '123')
 
@@ -28,7 +28,7 @@ describe API::V1::UsersController, type: :request do
       end
     end
 
-    context 'given a non valid client_id' do
+    context 'given an invalid client_id' do
       it 'receives an error' do
         post :create, params: create_user_params.merge!(client_id: 'not valid')
 
@@ -36,7 +36,7 @@ describe API::V1::UsersController, type: :request do
       end
     end
 
-    context 'given a non valid client_secret' do
+    context 'given an invalid client_secret' do
       it 'receives an error' do
         post :create, params: create_user_params.merge!(client_secret: 'not valid')
 

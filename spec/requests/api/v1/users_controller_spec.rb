@@ -6,7 +6,7 @@ describe API::V1::UsersController, type: :request do
   context 'when a user registers' do
     context 'given valid params' do
       it 'returns the user' do
-        post :create, params: create_user_params.merge!(email: 'new_email@gmail.com')
+        post :create, params: create_user_params.merge(email: 'new_email@gmail.com')
 
         expect(JSON.parse(response.body)['data']['type']).to eq('user')
       end
@@ -22,7 +22,7 @@ describe API::V1::UsersController, type: :request do
 
     context 'given an invalid password' do
       it 'receives an error' do
-        post :create, params: create_user_params.merge!(password: '123')
+        post :create, params: create_user_params.merge(password: '123')
 
         expect(JSON.parse(response.body).keys).to contain_exactly('errors')
       end
@@ -30,7 +30,7 @@ describe API::V1::UsersController, type: :request do
 
     context 'given an invalid client_id' do
       it 'receives an error' do
-        post :create, params: create_user_params.merge!(client_id: 'not valid')
+        post :create, params: create_user_params.merge(client_id: 'not valid')
 
         expect(JSON.parse(response.body).keys).to contain_exactly('errors')
       end
@@ -38,7 +38,7 @@ describe API::V1::UsersController, type: :request do
 
     context 'given an invalid client_secret' do
       it 'receives an error' do
-        post :create, params: create_user_params.merge!(client_secret: 'not valid')
+        post :create, params: create_user_params.merge(client_secret: 'not valid')
 
         expect(JSON.parse(response.body).keys).to contain_exactly('errors')
       end

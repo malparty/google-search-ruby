@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-<html lang='<%= I18n.locale %>'>
-  <head>
-    <title>GoogleSearchRuby</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html class="layout-default" lang='<%= I18n.locale %>'>
+<head>
+  <title><%= t('app_name') %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= javascript_pack_tag 'application' %>
-  </head>
-
-  <body>
-    <% if user_signed_in? %>
-      <%= button_to t('logout'), destroy_user_session_path, method: :delete  %>
-    <% end %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_pack_tag 'application' %>
+</head>
+<body>
+<div class="d-flex flex-column sticky-footer-wrapper min-vh-100">
+  <%= render 'shared/header' %>
+  <main class="flex-fill">
+    <div class="container mt-2">
+      <div class="row justify-content-center">
+        <% if notice %>
+          <p class="alert alert-info"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert alert-warning"><%= alert %></p>
+        <% end %>
+      </div>
+    </div>
     <%= yield %>
-  </body>
+  </main>
+  <%= render 'shared/footer' %>
+</div>
+</body>
 </html>

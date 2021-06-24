@@ -1,0 +1,8 @@
+<section class="list-keywords">
+  <% keywords.groups.each do |group_key, group_keywords| %>
+    <%= render partial: 'list_keywords_group', locals: { group_key: group_key, group_keywords: group_keywords } %>
+  <% end %>
+  <div class="d-flex justify-content-around">
+    <%== pagy_bootstrap_nav(pagy) %>
+  </div>
+</section>

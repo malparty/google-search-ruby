@@ -12,3 +12,9 @@ if Doorkeeper::Application.count.zero?
   Doorkeeper::Application.create(name: "iOS client", redirect_uri: "", scopes: "")
   Doorkeeper::Application.create(name: "Android client", redirect_uri: "", scopes: "")
 end
+
+if Rails.env.development?
+  user = User.where(email: 'admin@nimblehq.co').first || Fabricate(:admin, email: 'admin@nimblehq.co')
+
+  100.times { Fabricate(:keyword, user: user) }
+end

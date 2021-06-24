@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 Fabricator(:keyword) do
-  name FFaker::Lorem.word
+  name { FFaker::FreedomIpsum.word }
 end

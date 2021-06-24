@@ -7,3 +7,7 @@ Fabricator(:user) do
   password 'password123'
   password_confirmation 'password123'
 end
+
+Fabricator(:admin, from: :user) do
+  is_admin true
+end

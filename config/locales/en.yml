@@ -33,6 +33,8 @@ en:
   app_name: 'Google Search Ruby'
   doorkeeper:
     token_revoked: 'If your token was valid, it has been revoked'
+  keywords:
+    could_not_query: 'An error occurs when performing the Google Search, please try again.'
   auth:
     logout: 'Sign out'
     sign_up: 'Sign up'

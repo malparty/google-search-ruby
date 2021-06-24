@@ -4,8 +4,10 @@ class KeywordsController < ApplicationController
   include Pagy::Backend
 
   def index
+    pagy, keywords = pagy(KeywordsQuery.new(current_user).call)
+
     render locals: {
-      keywords: pagy(KeywordsQuery.new(current_user).call)
+      pagy: pagy, keywords: keywords
     }
   end
 end

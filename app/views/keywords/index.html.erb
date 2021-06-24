@@ -1,8 +1,8 @@
 <div class="container">
   <ul class="list-inline">
-    <% keywords[1].each do |keyword| %>
+    <% keywords.each do |keyword| %>
       <li class="list-inline-item"><%= keyword.name %></li>
     <% end %>
   </ul>
-  <%== pagy_bootstrap_nav(keywords[0]) %>
+  <%== pagy_bootstrap_nav(pagy) %>
 </div>

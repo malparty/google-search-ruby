@@ -16,5 +16,5 @@ end
 if Rails.env.development?
   user = User.where(email: 'admin@nimblehq.co').first || Fabricate(:admin, email: 'admin@nimblehq.co')
 
-  100.times { Fabricate(:keyword, user: user) }
+  Fabricate.times(100, :keyword, user: user)
 end

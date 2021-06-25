@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'reset_password', type: :system do
   context 'when an unauthenticated user reaches the sign in page' do
-    it 'displays the forgot your password button' do
+    it 'displays the forgot_password button' do
       visit new_user_session_path
 
       click_link I18n.t('auth.forgot_password')
@@ -13,7 +13,7 @@ describe 'reset_password', type: :system do
     end
   end
 
-  context 'when user reset password' do
+  context 'when a user resets password' do
     it 'shows a paranoid flash message' do
       visit new_user_password_path
 

@@ -4,10 +4,10 @@ class KeywordsController < ApplicationController
   include Pagy::Backend
 
   def index
-    pagy, keywords = pagy(keywords)
+    pagy, keywords_list = pagy(keywords)
 
     render locals: {
-      pagy: pagy, keywords: keywords
+      pagy: pagy, keywords: keywords_list
     }
   end
 

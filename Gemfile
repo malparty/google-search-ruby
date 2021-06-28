@@ -14,6 +14,7 @@ gem 'sidekiq' # background processing for Ruby
 gem 'bootsnap', require: false # Reduces boot times through caching; required in config/boot.rb
 gem 'i18n-js', '3.5.1' # A library to provide the I18n translations on the Javascript
 gem 'jsonapi-serializer' # A fast JSON:API serializer for Ruby Objects.
+gem 'httparty' # A HTTP client for Ruby.
 
 # Authentications & Authorizations
 gem 'devise' # Authentication solution for Rails with Warden
@@ -23,6 +24,9 @@ gem 'doorkeeper' # Awesome OAuth 2 provider for your Rails / Grape app
 # Assets
 gem 'webpacker', '~>5.2.0' # Transpile app-like JavaScript
 gem 'sass-rails' # SASS
+
+# Logging tools
+gem 'colorize' # Ruby gem for colorizing text using ANSI escape sequences
 
 # Translations
 # gem 'devise-i18n' # Translations for Devise

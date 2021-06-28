@@ -14,7 +14,7 @@ if Doorkeeper::Application.count.zero?
 end
 
 if Rails.env.development?
-  user = User.where(email: 'admin@nimblehq.co').first || Fabricate(:admin, email: 'admin@nimblehq.co')
+  user = User.where(email: 'admin@nimblehq.co').first_or_create(Fabricate.attributes_for(:admin, email: 'admin@nimblehq.co'))
 
   Fabricate.times(100, :keyword, user: user)
 end

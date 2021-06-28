@@ -22,6 +22,8 @@ RSpec.configure do |config|
 
   config.include Rails.application.routes.url_helpers
 
+  config.include OAuthHelpers
+
   config.include Devise::Test::IntegrationHelpers, type: :system
 
   config.include DeviseHelpers::SystemHelpers

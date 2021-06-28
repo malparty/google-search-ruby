@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     skip_controllers :authorizations, :authorized_applications, :tokens, :token_info
   end
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => 'registrations' }
 
   resources :keywords, only: :index
 

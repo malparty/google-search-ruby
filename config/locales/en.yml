@@ -40,6 +40,8 @@ en:
     sign_up: 'Sign up'
     sign_in: 'Sign in'
     cancel_my_account: 'Cancel my account'
+    forgot_password: 'Forgot your password?'
+    btn_reset_password : 'Send me reset password instructions'
   min_char: 'characters minimum'
   confirm: 'Are you sure?'
   update: 'Update'

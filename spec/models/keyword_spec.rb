@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Keyword, type: :model do
   context 'given a blank name' do
-    it 'raises a validation error' do
+    it 'raises a RecordInvalid error' do
       expect { Fabricate(:keyword, name: " \n") }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end

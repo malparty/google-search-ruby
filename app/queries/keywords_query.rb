@@ -8,7 +8,7 @@ class KeywordsQuery
   end
 
   def call
-    @keywords = order_by_name
+    order_by_name
   end
 
   private

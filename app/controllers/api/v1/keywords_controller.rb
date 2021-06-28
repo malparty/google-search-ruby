@@ -8,10 +8,10 @@ module API
       include ErrorHandlerConcern
 
       def index
-        pagy, keywords = pagy(KeywordsQuery.new(current_user).call)
+        pagy, keywords_list = pagy(keywords)
 
         if keywords.any?
-          render json: KeywordSerializer.new(keywords, pagy_options(pagy)).serializable_hash, status: :ok
+          render json: KeywordSerializer.new(keywords_list, pagy_options(pagy)).serializable_hash, status: :ok
         else
           render_empty
         end
@@ -29,6 +29,10 @@ module API
 
       def render_empty
         render json: { meta: I18n.t('keywords.empty_list'), data: [] }, status: :ok
+      end
+
+      def keywords
+        KeywordsQuery.new(current_user).call
       end
     end
   end

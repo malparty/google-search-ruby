@@ -8,12 +8,12 @@ class KeywordsQuery
   end
 
   def call
-    @keywords = order
+    @keywords = order_by_name
   end
 
   private
 
-  def order
+  def order_by_name
     keywords.order(:name)
   end
 end

@@ -18,7 +18,7 @@ RSpec.describe Keyword, type: :model do
   end
 
   context 'given a valid name' do
-    it 'can be saved successfully' do
+    it 'saves with success' do
       keyword = Fabricate(:keyword, name: FFaker::Lorem.characters(255))
 
       expect(keyword.save).to be(true)

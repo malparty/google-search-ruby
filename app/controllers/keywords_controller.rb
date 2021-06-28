@@ -16,5 +16,4 @@ class KeywordsController < ApplicationController
   def keywords
     KeywordsQuery.new(current_user).call
   end
-
 end

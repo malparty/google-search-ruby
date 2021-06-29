@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 2021_06_28_063806) do
     t.string 'first_name'
     t.string 'last_name'
     t.boolean 'is_admin', default: false, null: false
+    t.datetime 'discarded_at'
+    t.index ['discarded_at'], name: 'index_users_on_discarded_at'
     t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['is_admin'], name: 'index_users_on_is_admin'
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true

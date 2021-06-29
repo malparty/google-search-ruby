@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class KeywordsDecorator
+class KeywordsPresenter
   def initialize(keywords)
     @keywords = keywords
   end

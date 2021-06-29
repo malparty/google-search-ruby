@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class KeywordsPresenter
+class KeywordsCollectionPresenter
   def initialize(keywords)
     @keywords = keywords
   end

@@ -42,6 +42,13 @@ en:
     cancel_my_account: 'Cancel my account'
     forgot_password: 'Forgot your password?'
     btn_reset_password : 'Send me reset password instructions'
+  csv:
+    upload_success: 'Your file has been uploaded!'
+    validation:
+      blank: 'The csv file is empty. Try with another one.'
+      too_many_keywords: 'The csv file cannot contain more than 1000 keywords'
+      not_readable: 'Sorry, we cannot read the content of your csv file'
+      wrong_type: 'Ensure the provided file type is csv'
   min_char: 'characters minimum'
   confirm: 'Are you sure?'
   update: 'Update'

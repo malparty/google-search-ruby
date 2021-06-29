@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class KeywordsQuery
-  attr_reader :keywords
-
   def initialize(user)
     @keywords = user.keywords
   end
@@ -14,6 +12,6 @@ class KeywordsQuery
   private
 
   def order_by_name
-    keywords.order(:name)
+    @keywords.order(:name)
   end
 end

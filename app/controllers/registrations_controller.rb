@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class RegistrationsController < Devise::RegistrationsController
+  # Override user hard-delete (from Devise) with user soft-delete
   def destroy
     resource.discard
 

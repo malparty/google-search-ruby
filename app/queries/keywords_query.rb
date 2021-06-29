@@ -11,7 +11,9 @@ class KeywordsQuery
 
   private
 
+  attr_reader :keywords
+
   def order_by_name
-    @keywords.order(:name)
+    keywords.order(:name)
   end
 end

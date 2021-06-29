@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2021_06_28_063806) do
     t.bigint 'user_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.datetime 'discarded_at'
+    t.index ['discarded_at'], name: 'index_keywords_on_discarded_at'
     t.index ['name'], name: 'index_keywords_on_name'
     t.index ['user_id'], name: 'index_keywords_on_user_id'
   end

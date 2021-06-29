@@ -9,7 +9,7 @@ describe 'keywords list', type: :system do
 
       visit root_path
 
-      expect(find('.list-keywords')).to have_content(I18n.t('keywords.empty_list'))
+      expect(find('.list-keyword')).to have_content(I18n.t('keywords.empty_list'))
     end
 
     it 'does not show the pagination nav' do
@@ -17,7 +17,7 @@ describe 'keywords list', type: :system do
 
       visit root_path
 
-      expect(find('.list-keywords')).not_to have_selector('.pagination')
+      expect(find('.list-keyword')).not_to have_selector('.pagination')
     end
 
     it 'does not show any keyword' do
@@ -25,7 +25,7 @@ describe 'keywords list', type: :system do
 
       visit root_path
 
-      expect(find('.list-keywords')).not_to have_selector('.list-keywords-item')
+      expect(find('.list-keyword')).not_to have_selector('.list-keyword-item')
     end
   end
 
@@ -37,7 +37,7 @@ describe 'keywords list', type: :system do
 
       visit root_path
 
-      expect(page).to have_selector('.list-keywords-item', count: Pagy::VARS[:items])
+      expect(page).to have_selector('.list-keyword-item', count: Pagy::VARS[:items])
     end
 
     it 'shows an enabled pagination nav next button' do
@@ -47,7 +47,7 @@ describe 'keywords list', type: :system do
 
       visit root_path
 
-      expect(find('.list-keywords')).to have_selector('li.page-item.next:not(.disabled)', count: 1)
+      expect(find('.list-keyword')).to have_selector('li.page-item.next:not(.disabled)', count: 1)
     end
   end
 
@@ -59,7 +59,7 @@ describe 'keywords list', type: :system do
 
       visit root_path
 
-      expect(page).to have_selector('.list-keywords-item', count: Pagy::VARS[:items])
+      expect(page).to have_selector('.list-keyword-item', count: Pagy::VARS[:items])
     end
 
     it 'shows a disabled pagination nav next button' do
@@ -69,7 +69,7 @@ describe 'keywords list', type: :system do
 
       visit root_path
 
-      expect(find('.list-keywords')).to have_selector('li.page-item.next.disabled', count: 1)
+      expect(find('.list-keyword')).to have_selector('li.page-item.next.disabled', count: 1)
     end
   end
 end

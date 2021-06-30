@@ -1,23 +1,28 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 class CSVValidator < ActiveModel::Validator
-  def validate(record)
-    record.errors.add(:file, I18n.t('csv.validation.blank')) if is_blank?
-    record.errors.add(:file, I18n.t('csv.validation.too_many_keywords')) if has_too_many_keywords?
-    record.errors.add(:file, I18n.t('csv.validation.readable')) unless is_readable?
+  def validate(csv_form)
+    file = csv_form.file
+
+    add_error :blank if file.blank?
+    add_error :wrong_count unless valid_count? file
+    add_error :wrong_type unless valid_extension? file
+    add_error :not_readable unless file.readable?
   end
 
   private
 
-  def is_blank?
-    false
+  def valid_count?(file)
+    CSV.read(file).count.between?(1, 1000)
   end
 
-  def has_too_many_keywords?
-    false
+  def valid_extension?(file)
+    file.extname == '.csv'
   end
 
-  def is_readable?
-    true
+  def add_error(type)
+    csv_form.errors.add(:file, I18n.t("csv.validation.#{type}"))
   end
 end

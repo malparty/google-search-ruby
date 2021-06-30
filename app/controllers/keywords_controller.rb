@@ -16,7 +16,7 @@ class KeywordsController < ApplicationController
     if csv_form.save(create_params)
       redirect_to :keywords_path, notice: I18n.t('csv.upload_success')
     else
-    redirect_to :keywords_path, alert: csv_form.errors.full_messages
+      redirect_to :keywords_path, alert: csv_form.errors.full_messages
     end
   end
 

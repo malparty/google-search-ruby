@@ -157,6 +157,8 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
+    discard (1.2.0)
+      activerecord (>= 4.2, < 7)
     docile (1.4.0)
     doorkeeper (5.5.1)
       railties (>= 5)
@@ -247,8 +249,6 @@ GEM
     orm_adapter (0.5.0)
     pagy (3.13.0)
     parallel (1.20.1)
-    paranoia (2.4.3)
-      activerecord (>= 4.0, < 6.2)
     parser (3.0.1.1)
       ast (~> 2.4.1)
     pg (1.2.3)
@@ -493,6 +493,7 @@ DEPENDENCIES
   danger-undercover
   database_cleaner
   devise
+  discard
   doorkeeper
   fabrication
   ffaker
@@ -506,7 +507,6 @@ DEPENDENCIES
   listen (= 3.1.5)
   mini_magick
   pagy
-  paranoia
   pg
   pry-byebug
   pry-rails

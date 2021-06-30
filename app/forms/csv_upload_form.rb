@@ -7,34 +7,35 @@ class CSVUploadForm
   include ActiveModel::Attributes
   include ActiveModel::Validations
 
-  attribute :file
+  attr_accessor :file
 
   validates_with CSVValidator
 
   def initialize(user)
     @user = user
+    # super({})
   end
 
   def save(params)
-    Rails.logger.debug 'THAT?'
     file = params[:file]
-    # Rails.logger.debug 'OR THAT?'
-    # assign_attributes(params)
+    @file = params[:file]
+    # assign_attributes params
 
     return false unless valid?
 
+    user_id = user.id
+
     keywords = CSV.read(file).map do |row|
-      # Keyword.create(user_id: user.id, name: row[0]) # created_at: Time.current, updated_at: Time.current
-      Keyword.new(user_id: user.id, name: row[0], created_at: Time.current, updated_at: Time.current)
+      Keyword.new(user_id: user_id, name: row[0], created_at: Time.current, updated_at: Time.current)
     end
 
-    Rails.logger.debug keywords
+    # TODO: Bulk validation makes repetitive SQL Query for USER!!!!!
+    keywords_attr = keywords.select(&:validate).map { |k| k.attributes.except('id') }.to_a
 
-    # keywords = keywords.select(&:validate).to_a
-    ActiveRecord::Base.transaction { keywords.each(&:save) }
+    Rails.logger.debug keywords_attr
 
     # rubocop:disable Rails/SkipsModelValidations
-    # Keyword.insert_all(keywords,returning: nil, unique_by: :name)
+    user.keywords.insert_all keywords_attr
     # rubocop:enable Rails/SkipsModelValidations
 
     errors.empty?

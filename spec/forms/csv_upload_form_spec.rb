@@ -14,7 +14,7 @@ RSpec.describe CSVUploadForm, type: :form do
     it 'adds 8 keywords in database' do
       file = file_fixture('csv/valid.csv')
 
-      expect{ described_class.new(Fabricate(:user)).save({ file: file }) }.to change(Keyword, :count).by(8)
+      expect { described_class.new(Fabricate(:user)).save({ file: file }) }.to change(Keyword, :count).by(8)
     end
   end
 

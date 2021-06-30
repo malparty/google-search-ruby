@@ -5,7 +5,7 @@ require 'csv'
 class CSVUploadForm
   include ActiveModel::Validations
 
-  attr_reader :file
+  attr_reader :file, :keywords
 
   validates_with CSVValidator
 
@@ -14,11 +14,12 @@ class CSVUploadForm
   end
 
   def save(params)
-    self.file = params[:file]
+    @file = params[:file]
+    @keywords = parse_keywords
 
     return false unless valid?
 
-    keywords_attr = valid_keywords_attributes
+    keywords_attr = keywords_attributes
 
     # rubocop:disable Rails/SkipsModelValidations
     user.keywords.insert_all keywords_attr
@@ -29,15 +30,13 @@ class CSVUploadForm
 
   private
 
-  attr_writer :file
-
-  def valid_keywords_attributes
-    parse_keywords.select(&:validate).map { |k| k.attributes.except('id') }.to_a
+  def keywords_attributes
+    parse_keywords.map { |k| k.attributes.except('id') }.to_a
   end
 
   def parse_keywords
     CSV.read(file).map do |row|
-      new_bulk_keyword row[0]
+      new_bulk_keyword row.join(',')
     end
   end
 

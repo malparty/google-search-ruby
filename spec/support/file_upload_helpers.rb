@@ -18,4 +18,14 @@ module FileUploadHelpers
       ActionDispatch::Http::UploadedFile.new({ tempfile: file, type: type })
     end
   end
+
+  module System
+    def submit_file(name)
+      sign_in Fabricate(:user)
+
+      page.attach_file(I18n.t('csv.upload_btn'), Rails.root.join('spec', 'fixtures', 'files', 'csv', name))
+
+      click I18n.t('csv.submit_btn')
+    end
+  end
 end

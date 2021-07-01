@@ -15,6 +15,8 @@ module DeviseHelpers
 
     def sign_in(user)
       login_as user, scope: :user
+
+      user
     end
 
     def sign_up_ui(email, password, password_confirm = nil)

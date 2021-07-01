@@ -49,3 +49,5 @@ en:
   waiting_confirmation_for: 'Currently waiting confirmation for'
   forgot_password: 'Forgot your password?'
   my_profile: 'My Profile'
+  keywords:
+    empty_list: 'You do not have any keyword yet.'

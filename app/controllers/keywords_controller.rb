@@ -7,7 +7,7 @@ class KeywordsController < ApplicationController
     pagy, keywords_list = pagy(keywords)
 
     render locals: {
-      pagy: pagy, keywords: keywords_list
+      pagy: pagy, keywords: KeywordsCollectionPresenter.new(keywords_list)
     }
   end
 

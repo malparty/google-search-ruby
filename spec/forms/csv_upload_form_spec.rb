@@ -13,7 +13,7 @@ RSpec.describe CSVUploadForm, type: :form do
         expect(saved).to be(true)
       end
 
-      it 'parses the keyword containing comma symbol' do
+      it 'parses the keyword containing a comma symbol' do
         form, = save_csv_file 'valid.csv'
 
         expect(form.keywords.map(&:name)).to include('dien may xanh, the gio di dong')

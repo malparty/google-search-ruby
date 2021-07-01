@@ -22,18 +22,6 @@ class CSVValidator < ActiveModel::Validator
     csv_form.keywords
   end
 
-  def valid_count?
-    CSV.read(file).count.between?(1, 1000)
-  end
-
-  def valid_extension?
-    file.extname == '.csv'
-  end
-
-  def add_error(type)
-    csv_form.errors.add(:base, I18n.t("csv.validation.#{type}"))
-  end
-
   def validate_file
     add_error :blank if file.blank?
     add_error :wrong_count unless valid_count?
@@ -44,5 +32,17 @@ class CSVValidator < ActiveModel::Validator
     keywords_errors = keywords.each(&:validate).map { |keyword| keyword.errors.errors }.flatten.uniq
 
     keywords_errors.each { |error| csv_form.errors.add(:keyword, error.message) }
+  end
+
+  def add_error(type)
+    csv_form.errors.add(:base, I18n.t("csv.validation.#{type}"))
+  end
+
+  def valid_count?
+    CSV.read(file).count.between?(1, 1000)
+  end
+
+  def valid_extension?
+    file.extname == '.csv'
   end
 end

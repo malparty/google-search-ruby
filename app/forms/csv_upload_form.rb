@@ -19,10 +19,8 @@ class CSVUploadForm
 
     return false unless valid?
 
-    keywords_attr = keywords_attributes
-
     # rubocop:disable Rails/SkipsModelValidations
-    user.keywords.insert_all keywords_attr
+    user.keywords.insert_all keywords_attributes
     # rubocop:enable Rails/SkipsModelValidations
 
     errors.empty?
@@ -30,9 +28,7 @@ class CSVUploadForm
 
   private
 
-  def keywords_attributes
-    parse_keywords.map { |k| k.attributes.except('id') }.to_a
-  end
+  attr_reader :user
 
   def parse_keywords
     CSV.read(file).map do |row|
@@ -44,5 +40,7 @@ class CSVUploadForm
     Keyword.new(user_id: user.id, name: name, created_at: Time.current, updated_at: Time.current, bulk_insert: true)
   end
 
-  attr_reader :user
+  def keywords_attributes
+    parse_keywords.map { |k| k.attributes.except('id') }.to_a
+  end
 end

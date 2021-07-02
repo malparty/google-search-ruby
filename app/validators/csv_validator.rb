@@ -23,7 +23,6 @@ class CSVValidator < ActiveModel::Validator
   end
 
   def validate_file
-    add_error :blank if file.tempfile.blank?
     add_error :wrong_count unless valid_count?
     add_error :wrong_type unless valid_extension?
   end

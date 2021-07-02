@@ -14,7 +14,7 @@ class CSVUploadForm
   end
 
   def save(params)
-    @file = params[:csv_upload_form][0]
+    @file = params[:csv_upload_form][:file]
     @keywords = parse_keywords
 
     return false unless valid?

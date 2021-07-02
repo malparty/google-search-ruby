@@ -50,7 +50,6 @@ en:
   csv:
     upload_success: 'Your file has been uploaded!'
     validation:
-      blank: 'The csv file is empty. Try with another one.'
       wrong_count: 'The csv file should contain between 1 and 1000 keywords'
       wrong_type: 'Please ensure the provided file type is csv'
   min_char: 'characters minimum'

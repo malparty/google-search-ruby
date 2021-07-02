@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include Discard::Model
+
+  has_many :keywords, inverse_of: :user, dependent: :destroy
+
+  default_scope -> { kept }
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

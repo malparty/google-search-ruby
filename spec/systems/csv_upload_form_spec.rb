@@ -46,11 +46,11 @@ describe 'csv upload form', type: :system do
       end
     end
 
-    context 'given a file with invalid keywords' do
-      it 'displays some keyword errors' do
+    context 'given a file with a too long keyword' do
+      it 'displays the bad_keyword_length error' do
         submit_file 'invalid_keywords.csv'
 
-        expect(find('.alert.alert-danger')).to have_content('Keyword')
+        expect(find('.alert.alert-danger')).to have_content(I18n.t('csv.validation.bad_keyword_length'))
       end
     end
   end

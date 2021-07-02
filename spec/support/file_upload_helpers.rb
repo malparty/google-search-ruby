@@ -26,8 +26,6 @@ module FileUploadHelpers
       visit root_path
 
       page.attach_file('csv_upload_form_file', Rails.root.join('spec', 'fixtures', 'files', 'csv', name), visible: :all)
-
-      # page.execute_script('document.getElementById("new_CSVUploadForm").submit()')
     end
   end
 end

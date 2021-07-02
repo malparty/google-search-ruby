@@ -66,7 +66,7 @@ describe API::V1::KeywordsController, type: :request do
     end
 
     context 'given a valid page param' do
-      it 'returns the keywords to that page' do
+      it 'returns the keywords for that page' do
         user = Fabricate(:user)
         Fabricate.times(51, :keyword, user: user)
 
@@ -79,7 +79,7 @@ describe API::V1::KeywordsController, type: :request do
     end
 
     context 'given an invalid page param' do
-      it 'returns a 422 Unprocessable Entity' do
+      it 'returns a 422 Unprocessable Entity status code' do
         user = Fabricate(:user)
         Fabricate.times(51, :keyword, user: user)
 

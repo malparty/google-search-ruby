@@ -1,0 +1,10 @@
+<%= form_for(csv_form, as: CSVUploadForm, url: keywords_path, html: { method: :post, multipart: true }) do |f| %>
+  <div class="row mb-3">
+    <div class="col-12 col-lg-4 col-md-6">
+      <div class="custom-file">
+        <%= f.label 'Upload a CSV File', class: 'custom-file-label' %>
+        <%= f.file_field csv_form.file, autofocus: true, class: 'form-control custom-file-input' %>
+      </div>
+    </div>
+  </div>
+<% end %>

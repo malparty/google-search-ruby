@@ -14,7 +14,7 @@ class CSVUploadForm
   end
 
   def save(params)
-    @file = params[:file]
+    @file = params[:csv_upload_form][0]
     @keywords = parse_keywords
 
     return false unless valid?
@@ -31,7 +31,7 @@ class CSVUploadForm
   attr_reader :user
 
   def parse_keywords
-    CSV.read(file).map do |row|
+    CSV.read(file.tempfile).map do |row|
       new_bulk_keyword row.join(',')
     end
   end

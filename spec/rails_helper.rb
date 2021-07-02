@@ -28,5 +28,5 @@ RSpec.configure do |config|
 
   config.include DeviseHelpers::SystemHelpers
 
-  config.include FileUploadHelpers
+  config.include FileUploadHelpers::Form
 end

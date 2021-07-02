@@ -8,7 +8,7 @@ RSpec.describe CSVUploadForm, type: :form do
       it { expect { save_csv_file 'valid.csv' }.to change(Keyword, :count).by(8) }
 
       it 'can save' do
-        _, _, saved = save_csv_file 'valid.csv'
+        _, saved = save_csv_file 'valid.csv'
 
         expect(saved).to be(true)
       end

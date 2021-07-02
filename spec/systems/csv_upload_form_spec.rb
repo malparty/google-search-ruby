@@ -8,7 +8,9 @@ describe 'csv upload form', type: :system do
       it 'displays the file upload form' do
         sign_in Fabricate(:user)
 
-        expect(find('form.form-csv-upload')).to have_field(:file)
+        visit root_path
+
+        expect(find('form.form-csv-upload')).to have_field('csv_upload_form_file', visible: :all)
       end
     end
   end
@@ -18,21 +20,13 @@ describe 'csv upload form', type: :system do
       it 'redirects to the homepage' do
         submit_file 'valid.csv'
 
-        expect(page).to have_current_path(root_path)
+        expect(page).to have_current_path(keywords_path)
       end
 
       it 'displays an upload success message' do
         submit_file 'valid.csv'
 
         expect(find('.alert.alert-success')).to have_content(I18n.t('csv.upload_success'))
-      end
-    end
-
-    context 'given a blank csv file' do
-      it 'displays the blank error' do
-        submit_file 'blank.csv'
-
-        expect(find('.alert.alert-danger')).to have_content(I18n.t('csv.validation.blank'))
       end
     end
 
@@ -46,7 +40,7 @@ describe 'csv upload form', type: :system do
 
     context 'given a file with too many keywords' do
       it 'displays the wrong_count error' do
-        submit_file 'too_many_keywords.txt'
+        submit_file 'too_many_keywords.csv'
 
         expect(find('.alert.alert-danger')).to have_content(I18n.t('csv.validation.wrong_count'))
       end
@@ -56,7 +50,7 @@ describe 'csv upload form', type: :system do
       it 'displays some keyword errors' do
         submit_file 'invalid_keywords.csv'
 
-        expect(find('.alert.alert-danger')).to have_content('keyword')
+        expect(find('.alert.alert-danger')).to have_content('Keyword')
       end
     end
   end

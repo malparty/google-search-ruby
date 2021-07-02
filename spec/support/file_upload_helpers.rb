@@ -14,7 +14,8 @@ module FileUploadHelpers
       file = file_fixture("csv/#{file_name}")
 
       type = MIME::Types.type_for(file.extname).first.content_type
-
+      Rails.logger.debug type
+      Rails.logger.debug file
       ActionDispatch::Http::UploadedFile.new({ tempfile: file, type: type })
     end
   end
@@ -23,9 +24,11 @@ module FileUploadHelpers
     def submit_file(name)
       sign_in Fabricate(:user)
 
-      page.attach_file(I18n.t('csv.upload_btn'), Rails.root.join('spec', 'fixtures', 'files', 'csv', name))
+      visit root_path
 
-      click I18n.t('csv.submit_btn')
+      page.attach_file('csv_upload_form_file', Rails.root.join('spec', 'fixtures', 'files', 'csv', name), visible: :all)
+
+      # page.execute_script('document.getElementById("new_CSVUploadForm").submit()')
     end
   end
 end

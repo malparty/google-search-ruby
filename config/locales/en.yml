@@ -45,6 +45,7 @@ en:
     btn_reset_password : 'Send me reset password instructions'
   csv:
     upload_success: 'Your file has been uploaded!'
+    upload_btn: 'Upload a CSV File'
     validation:
       wrong_count: 'The csv file should contain between 1 and 1000 keywords'
       wrong_type: 'Please ensure the provided file type is csv'

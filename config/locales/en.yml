@@ -35,6 +35,7 @@ en:
     token_revoked: 'If your token was valid, it has been revoked'
   keywords:
     could_not_query: 'An error occurs when performing the Google Search, please try again.'
+    empty_list: 'You do not have any keyword yet.'
   auth:
     logout: 'Sign out'
     sign_up: 'Sign up'
@@ -45,7 +46,6 @@ en:
   csv:
     upload_success: 'Your file has been uploaded!'
     validation:
-      blank: 'The csv file is empty. Try with another one.'
       wrong_count: 'The csv file should contain between 1 and 1000 keywords'
       wrong_type: 'Please ensure the provided file type is csv'
   min_char: 'characters minimum'
@@ -55,5 +55,3 @@ en:
   waiting_confirmation_for: 'Currently waiting confirmation for'
   forgot_password: 'Forgot your password?'
   my_profile: 'My Profile'
-  keywords:
-    empty_list: 'You do not have any keyword yet.'

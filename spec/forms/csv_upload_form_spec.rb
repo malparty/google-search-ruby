@@ -28,14 +28,6 @@ RSpec.describe CSVUploadForm, type: :form do
       end
     end
 
-    context 'given a blank csv file' do
-      it 'returns a blank error' do
-        form, = save_csv_file 'blank.csv'
-
-        expect(form.errors.full_messages).to include(I18n.t('csv.validation.blank'))
-      end
-    end
-
     context 'given a non csv file' do
       it 'returns a wrong_type error' do
         form, = save_csv_file 'wrong_type.txt'

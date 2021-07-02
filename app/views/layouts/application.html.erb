@@ -13,16 +13,7 @@
 <div class="d-flex flex-column sticky-footer-wrapper min-vh-100">
   <%= render 'shared/header' %>
   <main class="flex-fill">
-    <div class="container mt-2">
-      <div class="row justify-content-center">
-        <% if notice %>
-          <p class="alert alert-info"><%= notice %></p>
-        <% end %>
-        <% if alert %>
-          <p class="alert alert-warning"><%= alert %></p>
-        <% end %>
-      </div>
-    </div>
+    <%= render 'shared/alert' %>
     <%= yield %>
   </main>
   <%= render 'shared/footer' %>

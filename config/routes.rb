@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: :registrations }
 
-  resources :keywords, only: :index
+  resources :keywords, only: [:index, :create]
 
-  resources :users, only: %i[create]
+  resources :users, only: :create
 
   namespace :api do
     namespace :v1 do

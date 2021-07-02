@@ -14,8 +14,7 @@ module FileUploadHelpers
       file = file_fixture("csv/#{file_name}")
 
       type = MIME::Types.type_for(file.extname).first.content_type
-      Rails.logger.debug type
-      Rails.logger.debug file
+
       ActionDispatch::Http::UploadedFile.new({ tempfile: file, type: type })
     end
   end

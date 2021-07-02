@@ -52,6 +52,7 @@ en:
     validation:
       wrong_count: 'The csv file should contain between 1 and 1000 keywords'
       wrong_type: 'Please ensure the provided file type is csv'
+      bad_keyword_length: 'One or many keywords excess the max length of 255 characters.'
   min_char: 'characters minimum'
   confirm: 'Are you sure?'
   update: 'Update'

@@ -3,8 +3,6 @@
 module API
   module V1
     class TokensController < Doorkeeper::TokensController
-      include ErrorHandlerConcern
-
       # Overridden from doorkeeper as the doorkeeper revoke action does not return response according to json-api spec
       def revoke
         # The authorization server responds with HTTP status code 200 if the client

@@ -3,8 +3,6 @@
 module API
   module V1
     class UsersController < ApplicationController
-      include API::V1::ErrorHandlerConcern
-
       skip_before_action :doorkeeper_authorize!, only: :create
 
       before_action :ensure_valid_client, only: :create

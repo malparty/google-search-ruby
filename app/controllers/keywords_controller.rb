@@ -14,9 +14,10 @@ class KeywordsController < ApplicationController
 
   def create
     if csv_form.save(create_params)
-      redirect_to :keywords_path, notice: I18n.t('csv.upload_success')
+      redirect_to keywords_path, notice: I18n.t('csv.upload_success')
     else
-      redirect_to :keywords_path, alert: csv_form.errors.full_messages
+      flash[:errors] = csv_form.errors.full_messages
+      redirect_to keywords_path
     end
   end
 
@@ -31,6 +32,6 @@ class KeywordsController < ApplicationController
   end
 
   def create_params
-    params.permit(:file)
+    params.permit(csv_upload_form: [])
   end
 end

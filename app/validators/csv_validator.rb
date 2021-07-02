@@ -23,7 +23,7 @@ class CSVValidator < ActiveModel::Validator
   end
 
   def validate_file
-    add_error :blank if file.blank?
+    add_error :blank if file.tempfile.blank?
     add_error :wrong_count unless valid_count?
     add_error :wrong_type unless valid_extension?
   end
@@ -39,10 +39,10 @@ class CSVValidator < ActiveModel::Validator
   end
 
   def valid_count?
-    CSV.read(file).count.between?(1, 1000)
+    CSV.read(file.tempfile).count.between?(1, 1000)
   end
 
   def valid_extension?
-    file.extname == '.csv'
+    file.content_type == 'text/csv'
   end
 end

@@ -5,7 +5,7 @@ require 'csv'
 class CSVUploadForm
   include ActiveModel::Validations
 
-  attr_reader :file, :keywords
+  attr_reader :file
 
   validates_with CSVValidator
 
@@ -15,13 +15,18 @@ class CSVUploadForm
 
   def save(params)
     @file = params[:csv_upload_form][:file]
-    @keywords = parse_keywords
 
     return false unless valid?
 
-    # rubocop:disable Rails/SkipsModelValidations
-    user.keywords.insert_all keywords_attributes
-    # rubocop:enable Rails/SkipsModelValidations
+    begin
+      Keyword.transaction do
+        # rubocop:disable Rails/SkipsModelValidations
+        user.keywords.insert_all parse_keywords
+        # rubocop:enable Rails/SkipsModelValidations
+      end
+    rescue ActiveRecord::StatementInvalid
+      errors.add(:keyword, I18n.t('csv.validation.bad_keyword_length'))
+    end
 
     errors.empty?
   end
@@ -31,16 +36,20 @@ class CSVUploadForm
   attr_reader :user
 
   def parse_keywords
-    CSV.read(file.tempfile).map do |row|
-      new_bulk_keyword row.join(',')
+    time = Time.current
+    CSV.read(file.tempfile).filter_map do |row|
+      keyword_attributes row.join(','), time
     end
   end
 
-  def new_bulk_keyword(name)
-    Keyword.new(user_id: user.id, name: name, created_at: Time.current, updated_at: Time.current, bulk_insert: true)
-  end
+  def keyword_attributes(name, time)
+    return nil if name.blank?
 
-  def keywords_attributes
-    parse_keywords.map { |k| k.attributes.except('id') }.to_a
+    {
+      user_id: user.id,
+      name: name,
+      created_at: time,
+      updated_at: time
+    }
   end
 end

@@ -14,9 +14,9 @@ RSpec.describe CSVUploadForm, type: :form do
       end
 
       it 'parses the keyword containing a comma symbol' do
-        form, = save_csv_file 'valid.csv'
+        save_csv_file 'valid.csv'
 
-        expect(form.keywords.map(&:name)).to include('dien may xanh, the gio di dong')
+        expect(Keyword.where(name: 'dien may xanh, the gio di dong').count).to eq(1)
       end
     end
 
@@ -36,11 +36,21 @@ RSpec.describe CSVUploadForm, type: :form do
       end
     end
 
-    context 'given 2 invalid keywords' do
-      it 'returns 2 keyword errors' do
+    context 'given a too long keyword' do
+      it 'returns 1 keyword errors' do
         form, = save_csv_file 'invalid_keywords.csv'
 
-        expect(form.errors.errors.count { |e| e.attribute == :keyword }).to eq(2)
+        expect(form.errors.full_messages.to_s).to include(I18n.t('csv.validation.bad_keyword_length'))
+      end
+
+      it 'does not save any keyword' do
+        expect { save_csv_file 'invalid_keywords.csv' }.to change(Keyword, :count).by(0)
+      end
+    end
+
+    context 'given a blank and 5 valid keywords' do
+      it 'ignores the blank keyword' do
+        expect { save_csv_file 'blank_keyword.csv' }.to change(Keyword, :count).by(5)
       end
     end
   end

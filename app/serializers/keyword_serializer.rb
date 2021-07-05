@@ -3,5 +3,5 @@
 class KeywordSerializer
   include JSONAPI::Serializer
 
-  attributes :name
+  attributes :name, :created_at
 end

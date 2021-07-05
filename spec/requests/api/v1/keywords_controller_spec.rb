@@ -12,7 +12,7 @@ describe API::V1::KeywordsController, type: :request do
       end
     end
 
-    context 'when no keywords' do
+    context 'when keyword_list is empty' do
       it 'returns a meta message' do
         create_token_header(Fabricate(:user))
 

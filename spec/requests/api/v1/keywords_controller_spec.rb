@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe API::V1::KeywordsController, type: :request do
-  describe '#index' do
+  describe 'GET #index' do
     context 'given an unauthenticated user' do
       it 'returns a 401 status code' do
         get :index

@@ -12,15 +12,11 @@ module API
         if keywords.any?
           render json: KeywordSerializer.new(keywords_list, pagy_options(pagy)).serializable_hash
         else
-          render_empty
+          render_empty I18n.t('keywords.empty_list')
         end
       end
 
       private
-
-      def render_empty
-        render json: { meta: I18n.t('keywords.empty_list'), data: [] }
-      end
 
       def keywords
         KeywordsQuery.new(current_user).call

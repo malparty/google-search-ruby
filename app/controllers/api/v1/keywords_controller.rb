@@ -10,7 +10,7 @@ module API
         pagy, keywords_list = pagy(keywords)
 
         if keywords.any?
-          render json: KeywordSerializer.new(keywords_list, pagy_options(pagy)).serializable_hash, status: :ok
+          render json: KeywordSerializer.new(keywords_list, pagy_options(pagy)).serializable_hash
         else
           render_empty
         end
@@ -19,7 +19,7 @@ module API
       private
 
       def render_empty
-        render json: { meta: I18n.t('keywords.empty_list'), data: [] }, status: :ok
+        render json: { meta: I18n.t('keywords.empty_list'), data: [] }
       end
 
       def keywords

@@ -26,7 +26,7 @@ module API
         def url_for_page(page)
           return nil unless page
 
-          url_for only_path: false, params: jsonapi_params.merge({ page: page })
+          url_for only_path: false, params: jsonapi_params.merge(page: page)
         end
 
         def jsonapi_params

@@ -14,7 +14,7 @@ module API
 
       rescue_from ::Pagy::OverflowError do |e|
         render_error(
-          details: "#{I18n.t('pagy.errors.overflow')} #{e.pagy.last}",
+          details: I18n.t('pagy.errors.overflow', max_page: e.pagy.last),
           source: e.variable,
           status: :unprocessable_entity
         )

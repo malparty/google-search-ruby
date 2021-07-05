@@ -38,7 +38,7 @@ en:
     empty_list: 'You do not have any keyword yet.'
   pagy:
     errors:
-      overflow: 'There are not that many pages here! Max page is '
+      overflow: 'There are not that many pages here! Max page is %{max_page}'
       variable: 'The page you try to access does not exist.'
   auth:
     logout: 'Sign out'

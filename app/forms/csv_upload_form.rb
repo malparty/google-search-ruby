@@ -21,7 +21,7 @@ class CSVUploadForm
     begin
       Keyword.transaction do
         # rubocop:disable Rails/SkipsModelValidations
-        user.keywords.insert_all parse_keywords
+        user.keywords.insert_all parsed_keywords
         # rubocop:enable Rails/SkipsModelValidations
       end
     rescue ActiveRecord::StatementInvalid
@@ -35,7 +35,7 @@ class CSVUploadForm
 
   attr_reader :user
 
-  def parse_keywords
+  def parsed_keywords
     time = Time.current
     CSV.read(file.tempfile).filter_map do |row|
       keyword_attributes row.join(','), time

@@ -15,13 +15,13 @@ describe 'csv upload form', type: :system do
 
   describe 'keywords#create' do
     context 'given a valid csv file' do
-      it 'redirects to the homepage', authenticated_user: true  do
+      it 'redirects to the homepage', authenticated_user: true do
         submit_file 'valid.csv'
 
         expect(page).to have_current_path(keywords_path)
       end
 
-      it 'displays an upload success message', authenticated_user: true  do
+      it 'displays an upload success message', authenticated_user: true do
         submit_file 'valid.csv'
 
         expect(find('.alert.alert-success')).to have_content(I18n.t('csv.upload_success'))
@@ -29,7 +29,7 @@ describe 'csv upload form', type: :system do
     end
 
     context 'given a text file' do
-      it 'displays the wrong_type error', authenticated_user: true  do
+      it 'displays the wrong_type error', authenticated_user: true do
         submit_file 'wrong_type.txt'
 
         expect(find('.alert.alert-danger')).to have_content(I18n.t('csv.validation.wrong_type'))
@@ -37,7 +37,7 @@ describe 'csv upload form', type: :system do
     end
 
     context 'given a file with too many keywords' do
-      it 'displays the wrong_count error', authenticated_user: true  do
+      it 'displays the wrong_count error', authenticated_user: true do
         submit_file 'too_many_keywords.csv'
 
         expect(find('.alert.alert-danger')).to have_content(I18n.t('csv.validation.wrong_count'))
@@ -45,7 +45,7 @@ describe 'csv upload form', type: :system do
     end
 
     context 'given a file with a too long keyword' do
-      it 'displays the bad_keyword_length error', authenticated_user: true  do
+      it 'displays the bad_keyword_length error', authenticated_user: true do
         submit_file 'invalid_keywords.csv'
 
         expect(find('.alert.alert-danger')).to have_content(I18n.t('csv.validation.bad_keyword_length'))

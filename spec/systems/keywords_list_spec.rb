@@ -4,19 +4,19 @@ require 'rails_helper'
 
 describe 'keywords list', type: :system do
   context 'given no keywords' do
-    it 'shows the empty_list message', authenticated_user: true  do
+    it 'shows the empty_list message', authenticated_user: true do
       visit root_path
 
       expect(find('.list-keyword')).to have_content(I18n.t('keywords.empty_list'))
     end
 
-    it 'does not show the pagination nav', authenticated_user: true  do
+    it 'does not show the pagination nav', authenticated_user: true do
       visit root_path
 
       expect(find('.list-keyword')).not_to have_selector('.pagination')
     end
 
-    it 'does not show any keyword', authenticated_user: true  do
+    it 'does not show any keyword', authenticated_user: true do
       visit root_path
 
       expect(find('.list-keyword')).not_to have_selector('.list-keyword-item')

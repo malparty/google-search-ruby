@@ -1,4 +1,20 @@
 <div class="container screen-keywords">
-  <%= render 'form_upload', csv_form: csv_form %>
   <%= render 'list_keywords', keywords: keywords, pagy: pagy %>
 </div>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p>Some text here should work.</p>
+  </div>
+</div>
+
+<% content_for :header_nav_bar do %>
+  <%= render 'shared/form_upload', csv_form: csv_form %>
+  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+    <i class="bi bi-sliders">
+    </i>
+  </button>
+<% end %>

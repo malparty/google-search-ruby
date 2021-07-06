@@ -11,6 +11,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import 'vendor/bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons';
 
 import 'initializers/';
 import 'screens/';

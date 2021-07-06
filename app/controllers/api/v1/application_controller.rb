@@ -22,10 +22,6 @@ module API
 
       private
 
-      def render_empty(meta_message)
-        render json: { meta: meta_message, data: [] }
-      end
-
       # helper method to access the current user from the token
       def current_user
         @current_user ||= User.find_by(id: doorkeeper_token[:resource_owner_id])

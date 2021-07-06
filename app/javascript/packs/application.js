@@ -10,7 +10,7 @@ import 'channels';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import 'vendor/bootstrap';
+import 'bootstrap/dist/js/bootstrap';
 
 import 'initializers/';
 import 'screens/';

@@ -13,14 +13,6 @@ describe API::V1::KeywordsController, type: :request do
     end
 
     context 'when keyword_list is empty' do
-      it 'returns a meta message' do
-        create_token_header(Fabricate(:user))
-
-        get :index
-
-        expect(JSON.parse(response.body)['meta']).to eq(I18n.t('keywords.empty_list'))
-      end
-
       it 'returns an empty data array' do
         create_token_header(Fabricate(:user))
 

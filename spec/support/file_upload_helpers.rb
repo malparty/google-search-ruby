@@ -21,8 +21,6 @@ module FileUploadHelpers
 
   module System
     def submit_file(name)
-      sign_in Fabricate(:user)
-
       visit root_path
 
       page.attach_file('csv_upload_form_file', Rails.root.join('spec', 'fixtures', 'files', 'csv', name), visible: :all)

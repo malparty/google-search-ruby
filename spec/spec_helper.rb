@@ -5,6 +5,11 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+  # Run authentication when needed
+  config.before(:all, authenticated_user: true) do
+    sign_in Fabricate(:user)
+  end
+
   config.mock_with :rspec do |mocks|
     # Prevents you from mocking or stubbing a method that does not exist on
     # a real object. This is generally recommended, and will default to

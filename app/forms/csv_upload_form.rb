@@ -36,20 +36,17 @@ class CSVUploadForm
   attr_reader :user
 
   def parsed_keywords
-    time = Time.current
     CSV.read(file.tempfile).filter_map do |row|
-      keyword_attributes row.join(','), time
+      keyword_attributes row.join(',')
     end
   end
 
-  def keyword_attributes(name, time)
+  def keyword_attributes(name)
     return nil if name.blank?
 
     {
       user_id: user.id,
-      name: name,
-      created_at: time,
-      updated_at: time
+      name: name
     }
   end
 end

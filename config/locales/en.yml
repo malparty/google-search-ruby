@@ -35,6 +35,11 @@ en:
     token_revoked: 'If your token was valid, it has been revoked'
   keywords:
     could_not_query: 'An error occurs when performing the Google Search, please try again.'
+    empty_list: 'You do not have any keyword yet.'
+  pagy:
+    errors:
+      overflow: 'There are not that many pages here! Max page is %{max_page}'
+      variable: 'The page you try to access does not exist.'
   auth:
     logout: 'Sign out'
     sign_up: 'Sign up'
@@ -49,5 +54,3 @@ en:
   waiting_confirmation_for: 'Currently waiting confirmation for'
   forgot_password: 'Forgot your password?'
   my_profile: 'My Profile'
-  keywords:
-    empty_list: 'You do not have any keyword yet.'

@@ -3,4 +3,3 @@ class AddLengthConstraintToNameToKeywords < ActiveRecord::Migration[6.1]
     add_check_constraint :keywords, 'char_length(name) <= 255', name: 'char_length_name'
   end
 end
-

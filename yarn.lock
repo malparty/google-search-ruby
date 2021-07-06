@@ -925,6 +925,11 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@popperjs/core@2.9.2":
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.2.tgz#adea7b6953cbb34651766b0548468e743c6a2353"
+  integrity sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
+
 "@rails/actioncable@^6.0.0":
   version "6.1.3"
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.1.3.tgz#c8a67ec4d22ecd6931f7ebd98143fddbc815419a"
@@ -1538,18 +1543,23 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
-bootstrap.native@3.0.13:
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/bootstrap.native/-/bootstrap.native-3.0.13.tgz#95c6ed59c3dcb180643d140a1e9095d35a246c9d"
-  integrity sha512-8df8/6+zXDxolYCIn7QNsQ+3NozgNmMfBgSyOolhs0GDUWyG6MfM3oGv7GsOfFbQRjBL7VFqQ1KJuBb/uW/HXA==
-  dependencies:
-    minifill "^0.0.8"
-    shorter-js "^0.1.7"
+bootstrap-icons@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-icons/-/bootstrap-icons-1.5.0.tgz#2cb19da148aa9105cb3174de2963564982d3dc55"
+  integrity sha512-44feMc7DE1Ccpsas/1wioN8ewFJNquvi5FewA06wLnqct7CwMdGDVy41ieHaacogzDqLfG8nADIvMNp9e4bfbA==
 
-bootstrap@4.5.2:
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.5.2.tgz#a85c4eda59155f0d71186b6e6ad9b875813779ab"
-  integrity sha512-vlGn0bcySYl/iV+BGA544JkkZP5LB3jsmkeKLFQakCOwCM3AOk7VkldBz4jrzSe+Z0Ezn99NVXa1o45cQY4R6A==
+bootstrap.native@4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/bootstrap.native/-/bootstrap.native-4.0.3.tgz#1e958f65c27b2d6914750d13fba18343deeecf3a"
+  integrity sha512-BhWTiU1mjltvFJ+q+OfmR3pUvAA31R85s0gP3U4uyIYZA5I3W6dVyTG48jPcJ5662drMAHh2ZeGwXeCR0HrY1g==
+  dependencies:
+    minifill "^0.0.16"
+    shorter-js "^0.2.1"
+
+bootstrap@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.0.2.tgz#aff23d5e0e03c31255ad437530ee6556e78e728e"
+  integrity sha512-1Ge963tyEQWJJ+8qtXFU6wgmAVj9gweEjibUdbmcCEYsn38tVwRk8107rk2vzt6cfQcRr3SlZ8aQBqaD8aqf+Q==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -4334,10 +4344,10 @@ mini-css-extract-plugin@^0.9.0:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
-minifill@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/minifill/-/minifill-0.0.8.tgz#c6ecef302bee672352986d89257b3c18fc7a9ce5"
-  integrity sha512-DOw02Fev6xB40wyie/YJtnIhY0eI+iQ7aBQlSVkOy5OKlFAxob6uG301uvJyMT7F1OeMGfbDexOTabL3uLid1g==
+minifill@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/minifill/-/minifill-0.0.16.tgz#1999956127379e435b6653f3d3f2b70d64544789"
+  integrity sha512-ya61lgDqSRlaOVbD8neOkZMpMpmbfCbRewzJ/rfzc9nbisFthip3YcmBBL3fu+gneIKTrzcOG7mDysJh5ZDjqQ==
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -6301,10 +6311,10 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
-shorter-js@^0.1.7:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/shorter-js/-/shorter-js-0.1.9.tgz#7ed28450da098981a996dd00b727eba63b0ab649"
-  integrity sha512-b6EiexnULDtfzUv9RU7MHybfz59MMjCAptNKCKDrsTHQv1r+IdJCxtnaVLZkWZpGW5k4Bld0SSGGMEvZfenYbw==
+shorter-js@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/shorter-js/-/shorter-js-0.2.1.tgz#e1c5e4730cec60eaeac2c58961d1cf930bc39337"
+  integrity sha512-C5w9DWKgmtduDIm+sPreDHBnXJ9mbT6g6ARhcqIQ4Ys7Zj8gqmfvIPX6YoW0tXXdCnL/xlni24CWTFXm4GCecA==
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"

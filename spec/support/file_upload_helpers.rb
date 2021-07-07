@@ -5,7 +5,7 @@ module FileUploadHelpers
     def save_csv_file(file_name)
       form = CSVUploadForm.new(Fabricate(:user))
 
-      saved = form.save({ csv_upload_form: { file: uploaded_file(file_name) } })
+      saved = form.save(uploaded_file(file_name))
 
       [form, saved]
     end

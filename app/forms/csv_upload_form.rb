@@ -13,8 +13,8 @@ class CSVUploadForm
     @user = user
   end
 
-  def save(params)
-    @file = params[:csv_upload_form][:file]
+  def save(file)
+    @file = file
 
     return false unless valid?
 

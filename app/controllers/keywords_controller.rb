@@ -13,7 +13,7 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    if csv_form.save(create_params)
+    if csv_form.save(create_params[:csv_upload_form][:file])
       flash[:success] = I18n.t('csv.upload_success')
     else
       flash[:errors] = csv_form.errors.full_messages

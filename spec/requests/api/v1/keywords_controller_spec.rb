@@ -102,7 +102,7 @@ describe API::V1::KeywordsController, type: :request do
         expect(JSON.parse(response.body)['errors'].keys).to contain_exactly('details', 'code', 'status')
       end
 
-      it 'respond with a 422 Unprocessable Entity status code' do
+      it 'respondS with a 422 Unprocessable Entity status code' do
         create_token_header
 
         post :create, params: file_params('too_many_keywords.csv')

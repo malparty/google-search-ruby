@@ -1,8 +1,0 @@
-<%= form_for(csv_form, as: CSVUploadForm, url: keywords_path, html: { method: :post, multipart: true, class: 'form-csv-upload d-inline' }) do |f| %>
-  <%= f.label :file do %>
-    <span class="btn btn-success">
-      <i class="bi bi-upload"></i>
-    </span>
-  <% end %>
-  <%= f.file_field :file, required: true, class: 'form-control', style: 'display:none;' %>
-<% end %>

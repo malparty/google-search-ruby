@@ -37,7 +37,7 @@
   </div>
   <div class="row">
     <a class="btn btn-link"
-       data-toggle="collapse"
+       data-bs-toggle="collapse"
        href="#newPassword"
        role="button"
        aria-expanded="false"
@@ -64,7 +64,7 @@
       </div>
     </div>
   </div>
-
-  <%= f.submit t('update'), class: 'btn btn-primary btn-block' %>
-
+  <div class="mt-2 d-grid gap-2">
+    <%= f.submit t('update'), class: 'btn btn-primary' %>
+  </div>
 <% end %>

@@ -83,4 +83,58 @@ describe API::V1::KeywordsController, type: :request do
       end
     end
   end
+
+  describe 'POST #create' do
+    context 'given an invalid file' do
+      it 'does not save any new keyword' do
+        create_token_header
+
+        params = file_params 'too_many_keywords.csv'
+
+        expect { post :create, params: params }.to change(Keyword, :count).by(0)
+      end
+
+      it 'returns an errors object' do
+        create_token_header
+
+        post :create, params: file_params('too_many_keywords.csv')
+
+        expect(JSON.parse(response.body)['errors'].keys).to contain_exactly('details', 'code', 'status')
+      end
+
+      it 'respond with a 422 Unprocessable Entity status code' do
+        create_token_header
+
+        post :create, params: file_params('too_many_keywords.csv')
+
+        expect(response.status).to eq(422)
+      end
+    end
+
+    context 'given a valid file' do
+      it 'saves the keywords in the DB' do
+        create_token_header
+
+        params = file_params 'valid.csv'
+
+        expect { post :create, params: params }.to change(Keyword, :count).by(8)
+      end
+
+      it 'returns a success meta message' do
+        create_token_header
+
+        post :create, params: file_params('valid.csv')
+
+        expect(JSON.parse(response.body)['meta']).to eq(I18n.t('csv.upload_success'))
+      end
+
+      it 'responds with a 200 OK status code' do
+        create_token_header
+
+        post :create, params: file_params('valid.csv')
+
+        expect(response.status).to eq(200)
+      end
+    end
+  end
 end

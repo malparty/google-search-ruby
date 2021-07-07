@@ -16,7 +16,11 @@ module API
         if csv_form.save(create_params[:file])
           render json: success_create
         else
-          render json: build_error(detail: csv_form.errors.full_messages, code: :invalid_file)
+          render_errors(
+            details: csv_form.errors.full_messages,
+            code: :invalid_file,
+            status: :unprocessable_entity
+          )
         end
       end
 

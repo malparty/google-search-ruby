@@ -6,7 +6,9 @@
   </div>
   <ul class="list-inline mb-0">
     <% group_keywords.each do |keyword| %>
-      <li class="list-inline-item list-keyword-item"><%= keyword.name %></li>
+      <li class="list-inline-item list-keyword-item">
+        <%= link_to keyword.name, keyword_path(keyword.id), data: { turbo_frame: 'keyword_show' } %>
+      </li>
     <% end %>
   </ul>
 </div>

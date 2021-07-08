@@ -12,6 +12,12 @@ class KeywordsController < ApplicationController
     }
   end
 
+  def show
+    render locals: {
+      keyword: current_user.keywords.find(show_params[:id])
+    }
+  end
+
   def create
     if csv_form.save(create_params[:csv_upload_form][:file])
       flash[:success] = I18n.t('csv.upload_success')
@@ -34,5 +40,9 @@ class KeywordsController < ApplicationController
 
   def create_params
     params.permit(csv_upload_form: [:file])
+  end
+
+  def show_params
+    params.permit(:id)
   end
 end

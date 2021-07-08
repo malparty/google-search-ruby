@@ -1,4 +1,5 @@
 import CSVUploadForm from '../../components/CSVUploadForm';
+import KeywordCanvas from '../../components/KeywordCanvas';
 
 const SELECTORS = {
   screen: '.screen-keywords',
@@ -16,6 +17,7 @@ class KeywordsScreen {
 
   _setup() {
     new CSVUploadForm(this.csvUploadForm);
+    new KeywordCanvas();
   }
 }
 

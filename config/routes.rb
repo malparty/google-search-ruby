@@ -7,8 +7,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: :registrations }
 
-  resources :keywords, only: [:index, :create]
-  resources :filters, only: :index
+  resources :keywords, only: [:index, :create, :show]
 
   resources :filters, only: :index
 

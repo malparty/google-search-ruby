@@ -18,8 +18,8 @@
         </form>
         <div class="text-end">
           <%= yield :header_nav_bar %>
-          <%= link_to t('my_profile'), edit_user_registration_path, method: :get, class: 'btn btn-outline-light' %>
-          <%= link_to t('auth.logout'), destroy_user_session_path, method: :delete, class: 'btn btn-warning me-2' %>
+          <%= link_to t('my_profile'), edit_user_registration_path, class: 'btn btn-outline-light' %>
+          <%= button_to t('auth.logout'), destroy_user_session_path, data:{turbo: 'false'}, method: :delete, form_class: 'd-inline', class: 'btn btn-warning me-2' %>
         </div>
       <% end %>
     </div>

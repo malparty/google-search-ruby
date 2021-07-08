@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-describe 'csv upload form', type: :system do
+describe 'CSV Upload Form', type: :system do
   describe 'keywords#index' do
-    context 'when user reach the home page' do
+    context 'when user reaches the homepage' do
       it 'displays the file upload form', authenticated_user: true do
         visit root_path
 
@@ -14,14 +14,14 @@ describe 'csv upload form', type: :system do
   end
 
   describe 'keywords#create' do
-    context 'given a valid csv file' do
+    context 'given a valid CSV file' do
       it 'redirects to the homepage', authenticated_user: true do
         submit_file 'valid.csv'
 
         expect(page).to have_current_path(keywords_path)
       end
 
-      it 'displays an upload success message', authenticated_user: true do
+      it 'displays the upload_success message', authenticated_user: true do
         submit_file 'valid.csv'
 
         expect(find('.alert.alert-success')).to have_content(I18n.t('csv.upload_success'))

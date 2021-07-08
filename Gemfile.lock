@@ -439,6 +439,8 @@ GEM
     thor (1.1.0)
     tilt (2.0.10)
     timecop (0.9.4)
+    turbo-rails (0.5.12)
+      rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     undercover (0.4.3)
@@ -535,6 +537,7 @@ DEPENDENCIES
   spring-commands-rspec
   spring-watcher-listen (= 2.0.1)
   timecop
+  turbo-rails
   tzinfo-data
   undercover
   vcr

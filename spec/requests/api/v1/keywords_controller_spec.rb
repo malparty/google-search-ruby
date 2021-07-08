@@ -13,9 +13,7 @@ describe API::V1::KeywordsController, type: :request do
     end
 
     context 'when keyword_list is empty' do
-      it 'returns an empty data array' do
-        create_token_header(Fabricate(:user))
-
+      it 'returns an empty data array', authenticated_api_user: true do
         get :index
 
         expect(JSON.parse(response.body)['data'].count).to eq(0)
@@ -34,7 +32,7 @@ describe API::V1::KeywordsController, type: :request do
         expect(JSON.parse(response.body)['data'].count).to eq(50)
       end
 
-      it 'returns the total pages meta info' do
+      it 'returns the total_pages meta info' do
         user = Fabricate(:user)
         Fabricate.times(51, :keyword, user: user)
 
@@ -86,25 +84,19 @@ describe API::V1::KeywordsController, type: :request do
 
   describe 'POST #create' do
     context 'given an invalid file' do
-      it 'does not save any new keyword' do
-        create_token_header
-
+      it 'does not save any new keyword', authenticated_api_user: true do
         params = file_params 'too_many_keywords.csv'
 
         expect { post :create, params: params }.to change(Keyword, :count).by(0)
       end
 
-      it 'returns an errors object' do
-        create_token_header
-
+      it 'returns an errors object', authenticated_api_user: true do
         post :create, params: file_params('too_many_keywords.csv')
 
         expect(JSON.parse(response.body)['errors'].keys).to contain_exactly('details', 'code', 'status')
       end
 
-      it 'responds with a 422 Unprocessable Entity status code' do
-        create_token_header
-
+      it 'responds with a 422 Unprocessable Entity status code', authenticated_api_user: true do
         post :create, params: file_params('too_many_keywords.csv')
 
         expect(response.status).to eq(422)
@@ -112,25 +104,19 @@ describe API::V1::KeywordsController, type: :request do
     end
 
     context 'given a valid file' do
-      it 'saves the keywords in the DB' do
-        create_token_header
-
+      it 'saves the keywords in the DB', authenticated_api_user: true do
         params = file_params 'valid.csv'
 
         expect { post :create, params: params }.to change(Keyword, :count).by(8)
       end
 
-      it 'returns a success meta message' do
-        create_token_header
-
+      it 'returns the upload_success meta message', authenticated_api_user: true do
         post :create, params: file_params('valid.csv')
 
         expect(JSON.parse(response.body)['meta']).to eq(I18n.t('csv.upload_success'))
       end
 
-      it 'responds with a 200 OK status code' do
-        create_token_header
-
+      it 'responds with a 200 OK status code', authenticated_api_user: true do
         post :create, params: file_params('valid.csv')
 
         expect(response.status).to eq(200)

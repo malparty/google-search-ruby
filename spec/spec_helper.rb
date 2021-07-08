@@ -10,6 +10,10 @@ RSpec.configure do |config|
     sign_in Fabricate(:user)
   end
 
+  config.before(:each, authenticated_api_user: true) do
+    create_token_header
+  end
+
   config.mock_with :rspec do |mocks|
     # Prevents you from mocking or stubbing a method that does not exist on
     # a real object. This is generally recommended, and will default to

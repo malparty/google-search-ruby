@@ -2,7 +2,7 @@
 
 class KeywordsQuery
   def initialize(user)
-    @keywords = user.keywords
+    @keywords = user.keywords.select(Keyword.column_names.excluding('html'))
   end
 
   def call

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_07_115300) do
+ActiveRecord::Schema.define(version: 2021_07_09_035106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -22,8 +22,19 @@ ActiveRecord::Schema.define(version: 2021_07_07_115300) do
     t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "discarded_at"
+    t.integer "status", default: 0, null: false
+    t.integer "ads_top_count"
+    t.integer "ads_page_count"
+    t.integer "non_ads_result_count"
+    t.integer "total_link_count"
+    t.text "html"
+    t.index ["ads_page_count"], name: "index_keywords_on_ads_page_count"
+    t.index ["ads_top_count"], name: "index_keywords_on_ads_top_count"
     t.index ["discarded_at"], name: "index_keywords_on_discarded_at"
     t.index ["name"], name: "index_keywords_on_name"
+    t.index ["non_ads_result_count"], name: "index_keywords_on_non_ads_result_count"
+    t.index ["status"], name: "index_keywords_on_status"
+    t.index ["total_link_count"], name: "index_keywords_on_total_link_count"
     t.index ["user_id"], name: "index_keywords_on_user_id"
     t.check_constraint "char_length((name)::text) <= 255", name: "char_length_name"
   end
@@ -56,6 +67,17 @@ ActiveRecord::Schema.define(version: 2021_07_07_115300) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "result_links", force: :cascade do |t|
+    t.bigint "keyword_id", null: false
+    t.integer "link_type", null: false
+    t.citext "url", null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["keyword_id"], name: "index_result_links_on_keyword_id"
+    t.index ["link_type"], name: "index_result_links_on_link_type"
+    t.index ["url"], name: "index_result_links_on_url"
+  end
+
   create_table "users", force: :cascade do |t|
     t.citext "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -76,4 +98,5 @@ ActiveRecord::Schema.define(version: 2021_07_07_115300) do
 
   add_foreign_key "keywords", "users"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "result_links", "keywords"
 end

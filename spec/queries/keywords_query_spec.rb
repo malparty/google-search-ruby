@@ -18,7 +18,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
       result = described_class.new(user).call
 
-      expect(result.to_a.size).to eq(3)
+      expect(result.length).to eq(3)
     end
 
     it 'orders the result by name ascending' do

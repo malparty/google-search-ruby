@@ -1,4 +1,4 @@
-class AddResultsToKeywords < ActiveRecord::Migration[6.1]
+class AddStatusAdsTopCountAdsPageCountNonAdsResultCountTotalLinkCountHtmlToKeywords < ActiveRecord::Migration[6.1]
   def change
     add_column :keywords, :status, :integer, default: 0, null: false
     add_column :keywords, :ads_top_count, :integer
@@ -12,16 +12,5 @@ class AddResultsToKeywords < ActiveRecord::Migration[6.1]
     add_index :keywords, :ads_page_count
     add_index :keywords, :non_ads_result_count
     add_index :keywords, :total_link_count
-
-    create_table :result_links do |t|
-      t.references :keyword, foreign_key: true, null: false
-      t.integer :link_type, null: false
-      t.citext :url, null: false
-
-      t.timestamps
-    end
-
-    add_index :result_links, :link_type
-    add_index :result_links, :url
   end
 end

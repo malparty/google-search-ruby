@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(version: 2021_07_07_115300) do
     t.bigint "keyword_id", null: false
     t.integer "link_type", null: false
     t.citext "url", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["keyword_id"], name: "index_result_links_on_keyword_id"
     t.index ["link_type"], name: "index_result_links_on_link_type"
     t.index ["url"], name: "index_result_links_on_url"

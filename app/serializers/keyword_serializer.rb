@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-class KeywordSerializer
-  include JSONAPI::Serializer
-
-  attributes :name, :created_at, :status, :ads_top_count, :ads_page_count, :non_ads_result_count, :total_link_count
+class KeywordSerializer < KeywordsSerializer
+  attributes :html, :result_links
 end

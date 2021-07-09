@@ -9,7 +9,11 @@ module API
       def index
         pagy, keywords_list = pagy(keywords)
 
-        render json: KeywordSerializer.new(keywords_list, pagy_options(pagy))
+        render json: KeywordsSerializer.new(keywords_list, pagy_options(pagy))
+      end
+
+      def show
+        render json: KeywordSerializer.new(current_user.keywords.find(show_params[:id]))
       end
 
       def create
@@ -42,6 +46,10 @@ module API
         {
           meta: I18n.t('csv.upload_success')
         }
+      end
+
+      def show_params
+        params.permit(:id)
       end
     end
   end

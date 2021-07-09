@@ -13,7 +13,9 @@ module API
       end
 
       def show
-        render json: KeywordSerializer.new(current_user.keywords.find(show_params[:id]))
+        keyword = current_user.keywords.find show_params[:id]
+
+        render json: KeywordSerializer.new(keyword, include: [:result_links])
       end
 
       def create

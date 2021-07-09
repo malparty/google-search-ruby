@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
 class KeywordSerializer < KeywordsSerializer
-  attributes :html, :result_links
+  attribute :html
+
+  has_many :result_links
 end

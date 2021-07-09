@@ -3,7 +3,5 @@
 class ResultLinkSerializer
   include JSONAPI::Serializer
 
-  attributes :link_type, :url, :created_at
-
-  belongs_to :keyword
+  attributes :url, :link_type, :created_at
 end

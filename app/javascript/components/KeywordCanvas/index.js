@@ -8,7 +8,7 @@ const TOGGLING_CANVAS_CLASS = 'offcanvas-toggling';
 
 const TURBO_CLICK_EVENT = 'turbo:click';
 
-const KEYWORD_FRAME = 'keyword_show';
+const KEYWORD_FRAME = 'frame_keyword_show';
 
 class KeywordCanvas {
   constructor() {

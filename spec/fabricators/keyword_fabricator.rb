@@ -5,7 +5,7 @@ Fabricator(:keyword) do
   user { Fabricate(:user) }
 end
 
-Fabricator(:keyword_with_result, from: :keyword) do
+Fabricator(:keyword_parsed, from: :keyword) do
   status :parsed
 
   ads_top_count { FFaker.rand 6 }
@@ -14,6 +14,8 @@ Fabricator(:keyword_with_result, from: :keyword) do
   total_link_count { |attrs| FFaker.rand(30) + attrs[:non_ads_result_count] }
 
   html { FFaker::HTMLIpsum.body }
+end
 
+Fabricator(:keyword_parsed_with_links, from: :keyword_parsed) do
   result_links(count: FFaker.rand(10))
 end

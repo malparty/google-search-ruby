@@ -123,4 +123,126 @@ describe API::V1::KeywordsController, type: :request do
       end
     end
   end
+
+  describe 'GET #show' do
+    context 'given an unparsed keyword' do
+      it 'has the keyword type' do
+        keyword = Fabricate(:keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:type]).to eq('keyword')
+      end
+
+      it 'has a pending status' do
+        keyword = Fabricate(:keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:attributes][:status]).to eq('pending')
+      end
+
+      it 'has a name' do
+        keyword = Fabricate(:keyword, name: 'specific_name')
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:attributes][:name]).to eq('specific_name')
+      end
+
+      it 'has a nil html attribute' do
+        keyword = Fabricate(:keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:attributes][:html]).to be_nil
+      end
+    end
+
+    context 'given a parsed keyword without result_links' do
+      it 'has an empty result_links relationship' do
+        keyword = Fabricate(:keyword_parsed)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:relationships][:result_links][:data]).to be_empty
+      end
+
+      it 'has an empty included element' do
+        keyword = Fabricate(:keyword_parsed)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:included]).to be_empty
+      end
+    end
+
+    context 'given a parsed keyword with 5 result_links' do
+      it 'counts 5 included items' do
+        keyword = Fabricate(:keyword_parsed)
+
+        keyword.result_links = Fabricate.times(5, :result_link, keyword: keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:included].length).to eq(5)
+      end
+
+      it 'includes urls starting with http' do
+        keyword = Fabricate(:keyword_parsed)
+
+        keyword.result_links = Fabricate.times(5, :result_link, keyword: keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:included].map { |incl| incl[:attributes][:url] }).to all(start_with 'http')
+      end
+
+      it 'includes valid link_type items' do
+        keyword = Fabricate(:keyword_parsed)
+
+        keyword.result_links = Fabricate.times(5, :result_link, keyword: keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:included].map { |incl| incl[:attributes][:link_type] }).to all(eq('ads_top').or(eq('ads_page')).or(eq('non_ads')))
+      end
+    end
+
+    context 'given an invalid id' do
+      it 'returns an errors element' do
+        create_token_header(Fabricate(:user))
+
+        get :show, params: { id: 0 }
+
+        expect(json_response.keys).to include(:errors)
+      end
+
+      it 'returns a 404 Not Found status code' do
+        create_token_header(Fabricate(:user))
+
+        get :show, params: { id: 0 }
+
+        expect(response.status).to eq(404)
+      end
+    end
+  end
 end

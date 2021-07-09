@@ -8,7 +8,7 @@
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
-# It"s strongly recommended that you check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2021_07_07_115300) do
 
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2021_07_07_115300) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
-    t.string "last_name"""
+    t.string "last_name"
     t.boolean "is_admin", default: false, null: false
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_users_on_discarded_at"

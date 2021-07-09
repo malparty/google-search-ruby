@@ -1,5 +1,5 @@
 <section class="list-keyword" data-turbo="true">
-  <%= turbo_frame_tag 'list_keywords' do %>
+  <%= turbo_frame_tag 'frame_list_keywords' do %>
     <% if keywords.groups.any? %>
       <% keywords.groups.each do |group_key, group_keywords| %>
         <%= render 'list_keywords_group', group_key: group_key, group_keywords: group_keywords %>

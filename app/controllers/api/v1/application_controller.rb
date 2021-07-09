@@ -20,6 +20,10 @@ module API
         )
       end
 
+      rescue_from ::ActiveRecord::RecordNotFound do
+        render_error(I18n.t('record_not_found'), status: :not_found)
+      end
+
       private
 
       # helper method to access the current user from the token

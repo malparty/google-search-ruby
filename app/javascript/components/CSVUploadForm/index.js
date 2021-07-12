@@ -5,7 +5,7 @@ const SELECTORS = {
 class CSVUploadForm {
   constructor(csvUploadForm) {
     this.csvUploadForm = csvUploadForm;
-    this.fileInput = csvUploadForm.querySelector(SELECTORS.fileInput)
+    this.fileInput = csvUploadForm.querySelector(SELECTORS.fileInput);
 
     this._setup();
   }
@@ -17,11 +17,11 @@ class CSVUploadForm {
   }
 
   _registerOnFileChangeEvent() {
-    document.addEventListener('DOMContentLoaded', () => {
-      // Csv File upload form - submit when file selected
-      this.fileInput.onchange = () => {
-        this.csvUploadForm.submit();
-      };
-    });
+    // Submit form when a file is selected
+    this.fileInput.onchange = () => {
+      this.csvUploadForm.submit();
+    };
   }
 }
+
+export default CSVUploadForm;

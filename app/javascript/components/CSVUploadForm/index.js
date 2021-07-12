@@ -1,11 +1,11 @@
 const SELECTORS = {
-  fileInput: '#csv_upload_form_file'
+  fileInput: '.form-csv-upload__input-file'
 };
 
 class CSVUploadForm {
-  constructor(csvUploadForm) {
-    this.csvUploadForm = csvUploadForm;
-    this.fileInput = csvUploadForm.querySelector(SELECTORS.fileInput);
+  constructor(elementRef) {
+    this.csvUploadForm = elementRef;
+    this.fileInput = elementRef.querySelector(SELECTORS.fileInput);
 
     this._setup();
   }

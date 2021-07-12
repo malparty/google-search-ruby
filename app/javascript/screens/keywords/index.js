@@ -1,11 +1,11 @@
 import CSVUploadForm from '../../components/CSVUploadForm';
 
 const SELECTORS = {
-  screen: '#screen_keywords',
-  csvUploadForm: '#new_CSVUploadForm'
+  screen: '.screen-keyword',
+  csvUploadForm: '.form-csv-upload'
 };
 
-class KeywordsScreen {
+class KeywordScreen {
   constructor() {
     this.csvUploadForm = document.querySelector(SELECTORS.csvUploadForm);
 
@@ -20,9 +20,9 @@ class KeywordsScreen {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const isKeywordsScreen = document.querySelector(SELECTORS.screen) !== null;
+  const isKeywordScreen = document.querySelector(SELECTORS.screen) !== null;
 
-  if (isKeywordsScreen) {
-    new KeywordsScreen();
+  if (isKeywordScreen) {
+    new KeywordScreen();
   }
 });

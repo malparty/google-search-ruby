@@ -1,7 +1,7 @@
 import CSVUploadForm from '../../components/CSVUploadForm';
 
 const SELECTORS = {
-  screen: '#screen_keywords',
+  screen: '.screen-keywords',
   csvUploadForm: '#new_CSVUploadForm'
 };
 

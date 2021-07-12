@@ -35,6 +35,11 @@ en:
     token_revoked: 'If your token was valid, it has been revoked'
   keywords:
     could_not_query: 'An error occurs when performing the Google Search, please try again.'
+    empty_list: 'You do not have any keyword yet.'
+  pagy:
+    errors:
+      overflow: 'There are not that many pages here! Max page is %{max_page}'
+      variable: 'The page you try to access does not exist.'
   auth:
     logout: 'Sign out'
     sign_up: 'Sign up'
@@ -42,6 +47,12 @@ en:
     cancel_my_account: 'Cancel my account'
     forgot_password: 'Forgot your password?'
     btn_reset_password : 'Send me reset password instructions'
+  csv:
+    upload_success: 'Your file has been uploaded!'
+    validation:
+      wrong_count: 'The csv file should contain between 1 and 1000 keywords'
+      wrong_type: 'Please ensure the provided file type is csv'
+      bad_keyword_length: 'One or many keywords excess the max length of 255 characters.'
   min_char: 'characters minimum'
   confirm: 'Are you sure?'
   update: 'Update'
@@ -49,5 +60,3 @@ en:
   waiting_confirmation_for: 'Currently waiting confirmation for'
   forgot_password: 'Forgot your password?'
   my_profile: 'My Profile'
-  keywords:
-    empty_list: 'You do not have any keyword yet.'

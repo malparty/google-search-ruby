@@ -25,10 +25,10 @@ module Google
       {
         ads_top_count: ads_top_count,
         ads_page_count: ads_page_count,
-        ads_top_url: ads_top_url,
-        ads_page_url: ads_page_url,
+        ads_top_urls: ads_top_urls,
+        ads_page_urls: ads_page_urls,
         non_ads_result_count: non_ads_result_count,
-        non_ads_url: non_ads_url,
+        non_ads_urls: non_ads_urls,
         total_link_count: total_link_count,
         html: html
       }
@@ -46,11 +46,11 @@ module Google
       document.css(".#{ADWORDS_CLASS}").count
     end
 
-    def ads_top_url
+    def ads_top_urls
       document.css("##{AD_CONTAINER_ID} .#{ADWORDS_CLASS}").map { |a_tag| a_tag['href'] }
     end
 
-    def ads_page_url
+    def ads_page_urls
       document.css(".#{ADWORDS_CLASS}").map { |a_tag| a_tag['href'] }
     end
 
@@ -58,7 +58,7 @@ module Google
       document.css(NON_ADS_RESULT_SELECTOR).count
     end
 
-    def non_ads_url
+    def non_ads_urls
       document.css(NON_ADS_RESULT_SELECTOR).map { |a_tag| a_tag['href'] }
     end
 

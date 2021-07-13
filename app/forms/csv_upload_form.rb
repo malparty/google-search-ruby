@@ -5,7 +5,7 @@ require 'csv'
 class CSVUploadForm
   include ActiveModel::Validations
 
-  attr_reader :file
+  attr_reader :file, :results
 
   validates_with CSVValidator
 
@@ -21,7 +21,7 @@ class CSVUploadForm
     begin
       Keyword.transaction do
         # rubocop:disable Rails/SkipsModelValidations
-        user.keywords.insert_all parsed_keywords
+        @results = user.keywords.insert_all(parsed_keywords, returning: %w[id name]).to_a
         # rubocop:enable Rails/SkipsModelValidations
       end
     rescue ActiveRecord::StatementInvalid

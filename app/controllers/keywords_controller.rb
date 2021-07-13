@@ -13,7 +13,9 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    if csv_form.save(create_params[:csv_upload_form][:file])
+    if save_csv_file
+      Google::DistributeSearchJob.perform_later(csv_form.results)
+
       flash[:success] = I18n.t('csv.upload_success')
     else
       flash[:errors] = csv_form.errors.full_messages
@@ -30,6 +32,10 @@ class KeywordsController < ApplicationController
 
   def csv_form
     @csv_form ||= CSVUploadForm.new(current_user)
+  end
+
+  def save_csv_file
+    csv_form.save(create_params[:csv_upload_form][:file])
   end
 
   def create_params

@@ -20,6 +20,8 @@ module Google
       update_keyword_status keyword, :failed
 
       raise
+    ensure
+      SearchProgressJob.perform_now keyword.user_id
     end
 
     private

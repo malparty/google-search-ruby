@@ -18,6 +18,8 @@ module Google
       job_failed keyword.id
 
       raise e
+    ensure
+      SearchProgressJob.perform_now keyword.user_id
     end
 
     private

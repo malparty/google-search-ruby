@@ -9,13 +9,13 @@ module API
       def index
         pagy, keywords_list = pagy(keywords)
 
-        render json: KeywordsSerializer.new(keywords_list, pagy_options(pagy))
+        render json: KeywordSerializer.new(keywords_list, pagy_options(pagy))
       end
 
       def show
         keyword = current_user.keywords.find show_params[:id]
 
-        render json: KeywordSerializer.new(keyword, include: [:result_links])
+        render json: KeywordSerializer.new(keyword, include: [:result_links], params: { show: true })
       end
 
       def create

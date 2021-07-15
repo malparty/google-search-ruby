@@ -16,7 +16,42 @@ describe API::V1::KeywordsController, type: :request do
       it 'returns an empty data array', authenticated_api_user: true do
         get :index
 
-        expect(JSON.parse(response.body)['data'].count).to eq(0)
+        expect(json_response[:data].count).to eq(0)
+      end
+    end
+
+    context 'given one page of keywords' do
+      it 'returns the right number of keywords' do
+        user = Fabricate(:user)
+        Fabricate.times(15, :keyword, user: user)
+
+        create_token_header(user)
+
+        get :index
+
+        expect(json_response[:data].count).to eq(15)
+      end
+
+      it 'does not display the HTML attribute' do
+        user = Fabricate(:user)
+        Fabricate.times(15, :keyword, user: user)
+
+        create_token_header(user)
+
+        get :index
+
+        expect(json_response[:data].first[:attributes].keys).not_to include(:html)
+      end
+
+      it 'does not include any additional data such as the result_links' do
+        user = Fabricate(:user)
+        Fabricate.times(15, :keyword, user: user)
+
+        create_token_header(user)
+
+        get :index
+
+        expect(json_response[:included]).to be_nil
       end
     end
 
@@ -29,7 +64,7 @@ describe API::V1::KeywordsController, type: :request do
 
         get :index
 
-        expect(JSON.parse(response.body)['data'].count).to eq(50)
+        expect(json_response[:data].count).to eq(50)
       end
 
       it 'returns the total_pages meta info' do
@@ -40,7 +75,7 @@ describe API::V1::KeywordsController, type: :request do
 
         get :index
 
-        expect(JSON.parse(response.body)['meta']['total_pages']).to eq(2)
+        expect(json_response[:meta][:total_pages]).to eq(2)
       end
 
       it 'returns the links to related pages' do
@@ -51,7 +86,7 @@ describe API::V1::KeywordsController, type: :request do
 
         get :index
 
-        expect(JSON.parse(response.body)['links'].keys).to contain_exactly('self', 'first', 'prev', 'next', 'last')
+        expect(json_response[:links].keys).to contain_exactly(:self, :first, :prev, :next, :last)
       end
     end
 
@@ -64,7 +99,7 @@ describe API::V1::KeywordsController, type: :request do
 
         get :index, params: { page: 2 }
 
-        expect(JSON.parse(response.body)['data'].count).to eq(1)
+        expect(json_response[:data].count).to eq(1)
       end
     end
 

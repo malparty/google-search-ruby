@@ -14,7 +14,7 @@ module API
 
       def create
         if csv_form.save(create_params[:file])
-          render json: success_create
+          render json: create_success_response
 
         else
           render_errors(
@@ -39,7 +39,7 @@ module API
         params.permit(:file)
       end
 
-      def success_create
+      def create_success_response
         {
           meta: I18n.t('csv.upload_success')
         }

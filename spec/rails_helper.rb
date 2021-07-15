@@ -30,4 +30,6 @@ RSpec.configure do |config|
 
   config.include FileUploadHelpers::Form
   config.include FileUploadHelpers::System
+
+  config.include ChannelHelpers
 end

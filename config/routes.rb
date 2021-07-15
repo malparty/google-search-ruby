@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   resources :keywords, only: [:index, :create]
 
+  resources :filters, only: :index
+
   resources :users, only: :create
 
   namespace :api do

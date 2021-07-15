@@ -1,4 +1,17 @@
 <div class="container screen-keyword">
-  <%= render 'form_upload', csv_form: csv_form %>
-  <%= render 'list_keywords', keywords: keywords, pagy: pagy %>
+  <div class="row">
+    <div class="col-md-4 col-lg-3 d-md-block d-none">
+      <%= render 'filters_keywords', csv_form: csv_form %>
+    </div>
+    <div class="col-md-8 col-lg-9">
+      <%= render 'list_keywords', keywords: keywords, pagy: pagy %>
+    </div>
+  </div>
 </div>
+
+<%= render 'filters_keywords_mobile', csv_form: csv_form %>
+
+<% content_for :header_nav_bar do %>
+  <%= render 'form_upload', csv_form: csv_form %>
+  <%= render 'filters_keywords_mobile_btn' %>
+<% end %>

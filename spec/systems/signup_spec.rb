@@ -58,8 +58,7 @@ describe 'signup', type: :system do
   end
 
   context 'when an authenticated user reaches the sign up page' do
-    it 'redirects him to the root_page' do
-      sign_in(Fabricate(:user))
+    it 'redirects him to the root_page', authenticated_user: true do
       visit new_user_registration_path
 
       expect(page).to have_current_path(root_path)

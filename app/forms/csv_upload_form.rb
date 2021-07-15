@@ -25,7 +25,7 @@ class CSVUploadForm
         # rubocop:enable Rails/SkipsModelValidations
       end
     rescue ActiveRecord::StatementInvalid
-      errors.add(:keyword, I18n.t('csv.validation.bad_keyword_length'))
+      errors.add(:base, I18n.t('csv.validation.bad_keyword_length'))
     end
 
     errors.empty?

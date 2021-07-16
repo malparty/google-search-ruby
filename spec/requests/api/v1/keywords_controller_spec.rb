@@ -4,22 +4,6 @@ require 'rails_helper'
 
 describe API::V1::KeywordsController, type: :request do
   describe 'GET #index' do
-    context 'given an unauthenticated user' do
-      it 'returns a 401 status code' do
-        get :index
-
-        expect(response.status).to eq(401)
-      end
-    end
-
-    context 'when keyword_list is empty' do
-      it 'returns an empty data array', authenticated_api_user: true do
-        get :index
-
-        expect(json_response[:data].count).to eq(0)
-      end
-    end
-
     context 'given one page of keywords' do
       it 'returns the right number of keywords' do
         user = Fabricate(:user)
@@ -113,6 +97,22 @@ describe API::V1::KeywordsController, type: :request do
         get :index, params: { page: 10 }
 
         expect(response.status).to eq(422)
+      end
+    end
+
+    context 'given an unauthenticated user' do
+      it 'returns a 401 status code' do
+        get :index
+
+        expect(response.status).to eq(401)
+      end
+    end
+
+    context 'when keyword_list is empty' do
+      it 'returns an empty data array', authenticated_api_user: true do
+        get :index
+
+        expect(json_response[:data].count).to eq(0)
       end
     end
   end

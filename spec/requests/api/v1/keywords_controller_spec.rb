@@ -83,26 +83,6 @@ describe API::V1::KeywordsController, type: :request do
   end
 
   describe 'POST #create' do
-    context 'given an invalid file' do
-      it 'does not save any new keyword', authenticated_api_user: true do
-        params = file_params 'too_many_keywords.csv'
-
-        expect { post :create, params: params }.to change(Keyword, :count).by(0)
-      end
-
-      it 'returns an errors object', authenticated_api_user: true do
-        post :create, params: file_params('too_many_keywords.csv')
-
-        expect(JSON.parse(response.body)['errors'].keys).to contain_exactly('details', 'code', 'status')
-      end
-
-      it 'responds with a 422 Unprocessable Entity status code', authenticated_api_user: true do
-        post :create, params: file_params('too_many_keywords.csv')
-
-        expect(response.status).to eq(422)
-      end
-    end
-
     context 'given a valid file' do
       it 'saves the keywords in the DB', authenticated_api_user: true do
         params = file_params 'valid.csv'
@@ -120,6 +100,26 @@ describe API::V1::KeywordsController, type: :request do
         post :create, params: file_params('valid.csv')
 
         expect(response.status).to eq(200)
+      end
+    end
+
+    context 'given an invalid file' do
+      it 'does not save any new keyword', authenticated_api_user: true do
+        params = file_params 'too_many_keywords.csv'
+
+        expect { post :create, params: params }.to change(Keyword, :count).by(0)
+      end
+
+      it 'returns an errors object', authenticated_api_user: true do
+        post :create, params: file_params('too_many_keywords.csv')
+
+        expect(JSON.parse(response.body)['errors'].keys).to contain_exactly('details', 'code', 'status')
+      end
+
+      it 'responds with a 422 Unprocessable Entity status code', authenticated_api_user: true do
+        post :create, params: file_params('too_many_keywords.csv')
+
+        expect(response.status).to eq(422)
       end
     end
   end

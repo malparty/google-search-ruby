@@ -15,7 +15,6 @@ module API
       def create
         if csv_form.save(create_params[:file])
           render json: create_success_response
-
         else
           render_errors(
             details: csv_form.errors.full_messages,

@@ -26,8 +26,11 @@ RSpec.configure do |config|
 
   config.include Devise::Test::IntegrationHelpers, type: :system
 
+  config.include Devise::Test::ControllerHelpers, type: :request
+
   config.include DeviseHelpers::SystemHelpers
 
   config.include FileUploadHelpers::Form
   config.include FileUploadHelpers::System
+  config.include FileUploadHelpers::Request
 end

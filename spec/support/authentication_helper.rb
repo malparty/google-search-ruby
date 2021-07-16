@@ -13,7 +13,7 @@ module DeviseHelpers
       click_button I18n.t('auth.sign_in')
     end
 
-    def sign_in(user)
+    def sign_in_system(user)
       login_as user, scope: :user
 
       user

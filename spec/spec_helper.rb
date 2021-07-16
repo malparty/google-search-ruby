@@ -10,6 +10,10 @@ RSpec.configure do |config|
     sign_in Fabricate(:user)
   end
 
+  config.before(:each, authenticated_request_user: true) do
+    sign_in Fabricate(:user)
+  end
+
   config.before(:each, authenticated_api_user: true) do
     create_token_header
   end

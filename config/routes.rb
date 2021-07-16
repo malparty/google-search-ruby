@@ -17,7 +17,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       # User sign_up
       resources :users, only: :create
-      resources :keywords, only: :index
+
+      resources :keywords, only: [:index, :create]
 
       # OAuth2 (token, revoke, ...)
       use_doorkeeper do

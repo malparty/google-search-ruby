@@ -8,22 +8,26 @@ module Google
 
     retry_on ClientServiceError, ArgumentError
 
-    def perform(keyword)
-      html_result = ClientService.new(keyword: keyword['name']).call
+    def perform(keyword_id)
+      keyword = Keyword.where(id: keyword_id).select(:id, :name, :user_id).take
+
+      return unless keyword
+
+      html_result = ClientService.new(keyword: keyword.name).call
 
       raise ClientServiceError unless html_result
 
-      update_keyword keyword['id'], ParserService.new(html_response: html_result).call
-    rescue ClientServiceError, ArgumentError => e
-      job_failed keyword['id']
+      update_keyword keyword_id, ParserService.new(html_response: html_result).call
+    rescue ActiveRecord::RecordNotFound, ClientServiceError, ArgumentError
+      update_keyword_status keyword_id, :failed
 
-      raise e
+      raise
     end
 
     private
 
-    def job_failed(keyword_id)
-      Keyword.update keyword_id, status: :failed
+    def update_keyword_status(keyword_id, status)
+      Keyword.update keyword_id, status: status
     end
 
     def update_keyword(keyword_id, attributes)

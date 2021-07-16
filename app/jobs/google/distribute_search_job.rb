@@ -4,9 +4,9 @@ module Google
   class DistributeSearchJob < ApplicationJob
     queue_as :default
 
-    def perform(keywords)
-      keywords.each do |keyword|
-        SearchKeywordJob.perform_later(keyword)
+    def perform(keyword_ids)
+      keyword_ids.each do |keyword_id|
+        SearchKeywordJob.perform_later(keyword_id)
       end
     end
   end

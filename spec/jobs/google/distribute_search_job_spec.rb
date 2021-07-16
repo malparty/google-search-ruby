@@ -8,13 +8,13 @@ RSpec.describe Google::DistributeSearchJob, type: :job do
   describe '#perform' do
     context 'given 3 valid keywords' do
       it 'queues a DistributedSearch job' do
-        keywords = Fabricate.times(3, :keyword).map(&:attributes)
+        keywords = Fabricate.times(3, :keyword).map(&:id)
 
         expect { described_class.perform_later keywords }.to have_enqueued_job(described_class)
       end
 
       it 'queues 3 SearchKeyword jobs' do
-        keywords = Fabricate.times(3, :keyword).map(&:attributes)
+        keywords = Fabricate.times(3, :keyword).map(&:id)
 
         expect { described_class.perform_now keywords }.to have_enqueued_job(Google::SearchKeywordJob).exactly(:thrice)
       end

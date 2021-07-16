@@ -14,7 +14,7 @@ class KeywordsController < ApplicationController
 
   def create
     if save_csv_file
-      Google::DistributeSearchJob.perform_later(csv_form.results)
+      Google::DistributeSearchJob.perform_later(csv_form.keyword_ids)
 
       flash[:success] = I18n.t('csv.upload_success')
     else

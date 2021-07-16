@@ -10,13 +10,13 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
       it 'queues the job', vcr: 'google_search/top_ads_1' do
         keyword = Fabricate(:keyword)
 
-        expect { described_class.perform_later keyword.attributes }.to have_enqueued_job(described_class)
+        expect { described_class.perform_later keyword.id }.to have_enqueued_job(described_class)
       end
 
       it 'saves all result_links in the DataBase', vcr: 'google_search/top_ads_1' do
         keyword = Fabricate(:keyword)
 
-        described_class.perform_now keyword.attributes
+        described_class.perform_now keyword.id
 
         expect(keyword.result_links.count).to eq(46)
       end
@@ -24,7 +24,7 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
       it 'sets the keyword status as parsed', vcr: 'google_search/top_ads_1' do
         keyword = Fabricate(:keyword)
 
-        described_class.perform_now keyword.attributes
+        described_class.perform_now keyword.id
 
         expect(keyword.reload.status).to eq('parsed')
       end
@@ -32,7 +32,7 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
       it 'sets the links counts with the right values', vcr: 'google_search/top_ads_1' do
         keyword = Fabricate(:keyword)
 
-        described_class.perform_now keyword.attributes
+        described_class.perform_now keyword.id
 
         keyword.reload
 
@@ -42,7 +42,7 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
       it 'sets the keyword html attribute', vcr: 'google_search/top_ads_1' do
         keyword = Fabricate(:keyword)
 
-        described_class.perform_now keyword.attributes
+        described_class.perform_now keyword.id
 
         expect(keyword.reload.html).to be_present
       end
@@ -52,7 +52,7 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
       it 'sets the keyword status as failed', vcr: 'google_search/too_many_requests' do
         keyword = Fabricate(:keyword)
 
-        described_class.perform_now keyword.attributes
+        described_class.perform_now keyword.id
 
         expect(keyword.reload.status).to eq('failed')
       end
@@ -68,7 +68,7 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
       it 'does not save any result_links', vcr: 'google_search/too_many_requests' do
         keyword = Fabricate(:keyword)
 
-        described_class.perform_now keyword.attributes
+        described_class.perform_now keyword.id
 
         expect(keyword.reload.result_links.count).to eq(0)
       end
@@ -84,7 +84,7 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
       it 'does not set the html attribute', vcr: 'google_search/too_many_requests' do
         keyword = Fabricate(:keyword)
 
-        described_class.perform_now keyword.attributes
+        described_class.perform_now keyword.id
 
         expect(keyword.reload.html).not_to be_present
       end

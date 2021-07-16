@@ -18,6 +18,12 @@ RSpec.describe CSVUploadForm, type: :form do
 
         expect(Keyword.where(name: 'dien may xanh, the gio di dong').count).to eq(1)
       end
+
+      it 'returns an array of 8 keyword_ids' do
+        form, = save_csv_file 'valid.csv'
+
+        expect(form.keyword_ids).to match_array(Keyword.select(:id).map(&:id))
+      end
     end
 
     context 'given too many keywords' do

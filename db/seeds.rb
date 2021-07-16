@@ -16,5 +16,5 @@ end
 if Rails.env.development?
   user = User.where(email: 'admin@nimblehq.co').first_or_create(Fabricate.attributes_for(:admin, email: 'admin@nimblehq.co'))
 
-  Fabricate.times(100, :keyword, user: user)
+  Fabricate.times(100, :keyword_parsed_with_links, user: user)
 end

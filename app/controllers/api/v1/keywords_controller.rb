@@ -12,6 +12,12 @@ module API
         render json: KeywordSerializer.new(keywords_list, pagy_options(pagy))
       end
 
+      def show
+        keyword = current_user.keywords.find show_params[:id]
+
+        render json: KeywordSerializer.new(keyword, include: [:result_links], params: { show: true })
+      end
+
       def create
         if csv_form.save(create_params[:file])
           render json: create_success_response
@@ -42,6 +48,10 @@ module API
         {
           meta: I18n.t('csv.upload_success')
         }
+      end
+
+      def show_params
+        params.permit(:id)
       end
     end
   end

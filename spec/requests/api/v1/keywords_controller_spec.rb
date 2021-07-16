@@ -4,19 +4,38 @@ require 'rails_helper'
 
 describe API::V1::KeywordsController, type: :request do
   describe 'GET #index' do
-    context 'given an unauthenticated user' do
-      it 'returns a 401 status code' do
+    context 'given one page of keywords' do
+      it 'returns the right number of keywords' do
+        user = Fabricate(:user)
+        Fabricate.times(15, :keyword, user: user)
+
+        create_token_header(user)
+
         get :index
 
-        expect(response.status).to eq(401)
+        expect(json_response[:data].count).to eq(15)
       end
-    end
 
-    context 'when keyword_list is empty' do
-      it 'returns an empty data array', authenticated_api_user: true do
+      it 'does not display the HTML attribute' do
+        user = Fabricate(:user)
+        Fabricate.times(15, :keyword, user: user)
+
+        create_token_header(user)
+
         get :index
 
-        expect(JSON.parse(response.body)['data'].count).to eq(0)
+        expect(json_response[:data].first[:attributes].keys).not_to include(:html)
+      end
+
+      it 'does not include any additional data such as the result_links' do
+        user = Fabricate(:user)
+        Fabricate.times(15, :keyword, user: user)
+
+        create_token_header(user)
+
+        get :index
+
+        expect(json_response[:included]).to be_nil
       end
     end
 
@@ -29,7 +48,7 @@ describe API::V1::KeywordsController, type: :request do
 
         get :index
 
-        expect(JSON.parse(response.body)['data'].count).to eq(50)
+        expect(json_response[:data].count).to eq(50)
       end
 
       it 'returns the total_pages meta info' do
@@ -40,7 +59,7 @@ describe API::V1::KeywordsController, type: :request do
 
         get :index
 
-        expect(JSON.parse(response.body)['meta']['total_pages']).to eq(2)
+        expect(json_response[:meta][:total_pages]).to eq(2)
       end
 
       it 'returns the links to related pages' do
@@ -51,7 +70,7 @@ describe API::V1::KeywordsController, type: :request do
 
         get :index
 
-        expect(JSON.parse(response.body)['links'].keys).to contain_exactly('self', 'first', 'prev', 'next', 'last')
+        expect(json_response[:links].keys).to contain_exactly(:self, :first, :prev, :next, :last)
       end
     end
 
@@ -64,7 +83,7 @@ describe API::V1::KeywordsController, type: :request do
 
         get :index, params: { page: 2 }
 
-        expect(JSON.parse(response.body)['data'].count).to eq(1)
+        expect(json_response[:data].count).to eq(1)
       end
     end
 
@@ -78,6 +97,22 @@ describe API::V1::KeywordsController, type: :request do
         get :index, params: { page: 10 }
 
         expect(response.status).to eq(422)
+      end
+    end
+
+    context 'given an unauthenticated user' do
+      it 'returns a 401 status code' do
+        get :index
+
+        expect(response.status).to eq(401)
+      end
+    end
+
+    context 'when keyword_list is empty' do
+      it 'returns an empty data array', authenticated_api_user: true do
+        get :index
+
+        expect(json_response[:data].count).to eq(0)
       end
     end
   end
@@ -120,6 +155,128 @@ describe API::V1::KeywordsController, type: :request do
         post :create, params: file_params('too_many_keywords.csv')
 
         expect(response.status).to eq(422)
+      end
+    end
+  end
+
+  describe 'GET #show' do
+    context 'given an unparsed keyword' do
+      it 'has the keyword type' do
+        keyword = Fabricate(:keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:type]).to eq('keyword')
+      end
+
+      it 'has a pending status' do
+        keyword = Fabricate(:keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:attributes][:status]).to eq('pending')
+      end
+
+      it 'has a name' do
+        keyword = Fabricate(:keyword, name: 'specific_name')
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:attributes][:name]).to eq('specific_name')
+      end
+
+      it 'has a nil html attribute' do
+        keyword = Fabricate(:keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:attributes][:html]).to be_nil
+      end
+    end
+
+    context 'given a parsed keyword without result_links' do
+      it 'has an empty result_links relationship' do
+        keyword = Fabricate(:keyword_parsed)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:data][:relationships][:result_links][:data]).to be_empty
+      end
+
+      it 'has an empty included element' do
+        keyword = Fabricate(:keyword_parsed)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:included]).to be_empty
+      end
+    end
+
+    context 'given a parsed keyword with 5 result_links' do
+      it 'counts 5 included items' do
+        keyword = Fabricate(:keyword_parsed)
+
+        keyword.result_links = Fabricate.times(5, :result_link, keyword: keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:included].length).to eq(5)
+      end
+
+      it 'includes urls starting with http' do
+        keyword = Fabricate(:keyword_parsed)
+
+        keyword.result_links = Fabricate.times(5, :result_link, keyword: keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:included].map { |incl| incl[:attributes][:url] }).to all(start_with 'http')
+      end
+
+      it 'includes valid link_type items' do
+        keyword = Fabricate(:keyword_parsed)
+
+        keyword.result_links = Fabricate.times(5, :result_link, keyword: keyword)
+
+        create_token_header(keyword.user)
+
+        get :show, params: { id: keyword.id }
+
+        expect(json_response[:included].map { |incl| incl[:attributes][:link_type] }).to all(eq('ads_top').or(eq('ads_page')).or(eq('non_ads')))
+      end
+    end
+
+    context 'given an invalid id' do
+      it 'returns an errors element' do
+        create_token_header(Fabricate(:user))
+
+        get :show, params: { id: 0 }
+
+        expect(json_response.keys).to include(:errors)
+      end
+
+      it 'returns a 404 Not Found status code' do
+        create_token_header(Fabricate(:user))
+
+        get :show, params: { id: 0 }
+
+        expect(response.status).to eq(404)
       end
     end
   end

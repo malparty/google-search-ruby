@@ -46,6 +46,16 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
 
         expect(keyword.reload.html).to be_present
       end
+
+      it 'performs a SearchProgress job with the right user id', vcr: 'google_search/top_ads_1' do
+        keyword = Fabricate(:keyword)
+
+        allow(Google::SearchProgressJob).to receive(:perform_now)
+
+        described_class.perform_now keyword.id
+
+        expect(Google::SearchProgressJob).to have_received(:perform_now).with(keyword.user_id).exactly(:once)
+      end
     end
 
     context 'given a 422 too many requests error' do
@@ -85,6 +95,17 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
 
       rescue Google::ClientServiceError
         expect(keyword.reload.html).not_to be_present
+      end
+
+      it 'performs a SearchProgress job with the right user id', vcr: 'google_search/too_many_requests' do
+        keyword = Fabricate(:keyword)
+
+        allow(Google::SearchProgressJob).to receive(:perform_now)
+
+        described_class.perform_now keyword.id
+
+      rescue Google::ClientServiceError
+        expect(Google::SearchProgressJob).to have_received(:perform_now).with(keyword.user_id).exactly(:once)
       end
     end
   end

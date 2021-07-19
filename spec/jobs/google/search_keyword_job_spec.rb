@@ -62,7 +62,7 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
 
         load 'app/jobs/google/search_keyword_job.rb'
 
-        expect(described_class).to have_received(:retry_on).with(Google::ClientServiceError, ArgumentError)
+        expect(described_class).to have_received(:retry_on).with(Google::ClientServiceError, ArgumentError, { wait: 12.seconds })
       end
 
       it 'does not save any result_links', vcr: 'google_search/too_many_requests' do

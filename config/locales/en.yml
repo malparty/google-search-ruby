@@ -36,6 +36,14 @@ en:
   keywords:
     could_not_query: 'An error occurs when performing the Google Search, please try again.'
     empty_list: 'You do not have any keyword yet.'
+    status:
+      pending: 'Pending'
+      failed: 'Failed'
+      parsed: 'Parsed'
+  result_links:
+    non_ads: 'Non ad links'
+    ads_page: 'Page ad links'
+    ads_top: 'Top ad links'
   pagy:
     errors:
       overflow: 'There are not that many pages here! Max page is %{max_page}'

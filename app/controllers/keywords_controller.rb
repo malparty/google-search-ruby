@@ -28,7 +28,7 @@ class KeywordsController < ApplicationController
     keyword = Keyword.includes(:result_links).find show_params[:id]
 
     render locals: {
-      keyword: keyword
+      presenter: KeywordPresenter.new(keyword)
     }
   end
 

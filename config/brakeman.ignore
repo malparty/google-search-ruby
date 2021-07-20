@@ -2,12 +2,43 @@
   "ignored_warnings": [
     {
       "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "12a9e8f2cbbbb7c5696285c7a7a370369ebb009dded4e715a33e18cfe5057641",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/preview/index.html.erb",
+      "line": 1,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Keyword.find(index_params[:keyword_id]).html",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PreviewController",
+          "method": "index",
+          "line": 7,
+          "file": "app/controllers/preview_controller.rb",
+          "rendered": {
+            "name": "preview/index",
+            "file": "app/views/preview/index.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "preview/index"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "note": "This HTML code is not coming from a user input but from our Google Search service -- thus it is safe."
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
       "warning_code": 106,
       "fingerprint": "c8adc1c0caf2c9251d1d8de588fb949070212d0eed5e1580aee88bab2287b772",
       "check_name": "SanitizeMethods",
       "message": "loofah gem 2.10.0 is vulnerable (CVE-2018-8048). Upgrade to 2.2.1",
       "file": "Gemfile.lock",
-      "line": 214,
+      "line": 222,
       "link": "https://github.com/flavorjones/loofah/issues/144",
       "code": null,
       "render_path": null,
@@ -17,6 +48,6 @@
       "note": "2.10.0 is HIGHER than 2.2.1, thus already patched!"
     }
   ],
-  "updated": "2021-06-18 15:28:26 +0700",
+  "updated": "2021-07-21 16:15:39 +0700",
   "brakeman_version": "5.0.1"
 }

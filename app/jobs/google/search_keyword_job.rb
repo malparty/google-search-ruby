@@ -9,7 +9,7 @@ module Google
     retry_on ClientServiceError, ArgumentError, wait: 12.seconds
 
     def perform(keyword_id)
-      keyword = Keyword.where(id: keyword_id).select(:id, :name, :user_id).take
+      keyword = Keyword.find keyword_id
 
       return unless keyword
 
@@ -17,26 +17,26 @@ module Google
 
       raise ClientServiceError unless html_result
 
-      update_keyword keyword_id, ParserService.new(html_response: html_result).call
+      update_keyword keyword, ParserService.new(html_response: html_result).call
     rescue ActiveRecord::RecordNotFound, ClientServiceError, ArgumentError
-      update_keyword_status keyword_id, :failed
+      update_keyword_status keyword, :failed
 
       raise
     end
 
     private
 
-    def update_keyword_status(keyword_id, status)
-      Keyword.update keyword_id, status: status
+    def update_keyword_status(keyword, status)
+      keyword.update! status: status
     end
 
-    def update_keyword(keyword_id, attributes)
+    def update_keyword(keyword, attributes)
       Keyword.transaction do
         # rubocop:disable Rails/SkipsModelValidations
-        Keyword.find(keyword_id).result_links.insert_all attributes[:result_links]
+        keyword.result_links.insert_all attributes[:result_links]
         # rubocop:enable Rails/SkipsModelValidations
 
-        Keyword.update keyword_id, attributes.except(:result_links)
+        keyword.update! attributes.except(:result_links)
       end
     end
   end

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   resources :filters, only: :index
 
+  resources :preview, only: :show
+
   resources :users, only: :create
 
   namespace :api do

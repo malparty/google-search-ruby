@@ -6,8 +6,6 @@ module Google
   class SearchKeywordJob < ApplicationJob
     queue_as :default
 
-    retry_on ClientServiceError, ArgumentError, wait: 12.seconds
-
     def perform(keyword_id)
       keyword = Keyword.find keyword_id
 

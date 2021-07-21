@@ -54,15 +54,8 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
 
         described_class.perform_now keyword.id
 
+      rescue Google::ClientServiceError
         expect(keyword.reload.status).to eq('failed')
-      end
-
-      it 'retries the job when an error is raised' do
-        allow(described_class).to receive(:retry_on)
-
-        load 'app/jobs/google/search_keyword_job.rb'
-
-        expect(described_class).to have_received(:retry_on).with(Google::ClientServiceError, ArgumentError, { wait: 12.seconds })
       end
 
       it 'does not save any result_links', vcr: 'google_search/too_many_requests' do
@@ -70,12 +63,16 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
 
         described_class.perform_now keyword.id
 
+      rescue Google::ClientServiceError
         expect(keyword.reload.result_links.count).to eq(0)
       end
 
       it 'does not set any result count', vcr: 'google_search/too_many_requests' do
         keyword = Fabricate(:keyword)
 
+        described_class.perform_now keyword.id
+
+      rescue Google::ClientServiceError
         keyword.reload
 
         expect([keyword.ads_top_count, keyword.ads_page_count, keyword.non_ads_result_count]).to all(be_nil)
@@ -86,6 +83,7 @@ RSpec.describe Google::SearchKeywordJob, type: :job do
 
         described_class.perform_now keyword.id
 
+      rescue Google::ClientServiceError
         expect(keyword.reload.html).not_to be_present
       end
     end

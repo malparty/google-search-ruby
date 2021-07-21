@@ -35,7 +35,7 @@ class KeywordsController < ApplicationController
   private
 
   def keywords
-    KeywordsQuery.new(current_user).call
+    KeywordsQuery.new(current_user).call(index_params)
   end
 
   def csv_form
@@ -44,6 +44,9 @@ class KeywordsController < ApplicationController
 
   def save_csv_file
     csv_form.save(create_params[:csv_upload_form][:file])
+
+  def index_params
+    params.permit(KeywordsQuery::QUERY_PARAMS)
   end
 
   def create_params

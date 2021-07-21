@@ -3,44 +3,132 @@
 require 'rails_helper'
 
 RSpec.describe KeywordsQuery, type: :query do
-  context 'given a user with no keywords' do
-    it 'returns an empty collection' do
-      result = described_class.new(Fabricate(:user)).call
+  context 'given no param' do
+    context 'given a user with no keywords' do
+      it 'returns an empty collection' do
+        result = described_class.new(Fabricate(:user)).call
 
-      expect(result).to be_empty
+        expect(result).to be_empty
+      end
+    end
+
+    context 'given a user with 3 keywords' do
+      it 'returns exactly 3 keywords' do
+        user = Fabricate(:user)
+        Fabricate.times(3, :keyword, user: user)
+
+        result = described_class.new(user).call
+
+        expect(result.length).to eq(3)
+      end
+
+      it 'orders the result by name ascending' do
+        user = Fabricate(:user)
+
+        %w[World awesome Pool].each { |name| Fabricate(:keyword, user: user, name: name) }
+
+        result = described_class.new(user).call
+
+        expect(result.map(&:name)).to eq(%w[awesome Pool World])
+      end
+    end
+
+    context 'given many users with keywords' do
+      it 'returns only keywords from the initialized user' do
+        users = Fabricate.times(2, :user)
+        Fabricate.times(10, :keyword, user: users[0])
+        Fabricate.times(15, :keyword, user: users[1])
+
+        result = described_class.new(users[0]).call
+
+        expect(result.map(&:user_id)).to all(eq(users[0].id))
+      end
     end
   end
 
-  context 'given a user with 3 keywords' do
-    it 'returns exactly 3 keywords' do
-      user = Fabricate(:user)
-      Fabricate.times(3, :keyword, user: user)
+  context 'given a keyword_pattern' do
+    context 'given a name as keyword_pattern' do
+      it 'returns only keywords matching exactly that name' do
+        user = Fabricate(:user)
 
-      result = described_class.new(user).call
+        %w[World awesome Pool].each { |name| Fabricate(:keyword, user: user, name: name) }
 
-      expect(result.length).to eq(3)
+        result = described_class.new(user).call({ keyword_pattern: 'awesome' })
+
+        expect(result.map(&:name)).to eq(%w[awesome])
+      end
+
+      it 'matches results in a case insensitive way' do
+        user = Fabricate(:user)
+
+        %w[World awesome Pool].each { |name| Fabricate(:keyword, user: user, name: name) }
+
+        result = described_class.new(user).call({ keyword_pattern: 'pooL' })
+
+        expect(result.map(&:name)).to eq(%w[Pool])
+      end
     end
 
-    it 'orders the result by name ascending' do
-      user = Fabricate(:user)
+    context 'given an expression as keyword_pattern' do
+      it 'returns only keywords matching the given pattern' do
+        user = Fabricate(:user)
 
-      %w[World awesome Pool].each { |name| Fabricate(:keyword, user: user, name: name) }
+        %w[World awesome Pool Zipline Zoo].each { |name| Fabricate(:keyword, user: user, name: name) }
 
-      result = described_class.new(user).call
+        result = described_class.new(user).call({ keyword_pattern: '.*o.*' })
 
-      expect(result.map(&:name)).to eq(%w[awesome Pool World])
+        expect(result.map(&:name)).to eq(%w[awesome Pool World Zoo])
+      end
     end
   end
 
-  context 'given many users with keywords' do
-    it 'returns only keywords from the initialized user' do
-      users = Fabricate.times(2, :user)
-      Fabricate.times(10, :keyword, user: users[0])
-      Fabricate.times(15, :keyword, user: users[1])
+  context 'given a url_pattern' do
+    context 'given a simple url_pattern' do
+      it 'returns only keywords having any result_link with that url' do
+        keyword = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user))[4]
 
-      result = described_class.new(users[0]).call
+        keyword.result_links[0].update(url: 'https://beautiful-table.com/zaxs')
 
-      expect(result.map(&:user_id)).to all(eq(users[0].id))
+        result = described_class.new(keyword.user).call({ url_pattern: 'https://beautiful-table.com/zaxs' })
+
+        expect(result.map(&:name)).to eq([keyword.name])
+      end
+    end
+
+    context 'given an expression as url_pattern' do
+      it 'returns only keywords having any result_link whose url matches that pattern' do
+        keyword = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user))[4]
+
+        keyword.result_links[0].update(url: 'https://beautiful-table.com/zaxs')
+
+        result = described_class.new(keyword.user).call({ url_pattern: '[htps]+:\/{2}[a-z-]+.com\/zaxs' })
+
+        expect(result.map(&:name)).to eq([keyword.name])
+      end
+    end
+  end
+
+  context 'given both url and keyword patterns' do
+    it 'returns exactly the right keywords' do
+      keyword = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user))[3]
+
+      keyword.result_links[0].update(url: 'https://beautiful-table.com/zaxs')
+
+      keyword.update(name: 'world')
+
+      result = described_class.new(keyword.user).call({ keyword_pattern: 'WOR.+', url_pattern: '[htps]+:\/{2}[a-z-]+.com\/zaxs' })
+
+      expect(result.map(&:name)).to eq([keyword.name])
+    end
+
+    it 'can return more than one result' do
+      keywords = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user), name: 'world')
+
+      keywords.take(2).each { |keyword| keyword.result_links[0].update(url: 'https://beautiful-table.com/zaxs') }
+
+      result = described_class.new(keywords[0].user).call({ keyword_pattern: 'WOR.+', url_pattern: '[htps]+:\/{2}[a-z-]+.com\/zaxs' })
+
+      expect(result.map(&:name)).to eq(%w[world world])
     end
   end
 end

@@ -161,4 +161,62 @@ RSpec.describe KeywordsQuery, type: :query do
       expect(result.url_match_count).to eq(2)
     end
   end
+
+  context 'given a unique link_type' do
+    it 'counts only url with this link_type' do
+      user = Fabricate(:user)
+
+      Fabricate.times(5, :keyword_parsed, user: user).each { |keyword| Fabricate(:result_link, keyword: keyword, link_type: :ads_top) }
+      Fabricate.times(10, :keyword_parsed, user: user).each { |keyword| Fabricate(:result_link, keyword: keyword, link_type: :non_ads) }
+
+      result = described_class.new(user).call({ link_types: [:ads_top] })
+
+      expect(result.url_match_count).to eq(5)
+    end
+
+    it 'returns only keywords having at least 1 result_link matching the link_type' do
+      user = Fabricate(:user)
+
+      Fabricate.times(5, :keyword_parsed, user: user).each { |keyword| Fabricate(:result_link, keyword: keyword, link_type: :ads_top) }
+      Fabricate.times(10, :keyword_parsed, user: user).each { |keyword| Fabricate(:result_link, keyword: keyword, link_type: :non_ads) }
+
+      result = described_class.new(user).call({ link_types: [:ads_top] })
+
+      expect(result.keywords.length).to eq(5)
+    end
+  end
+
+  context 'given 2 link_types' do
+    it 'counts url with these link_types' do
+      keyword = Fabricate(:keyword_parsed)
+
+      Fabricate.times(10, :result_link_with_keyword, keyword: keyword, link_type: %i[ads_top non_ads].sample)
+
+      result = described_class.new(keyword.user).call({ link_types: %i[ads_top non_ads] })
+
+      expect(result.url_match_count).to eq(10)
+    end
+
+    it 'does not counts url with a different link_type' do
+      keyword = Fabricate(:keyword_parsed)
+
+      Fabricate.times(10, :result_link_with_keyword, keyword: keyword, link_type: %i[ads_top non_ads].sample)
+      Fabricate.times(5, :result_link_with_keyword, keyword: keyword, link_type: :ads_page)
+
+      result = described_class.new(keyword.user).call({ link_types: %i[ads_top non_ads] })
+
+      expect(result.url_match_count).to eq(10)
+    end
+
+    it 'returns only the keyword having at least 1 result_link matching the link_type' do
+      keyword = Fabricate(:keyword_parsed)
+
+      Fabricate.times(5, :result_link_with_keyword, keyword: keyword, link_type: %i[ads_top non_ads].sample)
+      Fabricate.times(5, :result_link_with_keyword, keyword: Fabricate(:keyword_parsed), link_type: :ads_page)
+
+      result = described_class.new(keyword.user).call({ link_types: %i[ads_top non_ads] })
+
+      expect(result.keywords.length).to eq(1)
+    end
+  end
 end

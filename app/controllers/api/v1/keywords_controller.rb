@@ -9,7 +9,11 @@ module API
       def index
         pagy, keywords_list = pagy(keywords_query.keywords_filtered)
 
-        render json: KeywordSerializer.new(keywords_list, pagy_options(pagy))
+        options = pagy_options(pagy)
+
+        options[:meta] = options[:meta].merge(url_match_count: keywords_query.url_match_count)
+
+        render json: KeywordSerializer.new(keywords_list, options)
       end
 
       def show
@@ -35,7 +39,7 @@ module API
       private
 
       def keywords_query
-        @keywords_query ||= KeywordsQuery.new(current_user.keywords)
+        @keywords_query ||= KeywordsQuery.new(current_user.keywords, index_params)
       end
 
       def csv_form
@@ -50,6 +54,10 @@ module API
         {
           meta: I18n.t('csv.upload_success')
         }
+      end
+
+      def index_params
+        params.permit(Filter::QUERY_PARAMS)
       end
 
       def show_params

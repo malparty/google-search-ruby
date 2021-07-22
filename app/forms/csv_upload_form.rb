@@ -21,7 +21,7 @@ class CSVUploadForm
     begin
       Keyword.transaction do
         # rubocop:disable Rails/SkipsModelValidations
-        @keyword_ids = user.keywords.insert_all(parsed_keywords).map { |id| id['id'] }
+        @keyword_ids = user.keywords.insert_all(parsed_keywords).map { |keyword_hash| keyword_hash['id'] }
         # rubocop:enable Rails/SkipsModelValidations
       end
     rescue ActiveRecord::StatementInvalid

@@ -46,6 +46,7 @@ class KeywordsController < ApplicationController
 
   def save_csv_file
     csv_form.save(create_params[:csv_upload_form][:file])
+  end
 
   def index_params
     params.permit(KeywordsQuery::QUERY_PARAMS)

@@ -8,7 +8,7 @@ RSpec.describe KeywordsQuery, type: :query do
       it 'returns an empty collection' do
         result = described_class.new(Fabricate(:user)).call
 
-        expect(result).to be_empty
+        expect(result.keywords).to be_empty
       end
     end
 
@@ -19,7 +19,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
         result = described_class.new(user).call
 
-        expect(result.length).to eq(3)
+        expect(result.keywords.length).to eq(3)
       end
 
       it 'orders the result by name ascending' do
@@ -29,7 +29,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
         result = described_class.new(user).call
 
-        expect(result.map(&:name)).to eq(%w[awesome Pool World])
+        expect(result.keywords.map(&:name)).to eq(%w[awesome Pool World])
       end
     end
 
@@ -41,7 +41,17 @@ RSpec.describe KeywordsQuery, type: :query do
 
         result = described_class.new(users[0]).call
 
-        expect(result.map(&:user_id)).to all(eq(users[0].id))
+        expect(result.keywords.map(&:user_id)).to all(eq(users[0].id))
+      end
+
+      it 'only counts url matches from the initialized user' do
+        users = Fabricate.times(2, :user)
+        Fabricate.times(10, :keyword_parsed_with_links, user: users[0])
+        Fabricate.times(15, :keyword_parsed_with_links, user: users[1])
+
+        result = described_class.new(users[0]).call({ url_pattern: '.*' })
+
+        expect(result.url_match_count).to eq(users[0].keywords.sum { |keyword| keyword.result_links.count })
       end
     end
   end
@@ -55,7 +65,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
         result = described_class.new(user).call({ keyword_pattern: 'awesome' })
 
-        expect(result.map(&:name)).to eq(%w[awesome])
+        expect(result.keywords.map(&:name)).to eq(%w[awesome])
       end
 
       it 'matches results in a case insensitive way' do
@@ -65,7 +75,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
         result = described_class.new(user).call({ keyword_pattern: 'pooL' })
 
-        expect(result.map(&:name)).to eq(%w[Pool])
+        expect(result.keywords.map(&:name)).to eq(%w[Pool])
       end
     end
 
@@ -77,7 +87,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
         result = described_class.new(user).call({ keyword_pattern: '.*o.*' })
 
-        expect(result.map(&:name)).to eq(%w[awesome Pool World Zoo])
+        expect(result.keywords.map(&:name)).to eq(%w[awesome Pool World Zoo])
       end
     end
   end
@@ -91,7 +101,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
         result = described_class.new(keyword.user).call({ url_pattern: 'https://beautiful-table.com/zaxs' })
 
-        expect(result.map(&:name)).to eq([keyword.name])
+        expect(result.keywords.map(&:name)).to eq([keyword.name])
       end
     end
 
@@ -103,7 +113,17 @@ RSpec.describe KeywordsQuery, type: :query do
 
         result = described_class.new(keyword.user).call({ url_pattern: '[htps]+:\/{2}[a-z-]+.com\/zaxs' })
 
-        expect(result.map(&:name)).to eq([keyword.name])
+        expect(result.keywords.map(&:name)).to eq([keyword.name])
+      end
+
+      it 'counts the right url matches' do
+        keyword = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user))[4]
+
+        keyword.result_links[0].update(url: 'https://beautiful-table.com/zaxs')
+
+        result = described_class.new(keyword.user).call({ url_pattern: '[htps]+:\/{2}[a-z-]+.com\/zaxs' })
+
+        expect(result.url_match_count).to eq(1)
       end
     end
   end
@@ -118,7 +138,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
       result = described_class.new(keyword.user).call({ keyword_pattern: 'WOR.+', url_pattern: '[htps]+:\/{2}[a-z-]+.com\/zaxs' })
 
-      expect(result.map(&:name)).to eq([keyword.name])
+      expect(result.keywords.map(&:name)).to eq([keyword.name])
     end
 
     it 'can return more than one result' do
@@ -128,7 +148,17 @@ RSpec.describe KeywordsQuery, type: :query do
 
       result = described_class.new(keywords[0].user).call({ keyword_pattern: 'WOR.+', url_pattern: '[htps]+:\/{2}[a-z-]+.com\/zaxs' })
 
-      expect(result.map(&:name)).to eq(%w[world world])
+      expect(result.keywords.map(&:name)).to eq(%w[world world])
+    end
+
+    it 'counts the right url matches' do
+      keywords = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user), name: 'world')
+
+      keywords.take(2).each { |keyword| keyword.result_links[0].update(url: 'https://beautiful-table.com/zaxs') }
+
+      result = described_class.new(keywords[0].user).call({ keyword_pattern: 'WOR.+', url_pattern: '[htps]+:\/{2}[a-z-]+.com\/zaxs' })
+
+      expect(result.url_match_count).to eq(2)
     end
   end
 end

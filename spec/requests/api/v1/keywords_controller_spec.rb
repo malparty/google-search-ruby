@@ -115,6 +115,77 @@ describe API::V1::KeywordsController, type: :request do
         expect(json_response[:data].count).to eq(0)
       end
     end
+
+    context 'given a keyword_pattern param' do
+      it 'returns only the keywords matching that pattern' do
+        user = create_token_header
+
+        %w[freeride FREERUN Freedom unfreeze not matching keyword].each { |name| Fabricate(:keyword, user: user, name: name) }
+
+        get :index, params: { keyword_pattern: '^(unfree|free)' }
+
+        expect(json_response[:data].length).to eq(4)
+      end
+    end
+
+    context 'given a link_types param' do
+      it 'returns only the keywords having one or many matching result_link' do
+        user = create_token_header
+
+        10.times { Fabricate(:result_link, keyword: Fabricate(:keyword, user: user), link_type: :ads_top) }
+        5.times { Fabricate(:result_link, keyword: Fabricate(:keyword, user: user), link_type: :non_ads) }
+
+        get :index, params: { link_types: [:ads_top] }
+
+        expect(json_response[:data].length).to eq(10)
+      end
+
+      it 'counts the right url_match_count' do
+        user = create_token_header
+
+        Fabricate.times(10, :result_link, keyword: Fabricate(:keyword, user: user), link_type: :ads_top)
+        Fabricate.times(5, :result_link, keyword: Fabricate(:keyword, user: user), link_type: :non_ads)
+
+        get :index, params: { link_types: [:ads_top] }
+
+        expect(json_response[:meta][:url_match_count]).to eq(10)
+      end
+    end
+
+    context 'given an url_pattern param' do
+      it 'returns only the keywords having one or many matching result_link' do
+        user = create_token_header
+
+        %w[http://technology.vn www.hello.vn/technology www.not-matching.th http://neither.match].each { |url| Fabricate(:result_link, keyword: Fabricate(:keyword, user: user), url: url) }
+
+        get :index, params: { url_pattern: '(.vn){1}' }
+
+        expect(json_response[:data].length).to eq(2)
+      end
+
+      it 'counts the right url_match_count' do
+        user = create_token_header
+
+        %w[http://technology.vn www.hello.vn/technology www.not-matching.th http://neither.match].each { |url| Fabricate(:result_link, keyword: Fabricate(:keyword, user: user), url: url) }
+
+        get :index, params: { url_pattern: '(.vn){1}' }
+
+        expect(json_response[:meta][:url_match_count]).to eq(2)
+      end
+    end
+
+    context 'given an AdWords link_types and a (technology|technology.vn)$ url_pattern params' do
+      it 'counts the right url_match_count' do
+        user = create_token_header
+
+        Fabricate.times(10, :result_link, keyword: Fabricate(:keyword, user: user), link_type: %i[ads_top ads_page].sample, url: %w[http://technology.vn www.hello.com/technology].sample)
+        Fabricate.times(15, :result_link, keyword: Fabricate(:keyword, user: user), url: 'https://technologies.com')
+
+        get :index, params: { link_types: [ResultLink.link_types[:ads_top].to_s, ResultLink.link_types[:ads_page].to_s], url_pattern: '(technology|technology.vn)$' }
+
+        expect(json_response[:meta][:url_match_count]).to eq(10)
+      end
+    end
   end
 
   describe 'POST #create' do

@@ -24,6 +24,14 @@ class KeywordsController < ApplicationController
     redirect_to keywords_path
   end
 
+  def show
+    keyword = Keyword.includes(:result_links).find show_params[:id]
+
+    render locals: {
+      keyword: keyword
+    }
+  end
+
   private
 
   def keywords
@@ -40,5 +48,9 @@ class KeywordsController < ApplicationController
 
   def create_params
     params.permit(csv_upload_form: [:file])
+  end
+
+  def show_params
+    params.permit(:id)
   end
 end

@@ -1,0 +1,44 @@
+<%= turbo_frame_tag 'frame_keyword_show' do %>
+  <div class="card keyword-card">
+    <div class="card-header">
+      <%= render 'show_count_icons', presenter: presenter %>
+    </div>
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center lead">
+        <h1 class="display-2 keyword-card--title">
+          <% if presenter.keyword.parsed? %>
+            <%= link_to keyword_preview_index_path(keyword_id: presenter.keyword.id), target: '_blank' do %><i class="bi bi-server"></i><% end %>
+          <% else %>
+            <%= link_to presenter.google_link, target: '_blank' do %><i class="bi bi-google"></i><% end %>
+          <% end %>
+          <%= presenter.keyword.name %>
+        </h1>
+        <div class="keyword-card--status">
+          <i class="<%= presenter.status_icon %>"></i>
+          <%= t("keyword.status.#{presenter.keyword.status}") %>
+        </div>
+        <div class="keyword-card--created-at">
+          <div><%= presenter.created_at_date %></div>
+          <div><%= presenter.created_at_time %></div>
+        </div>
+      </div>
+      <% presenter.result_link_types.each do |link_type| %>
+        <h3 class="mt-3">
+          <i class="<%= presenter.result_link_type_icon link_type[0].to_sym %>"></i>
+          <%= t("result_links.#{link_type[0]}") %>
+        </h3>
+        <div class="list-group">
+          <div class="row">
+            <% link_type[1].each do |result_link| %>
+              <div class="col-6 keyword-card--result-link">
+                <a href="<%= result_link.url %>" target="_blank" class="btn list-group-item list-group-item-action">
+                  <%= presenter.url_title result_link.url %>
+                </a>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

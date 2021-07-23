@@ -35,7 +35,7 @@ describe 'login', type: :system do
 
   context 'when the user signed in and reached the home page' do
     it 'does not redirect to the sign in page' do
-      sign_in Fabricate(:user)
+      sign_in_system Fabricate(:user)
       visit root_path
 
       expect(page).to have_current_path(root_path)

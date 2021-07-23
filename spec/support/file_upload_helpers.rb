@@ -26,4 +26,16 @@ module FileUploadHelpers
       page.attach_file('csv_upload_form_file', Rails.root.join('spec', 'fixtures', 'files', 'csv', name), visible: :all)
     end
   end
+
+  module Request
+    def file_api_params(file_name)
+      path = Rails.root.join('spec', 'fixtures', 'files', 'csv', file_name)
+
+      { file: Rack::Test::UploadedFile.new(path, 'text/csv', true) }
+    end
+
+    def file_params(file_name)
+      { csv_upload_form: file_api_params(file_name) }
+    end
+  end
 end

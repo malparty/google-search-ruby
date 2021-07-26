@@ -20,6 +20,8 @@ module API
 
       def create
         if csv_form.save(create_params[:file])
+          Google::DistributeSearchJob.perform_later(csv_form.keyword_ids)
+
           render json: create_success_response
         else
           render_errors(

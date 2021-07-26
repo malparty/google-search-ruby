@@ -136,6 +136,10 @@ describe API::V1::KeywordsController, type: :request do
 
         expect(response.status).to eq(200)
       end
+
+      it 'queues a Google::DistributeSearchJob job', authenticated_api_user: true do
+        expect { post :create, params: file_api_params('valid.csv') }.to have_enqueued_job(Google::DistributeSearchJob)
+      end
     end
 
     context 'given an invalid file' do
@@ -155,6 +159,10 @@ describe API::V1::KeywordsController, type: :request do
         post :create, params: file_api_params('too_many_keywords.csv')
 
         expect(response.status).to eq(422)
+      end
+
+      it 'does not queue any job', authenticated_request_user: true do
+        expect { post :create, params: file_api_params('too_many_keywords.csv') }.not_to have_enqueued_job
       end
     end
   end

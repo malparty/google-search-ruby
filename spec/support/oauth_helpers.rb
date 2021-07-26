@@ -58,10 +58,18 @@ module OAuthHelpers
     }
   end
 
-  def create_token_header(user)
+  def create_token_header(user = nil)
+    user ||= Fabricate(:user)
+
     application = Fabricate(:application)
     access_token = Fabricate(:access_token, resource_owner_id: user.id, application_id: application.id)
 
     request.headers['Authorization'] = "Bearer #{access_token.token}"
+  end
+
+  def file_params(file_name)
+    path = Rails.root.join('spec', 'fixtures', 'files', 'csv', file_name)
+
+    { file: Rack::Test::UploadedFile.new(path, 'text/csv', true) }
   end
 end

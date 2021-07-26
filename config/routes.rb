@@ -7,15 +7,18 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: :registrations }
 
-  resources :keywords, only: :index
+  resources :keywords, only: [:index, :create]
 
-  resources :users, only: %i[create]
+  resources :filters, only: :index
+
+  resources :users, only: :create
 
   namespace :api do
     namespace :v1 do
       # User sign_up
       resources :users, only: :create
-      resources :keywords, only: :index
+
+      resources :keywords, only: [:index, :create, :show]
 
       # OAuth2 (token, revoke, ...)
       use_doorkeeper do

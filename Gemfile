@@ -25,6 +25,7 @@ gem 'doorkeeper' # Awesome OAuth 2 provider for your Rails / Grape app
 # Assets
 gem 'webpacker', '~>5.2.0' # Transpile app-like JavaScript
 gem 'sass-rails' # SASS
+gem 'turbo-rails' # Speed of SPA without any JavaScript
 
 # Logging tools
 gem 'colorize' # Ruby gem for colorizing text using ANSI escape sequences

@@ -7,10 +7,13 @@ import Rails from '@rails/ujs';
 import * as ActiveStorage from '@rails/activestorage';
 import 'channels';
 
+import '@hotwired/turbo-rails';
+
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import 'vendor/bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons';
 
 import 'initializers/';
 import 'screens/';

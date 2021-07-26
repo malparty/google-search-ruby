@@ -1,3 +1,17 @@
-<div class="container">
-  <%= render 'list_keywords', keywords: keywords, pagy: pagy %>
+<div class="container-xl screen-keyword">
+  <div class="row">
+    <div class="col-md-4 col-lg-3 d-md-block d-none">
+      <%= render 'filters_keywords' %>
+    </div>
+    <div class="col-md-8 col-lg-9">
+      <%= render 'list_keywords', keywords: keywords, pagy: pagy %>
+    </div>
+  </div>
 </div>
+
+<%= render 'filters_keywords_mobile' %>
+
+<% content_for :header_nav_bar do %>
+  <%= render 'form_upload', csv_form: csv_form %>
+  <%= render 'filters_keywords_mobile_btn' %>
+<% end %>

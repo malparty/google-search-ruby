@@ -18,4 +18,12 @@ module FileUploadHelpers
       ActionDispatch::Http::UploadedFile.new({ tempfile: file, type: type })
     end
   end
+
+  module System
+    def submit_file(name)
+      visit root_path
+
+      page.attach_file('csv_upload_form_file', Rails.root.join('spec', 'fixtures', 'files', 'csv', name), visible: :all)
+    end
+  end
 end

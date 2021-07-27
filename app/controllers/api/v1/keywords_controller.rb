@@ -7,7 +7,7 @@ module API
       include API::V1::Pagy::JSONAPIConcern
 
       def index
-        pagy, keywords_list = pagy(keywords_query.keywords)
+        pagy, keywords_list = pagy(keywords_query.keywords_filtered)
 
         render json: KeywordSerializer.new(keywords_list, pagy_options(pagy))
       end
@@ -35,7 +35,7 @@ module API
       private
 
       def keywords_query
-        @keywords_query ||= KeywordsQuery.new(current_user).call
+        @keywords_query ||= KeywordsQuery.new(current_user.keywords)
       end
 
       def csv_form

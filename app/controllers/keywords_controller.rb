@@ -4,7 +4,7 @@ class KeywordsController < ApplicationController
   include Pagy::Backend
 
   def index
-    pagy, keywords_list = pagy(keywords_query.keywords)
+    pagy, keywords_list = pagy(keywords_query.keywords_filtered)
 
     render locals: {
       pagy: pagy,
@@ -37,7 +37,7 @@ class KeywordsController < ApplicationController
   private
 
   def keywords_query
-    @keywords_query ||= KeywordsQuery.new(current_user).call(index_params)
+    @keywords_query ||= KeywordsQuery.new(current_user.keywords, index_params)
   end
 
   def csv_form

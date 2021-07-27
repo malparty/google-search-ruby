@@ -10,7 +10,7 @@ module KeywordFiltersHelpers
       fill_in :keyword_pattern, with: params[:keyword_pattern]
       fill_in :url_pattern, with: params[:url_pattern]
 
-      params[:link_types]&.each { |link_type| check "linkType#{link_type.to_s.camelize}" }
+      params[:link_types]&.each { |link_type| check "link_types_#{link_type}" }
 
       click_button I18n.t('filters.submit_btn')
     end

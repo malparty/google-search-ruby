@@ -114,7 +114,7 @@ describe 'keywords filters', type: :system do
       matched_keyword = Fabricate(:result_link, keyword: Fabricate(:keyword_parsed, user: user), link_type: :ads_top).keyword
       Fabricate(:result_link, keyword: Fabricate(:keyword_parsed, user: user), link_type: :non_ads)
 
-      submit_keyword_filters(user, { link_types: [:ads_top] })
+      submit_keyword_filters(user, { link_types: [ResultLink.link_types[:ads_top]] })
 
       expect(find('.list-keyword')).to have_content(matched_keyword.name)
     end
@@ -125,7 +125,7 @@ describe 'keywords filters', type: :system do
       Fabricate(:result_link, keyword: Fabricate(:keyword_parsed, user: user), link_type: :ads_top)
       unmatched_keyword = Fabricate(:result_link, keyword: Fabricate(:keyword_parsed, user: user), link_type: :non_ads).keyword
 
-      submit_keyword_filters(user, { link_types: [:ads_top] })
+      submit_keyword_filters(user, { link_types: [ResultLink.link_types[:ads_top]] })
 
       expect(find('.list-keyword')).not_to have_content(unmatched_keyword.name)
     end

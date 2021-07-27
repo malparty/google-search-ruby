@@ -10,6 +10,7 @@ class KeywordsController < ApplicationController
       pagy: pagy,
       keywords: KeywordsCollectionPresenter.new(keywords_list),
       url_match_count: keywords_query.url_match_count,
+      filter_error: keywords_query.error,
       csv_form: csv_form
     }
   end
@@ -49,7 +50,7 @@ class KeywordsController < ApplicationController
   end
 
   def index_params
-    params.permit(KeywordsQuery::QUERY_PARAMS)
+    params.permit(Filter::QUERY_PARAMS)
   end
 
   def create_params

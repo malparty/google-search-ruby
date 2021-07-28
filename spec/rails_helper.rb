@@ -34,5 +34,7 @@ RSpec.configure do |config|
   config.include FileUploadHelpers::System
   config.include FileUploadHelpers::Request
 
+  config.include SearchProgressHelpers::System
+
   config.include ChannelHelpers
 end

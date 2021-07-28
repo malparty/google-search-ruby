@@ -36,6 +36,10 @@ en:
   keywords:
     could_not_query: 'An error occurs when performing the Google Search, please try again.'
     empty_list: 'You do not have any keyword yet.'
+    parsed: 'keywords parsed'
+    failed: 'failed being retried'
+    parsing_progress: 'Parsing is in progress'
+    keywords_left: 'keywords left'
     status:
       pending: 'Pending'
       failed: 'Failed'

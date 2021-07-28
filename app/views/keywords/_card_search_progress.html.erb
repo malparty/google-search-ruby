@@ -1,0 +1,25 @@
+<div id="cardSearchProgress" class="card-search-progress">
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <strong class="mr-auto"><%= t('keywords.parsing_progress') %></strong>
+      <div class="card-search-progress--keywords-left">
+        <%= "#{presenter.pending_count} #{t('keywords.keywords_left')}" %>
+      </div>
+      <div>
+        <small>
+          <%= presenter.local_time %>
+        </small>
+      </div>
+    </div>
+    <div class="progress">
+      <div class="progress-bar card-search-progress--progress-bar-parsed" role="progressbar" style="width: <%= presenter.percent_parsed %>%"
+           aria-valuenow="<%= presenter.percent_parsed %>" aria-valuemin="0" aria-valuemax="100">
+        <%= "#{presenter.parsed_count} #{t('keywords.parsed')}" %>
+      </div>
+      <div class="progress-bar bg-warning card-search-progress--progress-bar-failed" role="progressbar" style="width: <%= presenter.percent_failed %>%"
+           aria-valuenow="<%= presenter.percent_failed %>" aria-valuemin="0" aria-valuemax="100">
+        <%= "#{presenter.failed_count} #{t('keywords.failed')}" %>
+      </div>
+    </div>
+  </div>
+</div>

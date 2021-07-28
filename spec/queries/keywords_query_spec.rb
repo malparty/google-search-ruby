@@ -34,7 +34,7 @@ RSpec.describe KeywordsQuery, type: :query do
     end
 
     context 'given many users with keywords' do
-      it 'returns only keywords from the initialized user' do
+      it 'returns only keywords from the authenticated user' do
         users = Fabricate.times(2, :user)
         Fabricate.times(10, :keyword, user: users[0])
         Fabricate.times(15, :keyword, user: users[1])
@@ -44,7 +44,7 @@ RSpec.describe KeywordsQuery, type: :query do
         expect(query.keywords_filtered.map(&:user_id)).to all(eq(users[0].id))
       end
 
-      it 'only counts URL matches from the initialized user' do
+      it 'counts only the URL matches for the authenticated user' do
         users = Fabricate.times(2, :user)
         Fabricate.times(10, :keyword_parsed_with_links, user: users[0])
         Fabricate.times(15, :keyword_parsed_with_links, user: users[1])
@@ -106,7 +106,7 @@ RSpec.describe KeywordsQuery, type: :query do
     end
 
     context 'given an expression as url_pattern' do
-      it 'returns only keywords having any result_link whose url matches that pattern' do
+      it 'returns only keywords having any result_link whose URL matches that pattern' do
         keyword = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user))[4]
 
         keyword.result_links[0].update(url: 'https://beautiful-table.com/zaxs')
@@ -116,7 +116,7 @@ RSpec.describe KeywordsQuery, type: :query do
         expect(query.keywords_filtered.map(&:name)).to eq([keyword.name])
       end
 
-      it 'counts the right url matches' do
+      it 'counts the right URL matches' do
         keyword = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user))[4]
 
         keyword.result_links[0].update(url: 'https://beautiful-table.com/zaxs')
@@ -138,7 +138,7 @@ RSpec.describe KeywordsQuery, type: :query do
     end
   end
 
-  context 'given both url and keyword patterns' do
+  context 'given both URL and keyword patterns' do
     it 'returns exactly the right keywords' do
       keyword = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user))[3]
 
@@ -161,7 +161,7 @@ RSpec.describe KeywordsQuery, type: :query do
       expect(query.keywords_filtered.map(&:name)).to eq(%w[world world])
     end
 
-    it 'counts the right url matches' do
+    it 'counts the right URL matches' do
       keywords = Fabricate.times(10, :keyword_parsed_with_links, user: Fabricate(:user), name: 'world')
 
       keywords.take(2).each { |keyword| keyword.result_links[0].update(url: 'https://beautiful-table.com/zaxs') }
@@ -173,7 +173,7 @@ RSpec.describe KeywordsQuery, type: :query do
   end
 
   context 'given a unique link_type' do
-    it 'counts only url with this link_type' do
+    it 'counts only URLs with this link_type' do
       user = Fabricate(:user)
 
       Fabricate.times(5, :keyword_parsed, user: user).each { |keyword| Fabricate(:result_link, keyword: keyword, link_type: :ads_top) }

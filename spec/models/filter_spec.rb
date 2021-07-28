@@ -21,7 +21,7 @@ RSpec.describe Filter, type: :model do
     end
 
     context 'given a filter from_params' do
-      it 'is a Filter object' do
+      it 'returns a Filter object' do
         params = { keyword_pattern: 'keyword', url_pattern: '^https://', link_types: ['', ResultLink.link_types[:ads_top].to_s] }
 
         filter = described_class.from_params params
@@ -39,7 +39,7 @@ RSpec.describe Filter, type: :model do
     end
 
     context 'given a filter from_params with empty params' do
-      it 'is a Filter object' do
+      it 'returns a Filter object' do
         filter = described_class.from_params({})
 
         expect(filter.class).to eq(described_class)

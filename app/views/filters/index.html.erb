@@ -2,7 +2,7 @@
   <p>
     <%= t('filters.total_of_keywords', keywords_count: keywords_count) %>
   </p>
-  <%= form_with url: keywords_path, method: :get, class: 'form-filters', data:{turbo:true, turbo_frame:'frame_list_keywords'} do |form| %>
+  <%= form_with url: keywords_path, method: :get, class: 'form-filters', data: { turbo: true, turbo_frame: 'frame_list_keywords' } do |form| %>
     <div>
       <%= form.label :keyword_pattern, class: 'form-label' do %>
         <i class="bi bi-list-check"></i> <%= t('filters.by_keyword') %>...

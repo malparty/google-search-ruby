@@ -1,13 +1,13 @@
 <section class="list-keyword" data-turbo="true">
   <%= turbo_frame_tag 'frame_list_keywords' do %>
     <% if filter_error.blank? %>
-      <div class="d-flex justify-content-end match-counts">
+      <div class="d-flex justify-content-end match-count">
         <div class="text-muted">
-          <div class="text-end match-counts--urls">
+          <div class="text-end match-count--urls">
             <%= url_match_count %>
             <i class="bi bi-link-45deg"></i>
           </div>
-          <div class="text-end match-counts--keywords">
+          <div class="text-end match-count--keywords">
             <%= pagy.count %>
             <i class="bi bi-list-check"></i>
           </div>

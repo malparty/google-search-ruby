@@ -13,7 +13,7 @@ describe 'keywords filters', type: :system do
 
       visit root_path
 
-      expect(find('.match-counts--keywords')).to have_content(5)
+      expect(find('.match-count--keywords')).to have_content(5)
     end
 
     it 'shows the matched result_links count' do
@@ -25,7 +25,7 @@ describe 'keywords filters', type: :system do
 
       visit root_path
 
-      expect(find('.match-counts--urls')).to have_content(5)
+      expect(find('.match-count--urls')).to have_content(5)
     end
 
     it 'has a filter form', authenticated_user: true do

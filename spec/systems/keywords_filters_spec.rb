@@ -13,7 +13,7 @@ describe 'keywords filters', type: :system do
 
       visit root_path
 
-      expect(find('.match-count--keywords')).to have_content(5)
+      expect(find('.match-count--keyword')).to have_content(5)
     end
 
     it 'shows the matched result_links count' do
@@ -25,37 +25,37 @@ describe 'keywords filters', type: :system do
 
       visit root_path
 
-      expect(find('.match-count--urls')).to have_content(5)
+      expect(find('.match-count--url')).to have_content(5)
     end
 
     it 'has a filter form', authenticated_user: true do
       visit root_path
 
-      expect(page).to have_selector('.form-filters')
+      expect(page).to have_selector('.form-filter')
     end
 
     it 'has a keyword_pattern input', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filters')).to have_selector('input[name=keyword_pattern]')
+      expect(find('.form-filter')).to have_selector('input[name=keyword_pattern]')
     end
 
     it 'has a url_pattern input', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filters')).to have_selector('input[name=url_pattern]')
+      expect(find('.form-filter')).to have_selector('input[name=url_pattern]')
     end
 
     it 'has all the link_types checkboxes', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filters')).to have_selector('input[type=checkbox][name=link_types\[\]]', count: ResultLink.link_types.length)
+      expect(find('.form-filter')).to have_selector('input[type=checkbox][name=link_types\[\]]', count: ResultLink.link_types.length)
     end
 
     it 'has a submit button', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filters button[type=submit]')).to have_content(I18n.t('filters.submit_btn'))
+      expect(find('.form-filter button[type=submit]')).to have_content(I18n.t('filters.submit_btn'))
     end
 
     it 'does NOT have any error message', authenticated_user: true do

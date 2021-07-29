@@ -8,7 +8,7 @@ class KeywordsController < ApplicationController
 
     render locals: {
       pagy: pagy,
-      keywords: KeywordsCollectionPresenter.new(keywords_list),
+      presenter: KeywordsCollectionPresenter.new(keywords_list),
       url_match_count: keywords_query.url_match_count,
       filter_error: keywords_query.error,
       csv_form: csv_form

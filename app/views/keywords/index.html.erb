@@ -7,7 +7,7 @@
       <%= turbo_stream_from "card_search_progress_stream:user_#{current_user.id}" %>
       <%= turbo_frame_tag 'card_search_progress' do %>
       <% end %>
-      <%= render 'list_keywords', keywords: keywords, pagy: pagy, url_match_count: url_match_count, filter_error: filter_error %>
+      <%= render 'list_keywords', presenter: presenter, pagy: pagy, url_match_count: url_match_count, filter_error: filter_error %>
 
       <%= turbo_frame_tag 'frame_keyword_show' do %>
       <% end %>

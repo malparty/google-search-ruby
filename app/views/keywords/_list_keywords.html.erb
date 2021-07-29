@@ -14,11 +14,11 @@
         </div>
       </div>
     <% end %>
-    <% if keywords.groups.any? %>
+    <% if presenter.keyword_groups.any? %>
       <div class="d-flex justify-content-around">
         <%== pagy_bootstrap_nav(pagy) %>
       </div>
-      <% keywords.groups.each do |group_key, group_keywords| %>
+      <% presenter.keyword_groups.each do |group_key, group_keywords| %>
         <%= render 'list_keywords_group', group_key: group_key, group_keywords: group_keywords %>
       <% end %>
     <% elsif filter_error.present? %>

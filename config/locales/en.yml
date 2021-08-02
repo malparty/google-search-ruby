@@ -76,6 +76,8 @@ en:
   waiting_confirmation_for: 'Currently waiting confirmation for'
   forgot_password: 'Forgot your password?'
   my_profile: 'My Profile'
-  filters: 'Filters'
+  filters:
+    filters: 'Filters'
+    value_error: 'has wrong value'
   loading: 'Loading'
   record_not_found: 'The requested resource could not be found.'

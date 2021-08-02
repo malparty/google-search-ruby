@@ -17,7 +17,7 @@ class Filter
   def self.from_params(params)
     Filter.new keyword_pattern: params[:keyword_pattern],
                url_pattern: params[:url_pattern],
-               link_types: params[:link_types]&.map(&:to_i)&.uniq
+               link_types: params[:link_types]&.select(&:present?)&.map(&:to_i)&.uniq
   end
 
   def result_link_filter_exist?

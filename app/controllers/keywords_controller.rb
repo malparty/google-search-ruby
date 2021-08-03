@@ -13,13 +13,23 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    if csv_form.save(create_params[:csv_upload_form][:file])
+    if save_csv_file
+      Google::DistributeSearchJob.perform_later(csv_form.keyword_ids)
+
       flash[:success] = I18n.t('csv.upload_success')
     else
       flash[:errors] = csv_form.errors.full_messages
     end
 
     redirect_to keywords_path
+  end
+
+  def show
+    keyword = Keyword.includes(:result_links).find show_params[:id]
+
+    render locals: {
+      presenter: KeywordPresenter.new(keyword)
+    }
   end
 
   private
@@ -32,7 +42,15 @@ class KeywordsController < ApplicationController
     @csv_form ||= CSVUploadForm.new(current_user)
   end
 
+  def save_csv_file
+    csv_form.save(create_params[:csv_upload_form][:file])
+  end
+
   def create_params
     params.permit(csv_upload_form: [:file])
+  end
+
+  def show_params
+    params.permit(:id)
   end
 end

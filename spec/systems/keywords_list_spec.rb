@@ -25,7 +25,7 @@ describe 'keywords list', type: :system do
 
   context 'given more keywords than what a page can contain' do
     it 'shows exactly 1 page of keywords' do
-      user = sign_in Fabricate(:user)
+      user = sign_in_system Fabricate(:user)
 
       Fabricate.times(Pagy::VARS[:items] + 1, :keyword, user: user)
 
@@ -35,7 +35,7 @@ describe 'keywords list', type: :system do
     end
 
     it 'shows an enabled pagination nav next button' do
-      user = sign_in Fabricate(:user)
+      user = sign_in_system Fabricate(:user)
 
       Fabricate.times(Pagy::VARS[:items] + 1, :keyword, user: user)
 
@@ -47,7 +47,7 @@ describe 'keywords list', type: :system do
 
   context 'given exactly 1 full page of keywords' do
     it 'shows exactly the max number of keywords one page can contain' do
-      user = sign_in Fabricate(:user)
+      user = sign_in_system Fabricate(:user)
 
       Fabricate.times(Pagy::VARS[:items], :keyword, user: user)
 
@@ -57,7 +57,7 @@ describe 'keywords list', type: :system do
     end
 
     it 'shows a disabled pagination nav next button' do
-      user = sign_in Fabricate(:user)
+      user = sign_in_system Fabricate(:user)
 
       Fabricate.times(Pagy::VARS[:items], :keyword, user: user)
 

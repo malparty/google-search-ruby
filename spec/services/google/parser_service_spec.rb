@@ -28,7 +28,11 @@ RSpec.describe Google::ParserService, type: :service do
       it 'finds exactly the 3 top ads urls', vcr: 'google_search/top_ads_6' do
         result = Google::ClientService.new(keyword: 'vpn').call
 
-        expect(described_class.new(html_response: result).call[:ads_top_urls]).to contain_exactly('https://cloud.google.com/free', 'https://www.expressvpn.com/', 'https://www.top10vpn.com/best-vpn-for-vietnam/')
+        result_links = described_class.new(html_response: result).call[:result_links]
+
+        top_ads_urls = result_links.select { |link| link[:link_type] == :ads_top }.pluck(:url)
+
+        expect(top_ads_urls).to contain_exactly('https://cloud.google.com/free', 'https://www.expressvpn.com/', 'https://www.top10vpn.com/best-vpn-for-vietnam/')
       end
 
       it 'counts exactly 14 non ad results', vcr: 'google_search/top_ads_6' do
@@ -37,10 +41,14 @@ RSpec.describe Google::ParserService, type: :service do
         expect(described_class.new(html_response: result).call[:non_ads_result_count]).to eq(14)
       end
 
-      it 'gets 14 results', vcr: 'google_search/top_ads_6' do
+      it 'gets 14 non_ads result_links', vcr: 'google_search/top_ads_6' do
         result = Google::ClientService.new(keyword: 'vpn').call
 
-        expect(described_class.new(html_response: result).call[:non_ads_urls].count).to eq(14)
+        result_links = described_class.new(html_response: result).call[:result_links]
+
+        non_ads = result_links.select { |link| link[:link_type] == :non_ads }
+
+        expect(non_ads.length).to eq(14)
       end
 
       it 'gets exactly 113 links', vcr: 'google_search/top_ads_6' do

@@ -37,19 +37,19 @@ describe 'keywords filters', type: :system do
     it 'has a keyword_pattern input', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filter')).to have_selector('input[name=keyword_pattern]')
+      expect(find('.form-filter')).to have_selector('input[name=filter\[keyword_pattern\]]')
     end
 
     it 'has a url_pattern input', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filter')).to have_selector('input[name=url_pattern]')
+      expect(find('.form-filter')).to have_selector('input[name=filter\[url_pattern\]]')
     end
 
     it 'has all the link_types checkboxes', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filter')).to have_selector('input[type=checkbox][name=link_types\[\]]', count: ResultLink.link_types.length)
+      expect(find('.form-filter')).to have_selector('input[type=checkbox][name=filter\[link_types\]\[\]]', count: ResultLink.link_types.length)
     end
 
     it 'has a submit button', authenticated_user: true do

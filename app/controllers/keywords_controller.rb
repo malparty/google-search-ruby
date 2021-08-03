@@ -10,7 +10,7 @@ class KeywordsController < ApplicationController
       pagy: pagy,
       presenter: KeywordsCollectionPresenter.new(keywords_list),
       url_match_count: keywords_query.url_match_count,
-      filter_error: keywords_query.error,
+      filter: keywords_query.filter,
       csv_form: csv_form
     }
   end

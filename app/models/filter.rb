@@ -24,6 +24,10 @@ class Filter
     url_pattern.present? || link_types.present?
   end
 
+  def error_message
+    errors.full_messages.join '. '
+  end
+
   protected
 
   def link_types_exist?

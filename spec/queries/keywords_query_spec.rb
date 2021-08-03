@@ -133,7 +133,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
         query = described_class.new(keyword.user.keywords, { url_pattern: '.com\/zaxs$' })
 
-        expect(query.error).to be_blank
+        expect(query.filter.error_message).to be_blank
       end
     end
   end
@@ -260,7 +260,7 @@ RSpec.describe KeywordsQuery, type: :query do
 
       query.keywords_filtered
 
-      expect(query.error).to be_present
+      expect(query.filter.error_message).to be_present
     end
   end
 end

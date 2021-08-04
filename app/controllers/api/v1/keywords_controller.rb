@@ -7,9 +7,13 @@ module API
       include API::V1::Pagy::JSONAPIConcern
 
       def index
-        pagy, keywords_list = pagy(keywords)
+        pagy, keywords_list = pagy(keywords_query.keywords_filtered)
 
-        render json: KeywordSerializer.new(keywords_list, pagy_options(pagy))
+        options = pagy_options(pagy)
+
+        options[:meta] = options[:meta].merge(url_match_count: keywords_query.url_match_count)
+
+        render json: KeywordSerializer.new(keywords_list, options)
       end
 
       def show
@@ -20,6 +24,8 @@ module API
 
       def create
         if csv_form.save(create_params[:file])
+          Google::DistributeSearchJob.perform_later(csv_form.keyword_ids)
+
           render json: create_success_response
         else
           render_errors(
@@ -32,8 +38,8 @@ module API
 
       private
 
-      def keywords
-        KeywordsQuery.new(current_user).call
+      def keywords_query
+        @keywords_query ||= KeywordsQuery.new(current_user.keywords, index_params)
       end
 
       def csv_form
@@ -48,6 +54,10 @@ module API
         {
           meta: I18n.t('csv.upload_success')
         }
+      end
+
+      def index_params
+        params.permit(Filter::QUERY_PARAMS)
       end
 
       def show_params

@@ -17,5 +17,5 @@ Fabricator(:keyword_parsed, from: :keyword) do
 end
 
 Fabricator(:keyword_parsed_with_links, from: :keyword_parsed) do
-  result_links(count: FFaker.rand(10))
+  result_links(count: FFaker.rand(10) + 1)
 end

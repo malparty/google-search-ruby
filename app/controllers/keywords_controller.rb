@@ -4,10 +4,13 @@ class KeywordsController < ApplicationController
   include Pagy::Backend
 
   def index
-    pagy, keywords_list = pagy(keywords)
+    pagy, keywords_list = pagy(keywords_query.keywords_filtered)
 
     render locals: {
-      pagy: pagy, keywords: KeywordsCollectionPresenter.new(keywords_list),
+      pagy: pagy,
+      presenter: KeywordsCollectionPresenter.new(keywords_list),
+      url_match_count: keywords_query.url_match_count,
+      filter_error: keywords_query.error,
       csv_form: csv_form
     }
   end
@@ -34,8 +37,8 @@ class KeywordsController < ApplicationController
 
   private
 
-  def keywords
-    KeywordsQuery.new(current_user).call
+  def keywords_query
+    @keywords_query ||= KeywordsQuery.new(current_user.keywords, index_params)
   end
 
   def csv_form
@@ -44,6 +47,10 @@ class KeywordsController < ApplicationController
 
   def save_csv_file
     csv_form.save(create_params[:csv_upload_form][:file])
+  end
+
+  def index_params
+    params.permit(Filter::QUERY_PARAMS)
   end
 
   def create_params

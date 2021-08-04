@@ -35,11 +35,11 @@ en:
     token_revoked: 'If your token was valid, it has been revoked'
   keywords:
     could_not_query: 'An error occurs when performing the Google Search, please try again.'
-    empty_list: 'You do not have any keyword yet.'
     parsed: 'keywords parsed'
     failed: 'failed being retried'
     parsing_progress: 'Parsing is in progress'
     keywords_left: 'keywords left'
+    empty_list: 'No keyword found. Upload a CSV file to add more keywords.'
     status:
       pending: 'Pending'
       failed: 'Failed'
@@ -48,6 +48,10 @@ en:
     non_ads: 'Non ad links'
     ads_page: 'Page ad links'
     ads_top: 'Top ad links'
+  link_types:
+    ads_top: 'Top ads'
+    ads_page: 'Page ads'
+    non_ads: 'Non ads'
   pagy:
     errors:
       overflow: 'There are not that many pages here! Max page is %{max_page}'
@@ -79,5 +83,11 @@ en:
   filters:
     filters: 'Filters'
     value_error: 'has wrong value'
+    total_of_keywords: "You have a total of %{keywords_count} keywords"
+    by_keyword: 'By keyword'
+    by_result_link: 'By result link'
+    submit_btn: 'Apply'
+    cheatsheet: 'Patterns cheatsheet'
+    anyletterfromatoz: 'AnyLetterFromAToZ'
   loading: 'Loading'
   record_not_found: 'The requested resource could not be found.'

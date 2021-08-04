@@ -37,4 +37,6 @@ RSpec.configure do |config|
   config.include SearchProgressHelpers::System
 
   config.include ChannelHelpers
+
+  config.include KeywordFiltersHelpers::System
 end

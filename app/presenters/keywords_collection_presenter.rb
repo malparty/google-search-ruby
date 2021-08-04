@@ -5,7 +5,7 @@ class KeywordsCollectionPresenter
     @keywords = keywords
   end
 
-  def groups
+  def keyword_groups
     keywords.group_by { |keyword| keyword.name[0].upcase.to_sym }
   end
 

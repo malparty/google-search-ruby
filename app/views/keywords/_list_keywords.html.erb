@@ -1,12 +1,28 @@
 <section class="list-keyword" data-turbo="true">
   <%= turbo_frame_tag 'frame_list_keywords' do %>
-    <% if keywords.groups.any? %>
+    <% if filter_error.blank? %>
+      <div class="d-flex justify-content-end match-count">
+        <div class="text-muted">
+          <div class="text-end match-count--url">
+            <%= url_match_count %>
+            <i class="bi bi-link-45deg"></i>
+          </div>
+          <div class="text-end match-count--keyword">
+            <%= pagy.count %>
+            <i class="bi bi-list-check"></i>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if presenter.keyword_groups.any? %>
       <div class="d-flex justify-content-around">
         <%== pagy_bootstrap_nav(pagy) %>
       </div>
-      <% keywords.groups.each do |group_key, group_keywords| %>
+      <% presenter.keyword_groups.each do |group_key, group_keywords| %>
         <%= render 'list_keywords_group', group_key: group_key, group_keywords: group_keywords %>
       <% end %>
+    <% elsif filter_error.present? %>
+      <div class="alert alert-danger"><%= filter_error %></div>
     <% else %>
       <div class="alert alert-light"><%= t('keywords.empty_list') %></div>
     <% end %>

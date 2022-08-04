@@ -1,13 +1,13 @@
 <div class="container-xl screen-keyword">
   <div class="row">
     <div class="col-md-4 col-lg-3 d-md-block d-none">
-      <%= render 'filters_keywords' %>
+      <%= render 'filters_keywords', filter: filter %>
     </div>
     <div class="col-md-8 col-lg-9">
       <%= turbo_stream_from "card_search_progress_stream:user_#{current_user.id}" %>
       <%= turbo_frame_tag 'card_search_progress' do %>
       <% end %>
-      <%= render 'list_keywords', presenter: presenter, pagy: pagy, url_match_count: url_match_count, filter_error: filter.error_message %>
+      <%= render 'list_keywords', presenter: presenter, pagy: pagy, url_match_count: url_match_count, filter: filter %>
 
       <%= turbo_frame_tag 'frame_keyword_show' do %>
       <% end %>
@@ -15,7 +15,7 @@
   </div>
 </div>
 
-<%= render 'filters_keywords_mobile' %>
+<%= render 'filters_keywords_mobile', filter: filter %>
 
 <% content_for :header_nav_bar do %>
   <%= render 'form_upload', csv_form: csv_form %>

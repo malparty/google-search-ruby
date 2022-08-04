@@ -1,6 +1,6 @@
 <section class="list-keyword" data-turbo="true">
   <%= turbo_frame_tag 'frame_list_keywords' do %>
-    <% if filter_error.blank? %>
+    <% if filter.errors.blank? %>
       <div class="d-flex justify-content-end match-count">
         <div class="text-muted">
           <div class="text-end match-count--url">
@@ -21,8 +21,8 @@
       <% presenter.keyword_groups.each do |group_key, group_keywords| %>
         <%= render 'list_keywords_group', group_key: group_key, group_keywords: group_keywords %>
       <% end %>
-    <% elsif filter_error.present? %>
-      <div class="alert alert-danger"><%= filter_error %></div>
+    <% elsif filter.errors.any? %>
+      <div class="alert alert-danger"><%= filter.error_message %></div>
     <% else %>
       <div class="alert alert-light"><%= t('keywords.empty_list') %></div>
     <% end %>

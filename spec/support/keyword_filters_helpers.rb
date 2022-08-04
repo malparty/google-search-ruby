@@ -7,10 +7,10 @@ module KeywordFiltersHelpers
 
       visit root_path
 
-      fill_in :keyword_pattern, with: params[:keyword_pattern]
-      fill_in :url_pattern, with: params[:url_pattern]
+      fill_in :filter_keyword_pattern, with: params[:keyword_pattern]
+      fill_in :filter_url_pattern, with: params[:url_pattern]
 
-      params[:link_types]&.each { |link_type| check "link_types_#{link_type}" }
+      params[:link_types]&.each { |link_type| check "filter_link_types_#{link_type}" }
 
       click_button I18n.t('filters.submit_btn')
     end

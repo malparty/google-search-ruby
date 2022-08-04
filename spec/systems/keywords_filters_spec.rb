@@ -37,19 +37,19 @@ describe 'keywords filters', type: :system do
     it 'has a keyword_pattern input', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filter')).to have_selector('input[name=keyword_pattern]')
+      expect(find('.form-filter')).to have_selector('input[name=filter\[keyword_pattern\]]')
     end
 
     it 'has a url_pattern input', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filter')).to have_selector('input[name=url_pattern]')
+      expect(find('.form-filter')).to have_selector('input[name=filter\[url_pattern\]]')
     end
 
     it 'has all the link_types checkboxes', authenticated_user: true do
       visit root_path
 
-      expect(find('.form-filter')).to have_selector('input[type=checkbox][name=link_types\[\]]', count: ResultLink.link_types.length)
+      expect(find('.form-filter')).to have_selector('input[type=checkbox][name=filter\[link_types\]\[\]]', count: ResultLink.link_types.length)
     end
 
     it 'has a submit button', authenticated_user: true do
@@ -194,6 +194,48 @@ describe 'keywords filters', type: :system do
       submit_keyword_filters(result_link.keyword.user, { url_pattern: '?' })
 
       expect(find('.list-keyword')).to have_content('Url pattern is invalid')
+    end
+  end
+
+  context 'given a URL with filter params' do
+    it 'shows the matched keyword' do
+      matched_keyword = Fabricate(:keyword, name: 'hello')
+      Fabricate(:keyword, name: 'world', user: matched_keyword.user)
+
+      sign_in matched_keyword.user
+
+      visit root_path(filter: { keyword_pattern: '^hel' })
+
+      expect(find('.list-keyword')).to have_content(matched_keyword.name)
+    end
+
+    it 'does NOT show the unmatched keyword' do
+      unmatched_keyword = Fabricate(:keyword, name: 'hello')
+      Fabricate(:keyword, name: 'world', user: unmatched_keyword.user)
+
+      sign_in unmatched_keyword.user
+
+      visit root_path(filter: { keyword_pattern: '^wor' })
+
+      expect(find('.list-keyword')).not_to have_content(unmatched_keyword.name)
+    end
+
+    it 'fills keyword_pattern in', authenticated_user: true do
+      visit root_path(filter: { keyword_pattern: '^hel' })
+
+      expect(find('.form-filter')).to have_field('filter[keyword_pattern]', with: '^hel')
+    end
+
+    it 'fills url_pattern in', authenticated_user: true do
+      visit root_path(filter: { url_pattern: '^https' })
+
+      expect(find('.form-filter')).to have_field('filter[url_pattern]', with: '^https')
+    end
+
+    it 'fills link_types in', authenticated_user: true do
+      visit root_path(filter: { link_types: %w[1] })
+
+      expect(find('.form-filter #filter_link_types_1')).to be_checked
     end
   end
 end

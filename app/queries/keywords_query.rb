@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class KeywordsQuery
+  attr_reader :filter
+
   def initialize(relation, filter_params = {})
     @relation = relation
     @filter = Filter.from_params(filter_params)
@@ -23,13 +25,9 @@ class KeywordsQuery
     result_links_filtered.count
   end
 
-  def error
-    filter.errors.full_messages.join '. '
-  end
-
   private
 
-  attr_reader :relation, :filter
+  attr_reader :relation
 
   def without_html_column(scope)
     scope.select(Keyword.column_names.excluding('html'))

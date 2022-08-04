@@ -3,7 +3,7 @@
 class Filter
   include ActiveModel::Model
 
-  QUERY_PARAMS = [:url_pattern, :keyword_pattern, { link_types: [] }].freeze
+  QUERY_PARAMS = [filter: [:url_pattern, :keyword_pattern, { link_types: [] }]].freeze
   PATTERN_REGEXP =
     %r{\A\^?((\[[\\\-/:.\w]+\])|([\\\-/:.\w]+)|(\(([\\\-/:.\w]+)\|?([\\\-/:.\w]+)\)))[+?*]?(\{\d+(,\d?)?\})?\$?\Z}
     .freeze
@@ -15,13 +15,19 @@ class Filter
   validate :link_types_exist?
 
   def self.from_params(params)
-    Filter.new keyword_pattern: params[:keyword_pattern],
-               url_pattern: params[:url_pattern],
-               link_types: params[:link_types]&.select(&:present?)&.map(&:to_i)&.uniq
+    return Filter.new unless params.key?(:filter)
+
+    Filter.new keyword_pattern: params[:filter][:keyword_pattern],
+               url_pattern: params[:filter][:url_pattern],
+               link_types: params[:filter][:link_types]&.select(&:present?)&.map(&:to_i)&.uniq
   end
 
   def result_link_filter_exist?
     url_pattern.present? || link_types.present?
+  end
+
+  def error_message
+    errors.full_messages.join '. '
   end
 
   protected
